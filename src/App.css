@@ -42,7 +42,7 @@ body {
   display: block;
   padding: 0.5rem 1rem;
   background-color: #ffde4d;
-  color: #ffffff;
+  color: #000;
   border: none;
   border-radius: 2rem;
   cursor: pointer;
@@ -53,9 +53,10 @@ body {
   letter-spacing: 1px;
   outline: none;
   text-align: center;
+  border: 2px solid #ff4c4c;
 }
 
 .btn:hover {
-  box-shadow: 5px 10px #ff4c4c;
+  box-shadow: 2.5px 5px #ff4c4c;
   color: #000;
 }

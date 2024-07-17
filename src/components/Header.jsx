@@ -41,10 +41,15 @@ export default function Header() {
           src="./logo.png"
           alt="Logo Final"
           className={`image ${currentImage === 3 ? "falling" : "hidden"}`}
-        />
-        {showWelcomeText && (
-          <h1 className="welcome-text">Welcome to Homebody</h1>
-        )}
+        />{" "}
+        <div>
+          {" "}
+          {showWelcomeText && (
+            <a href="#apparel" className="welcome-text btn">
+              Start Now!
+            </a>
+          )}
+        </div>
       </div>
     </header>
   );
