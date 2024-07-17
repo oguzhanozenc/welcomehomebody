@@ -31,6 +31,7 @@ const products = [
 export default function Accessories() {
   return (
     <div className="accessories" id="accessories">
+      <h2 className="section-title">Accessories</h2>
       <div className="window">
         <div className="title-bar">
           <div className="buttons">

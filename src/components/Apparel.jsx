@@ -31,6 +31,7 @@ const products = [
 export default function Apparel() {
   return (
     <div className="apparel" id="apparel">
+      <h2 className="section-title">Apparel</h2>
       <div className="window">
         <div className="title-bar">
           <div className="buttons">

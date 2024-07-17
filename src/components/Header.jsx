@@ -7,8 +7,8 @@ export default function Header() {
 
   useEffect(() => {
     const timers = [
-      setTimeout(() => setCurrentImage(1), 2000),
-      setTimeout(() => setCurrentImage(2), 4000),
+      setTimeout(() => setCurrentImage(1), 1500),
+      setTimeout(() => setCurrentImage(2), 3000),
       setTimeout(() => setCurrentImage(3), 5000),
     ];
 

@@ -60,3 +60,9 @@ body {
   box-shadow: 2.5px 5px #ff4c4c;
   color: #000;
 }
+
+.section-title {
+  font-size: 3.5rem;
+  color: black;
+  margin: 1rem auto;
+}
