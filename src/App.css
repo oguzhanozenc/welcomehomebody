@@ -1,0 +1,61 @@
+/* App.css */
+@import url("https://fonts.googleapis.com/css2?family=VT323&display=swap");
+
+:root {
+  --color-top: #000;
+  --color-start: #f3feb8;
+  --color-middle: #ffde4d;
+  --color-end: #ffb22c;
+  --color-bottom: #ff4c4c;
+
+  cursor: url("../public/cursor.png"), auto;
+}
+
+a:hover,
+button:hover {
+  cursor: url("../public/pointer.png"), auto;
+}
+
+* {
+  text-decoration: none;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  color: inherit;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "VT323", monospace;
+  font-weight: 400;
+  font-style: normal;
+  background: var(--color-top);
+  color: #fff;
+  transition: background-color 0.3s ease;
+}
+
+.btn {
+  display: block;
+  padding: 0.5rem 1rem;
+  background-color: #ffde4d;
+  color: #ffffff;
+  border: none;
+  border-radius: 2rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: inherit;
+  text-transform: uppercase;
+  font-size: 1.5rem;
+  letter-spacing: 1px;
+  outline: none;
+  text-align: center;
+}
+
+.btn:hover {
+  box-shadow: 5px 10px #ff4c4c;
+  color: #000;
+}

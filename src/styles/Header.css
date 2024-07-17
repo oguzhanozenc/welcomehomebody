@@ -1,0 +1,98 @@
+.header {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 20rem;
+  height: 20rem;
+  margin: 10rem auto;
+  padding: 10%;
+}
+
+.header img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transform: scale(0.5) rotate(-5deg);
+  transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.header img.visible {
+  opacity: 1;
+  transform: scale(1.2) rotate(0deg);
+  animation: bounce 0.5s ease-in-out;
+}
+
+.header img.hidden {
+  opacity: 0;
+  transform: scale(0.5) rotate(5deg);
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: scale(1) translateY(0);
+  }
+  50% {
+    transform: scale(1.1) translateY(-10px);
+  }
+}
+
+.header img.falling {
+  opacity: 1;
+  animation: fallAnimation 1.5s ease-in-out;
+}
+
+@keyframes fallAnimation {
+  0% {
+    transform: translateY(-500px) scale(0.7);
+  }
+  50% {
+    transform: translateY(0) scale(0.6);
+  }
+  100% {
+    transform: translateY(0) scale(0.5) rotate(0deg);
+  }
+}
+
+.header img.falling:hover {
+  transform: rotate(5deg) scale(0.5);
+  transition: all 300ms ease;
+}
+
+.welcome-text {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2rem;
+  letter-spacing: 0.25rem;
+  color: #ffffff;
+  opacity: 0;
+  animation: fadeIn 1s ease-in-out forwards,
+    bounceText 0.5s ease-in-out 4.5s forwards;
+  text-align: center;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes bounceText {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+}
