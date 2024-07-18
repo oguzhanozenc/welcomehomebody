@@ -20,8 +20,8 @@ export default function Header() {
   }, []);
 
   return (
-    <header>
-      <div className="header" id="home">
+    <header className="header">
+      <div className="header-container">
         <img
           src="./logo-close.png"
           alt="Logo Close"
@@ -40,17 +40,19 @@ export default function Header() {
         <img
           src="./logo.png"
           alt="Logo Final"
-          className={`image ${currentImage === 3 ? "falling" : "hidden"}`}
-        />{" "}
-        <div>
-          {" "}
-          {showWelcomeText && (
-            <a href="#apparel" className="welcome-text btn">
-              Start Now!
-            </a>
-          )}
-        </div>
+          className={`image ${
+            currentImage === 3 ? "falling visible" : "hidden"
+          }`}
+        />
+        <div className="background-overlay"></div>
       </div>
+      {showWelcomeText && (
+        <div className="welcome-text">
+          <a href="#apparel" className="btn">
+            EXPLORE»
+          </a>
+        </div>
+      )}
     </header>
   );
 }

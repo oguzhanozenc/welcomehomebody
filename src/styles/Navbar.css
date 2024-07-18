@@ -9,21 +9,21 @@
   font-style: normal;
   z-index: 99;
   font-size: 1.5rem;
-
   top: 0;
 }
 
 #navbarlogo {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
+  margin-left: 2rem;
 }
 
 .navbarmenu {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 0.25rem;
+
   font-weight: 500;
 }
 
@@ -56,4 +56,16 @@
 #navbarlogo:hover {
   -webkit-filter: drop-shadow(5px 5px 10px #ffde4d);
   filter: drop-shadow(5px 5px 10px #ffde4d);
+}
+
+.basket {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-right: 2rem;
+}
+
+.basket img {
+  width: 3.5rem;
+  height: auto;
 }

@@ -53,7 +53,7 @@ export default function Accessories() {
                 <div className="product-details">
                   <h3 className="product-name">{product.name}</h3>
                   <p className="product-price">{product.price}</p>
-                  <button className="btn">BAG IT</button>
+                  <button className="btn">VIEW</button>
                 </div>
               </div>
             ))}

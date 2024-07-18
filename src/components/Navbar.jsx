@@ -96,6 +96,9 @@ export default function Navbar() {
             CONTACT
           </a>
         </div>
+      </div>{" "}
+      <div className="basket">
+        <img src="./basket.png" alt="" />
       </div>
     </nav>
   );
