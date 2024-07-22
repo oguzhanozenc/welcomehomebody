@@ -1,17 +1,25 @@
 import React from "react";
 import Header from "./Header";
-import Apparel from "./Apparel";
-import Accessories from "./Accessories";
-import Blog from "./Blog";
+import ProductList from "./ProductList";
+import RecentPosts from "./RecentPosts";
 import Contact from "./Contact";
+import { products } from "./ProductData";
 
-const Home = () => {
+const Home = ({ addToBasket }) => {
   return (
     <div>
       <Header />
-      <Apparel />
-      <Accessories />
-      <Blog />
+      <ProductList
+        title="Apparel"
+        products={products.apparel}
+        addToBasket={addToBasket}
+      />
+      <ProductList
+        title="Accessories"
+        products={products.accessories}
+        addToBasket={addToBasket}
+      />
+      <RecentPosts />
       <Contact />
     </div>
   );

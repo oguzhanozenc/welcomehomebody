@@ -1,0 +1,77 @@
+.contact-section {
+  padding: 4rem 0;
+  background-color: #000;
+  color: #fff;
+  text-align: center;
+}
+
+.contact-title {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  color: #f0f0f0;
+}
+
+.contact-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-container {
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 2rem;
+  border-radius: 1rem;
+  width: 90%;
+  max-width: 600px;
+}
+
+.confirmation-message {
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 2rem;
+  border-radius: 1rem;
+  width: 90%;
+  max-width: 600px;
+}
+
+.arcade-label {
+  color: #fff;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.arcade-input {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1rem;
+  border: 2px solid #fff;
+  background-color: transparent;
+  color: #fff;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.arcade-input:focus {
+  outline: none;
+  border-color: #00ff00;
+}
+
+.arcade-icon {
+  vertical-align: middle;
+  margin-right: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 2rem;
+  }
+
+  .form-container,
+  .confirmation-message {
+    width: 100%;
+    padding: 1rem;
+  }
+}

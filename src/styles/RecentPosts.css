@@ -1,0 +1,112 @@
+.recent-posts {
+  padding: 10%;
+  margin: 10% auto;
+
+  color: #e0e0e0;
+}
+
+.section-title {
+  font-family: "Press Start 2P", cursive;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #1a1a1a;
+}
+
+.posts-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.post-card {
+  background: #333;
+  border: 2px solid #ff8c00;
+  border-radius: 8px;
+  overflow: hidden;
+  width: 300px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.post-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.post-content {
+  padding: 15px;
+}
+
+.recentpost-title {
+  font-family: "Press Start 2P", cursive;
+  font-size: 1.25rem;
+  color: #ff8c00;
+  text-align: justify;
+  margin-bottom: 10px;
+}
+
+.post-excerpt {
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+}
+
+.read-more-btn {
+  background-color: #ff8c00;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-family: "Press Start 2P", cursive;
+  text-transform: uppercase;
+  transition: background-color 0.3s;
+}
+
+.read-more-btn:hover {
+  background-color: #e07b00;
+}
+
+.subscription {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.subscription-title {
+  font-family: "Press Start 2P", cursive;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  color: #1a1a1a;
+}
+
+.subscription-form {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.subscription-input {
+  border: 2px solid #ff8c00;
+  border-radius: 5px;
+  padding: 10px;
+  background: #333;
+  color: #fff;
+  font-family: "Press Start 2P", cursive;
+}
+
+.subscription-btn {
+  background-color: #ff8c00;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-family: "Press Start 2P", cursive;
+  text-transform: uppercase;
+  transition: background-color 0.3s;
+}
+
+.subscription-btn:hover {
+  background-color: #e07b00;
+}

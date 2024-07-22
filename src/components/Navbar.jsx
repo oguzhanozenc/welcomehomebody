@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import "../styles/Navbar.css";
 
-export default function Navbar() {
+export default function Navbar({ basket, toggleOrderNavbar }) {
   const location = useLocation();
   const navigate = useNavigate();
   const isHomePage = location.pathname === "/";
@@ -17,6 +17,8 @@ export default function Navbar() {
       }
     }
   };
+
+  const basketCount = basket.length;
 
   return (
     <nav className="navbar">
@@ -96,9 +98,10 @@ export default function Navbar() {
             CONTACT
           </a>
         </div>
-      </div>{" "}
-      <div className="basket">
-        <img src="./basket.png" alt="" />
+      </div>
+      <div className="basket" onClick={toggleOrderNavbar}>
+        <img src="/basket.png" alt="Basket" />
+        {basketCount > 0 && <div className="basket-count">{basketCount}</div>}
       </div>
     </nav>
   );
