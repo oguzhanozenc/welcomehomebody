@@ -88,3 +88,121 @@
 .checkout-link:hover {
   background-color: #45a049;
 }
+
+@media (max-width: 1200px) {
+  .order-navbar {
+    width: 200px;
+  }
+
+  .toggle-btn {
+    font-size: 2rem;
+  }
+
+  .basket-item-image {
+    width: 40px;
+    height: 40px;
+  }
+
+  .basket-item-name {
+    font-size: 0.9rem;
+  }
+
+  .basket-item-price {
+    font-size: 0.8rem;
+  }
+
+  .checkout-link {
+    margin: 15px;
+    padding: 8px;
+  }
+}
+
+@media (max-width: 992px) {
+  .order-navbar {
+    width: 180px;
+  }
+
+  .toggle-btn {
+    font-size: 1.8rem;
+  }
+
+  .basket-item-image {
+    width: 35px;
+    height: 35px;
+  }
+
+  .basket-item-name {
+    font-size: 0.8rem;
+  }
+
+  .basket-item-price {
+    font-size: 0.7rem;
+  }
+
+  .checkout-link {
+    margin: 10px;
+    padding: 6px;
+  }
+}
+
+@media (max-width: 768px) {
+  .order-navbar {
+    width: 100%;
+    max-width: 300px;
+    padding: 1rem;
+  }
+
+  .toggle-btn {
+    top: 1rem;
+    left: 1rem;
+    font-size: 1.5rem;
+  }
+
+  .basket-item-image {
+    width: 30px;
+    height: 30px;
+  }
+
+  .basket-item-name {
+    font-size: 0.7rem;
+  }
+
+  .basket-item-price {
+    font-size: 0.6rem;
+  }
+
+  .checkout-link {
+    margin: 5px;
+    padding: 5px;
+  }
+}
+
+@media (max-width: 576px) {
+  .order-navbar {
+    width: 100%;
+    max-width: 100%;
+    padding: 0.5rem;
+  }
+
+  .toggle-btn {
+    font-size: 1.2rem;
+  }
+
+  .basket-item-image {
+    width: 25px;
+    height: 25px;
+  }
+
+  .basket-item-name {
+    font-size: 0.6rem;
+  }
+
+  .basket-item-price {
+    font-size: 0.5rem;
+  }
+
+  .checkout-link {
+    margin: 2px;
+    padding: 4px;
+  }
+}

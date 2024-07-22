@@ -17,6 +17,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 
 .form-container {
@@ -64,14 +65,64 @@
   margin-right: 0.5rem;
 }
 
-@media (max-width: 768px) {
-  .section-title {
+@media (max-width: 1200px) {
+  .contact-title {
+    font-size: 2.2rem;
+  }
+
+  .arcade-label {
+    font-size: 1.1rem;
+  }
+
+  .arcade-input {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .contact-title {
     font-size: 2rem;
+  }
+
+  .arcade-label {
+    font-size: 1rem;
+  }
+
+  .arcade-input {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .contact-title {
+    font-size: 1.8rem;
   }
 
   .form-container,
   .confirmation-message {
     width: 100%;
     padding: 1rem;
+  }
+
+  .arcade-label {
+    font-size: 0.9rem;
+  }
+
+  .arcade-input {
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .contact-title {
+    font-size: 1.6rem;
+  }
+
+  .arcade-label {
+    font-size: 0.8rem;
+  }
+
+  .arcade-input {
+    font-size: 0.6rem;
   }
 }

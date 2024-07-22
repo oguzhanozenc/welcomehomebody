@@ -1,5 +1,3 @@
-/* Header.css */
-
 .header {
   position: relative;
   width: 100%;
@@ -81,4 +79,62 @@
   border-radius: 4rem;
   text-decoration: none;
   transition: background-color 0.3s ease;
+}
+
+@media (max-width: 1200px) {
+  .header img {
+    width: 20rem;
+  }
+
+  .welcome-text .btn {
+    padding: 0.8rem 1.5rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .header img {
+    width: 18rem;
+  }
+
+  .welcome-text .btn {
+    padding: 0.7rem 1.2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    height: 80vh;
+  }
+
+  .header img {
+    width: 15rem;
+    top: 15%;
+  }
+
+  .welcome-text {
+    bottom: 5%;
+  }
+
+  .welcome-text .btn {
+    padding: 0.6rem 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .header {
+    height: 60vh;
+  }
+
+  .header img {
+    width: 12rem;
+    top: 10%;
+  }
+
+  .welcome-text {
+    bottom: 3%;
+  }
+
+  .welcome-text .btn {
+    padding: 0.5rem 0.8rem;
+  }
 }

@@ -1,14 +1,13 @@
 .recent-posts {
-  padding: 10%;
-  margin: 10% auto;
-
+  padding: 5%;
+  margin: 5% auto;
   color: #e0e0e0;
 }
 
 .section-title {
   font-family: "Press Start 2P", cursive;
-  font-size: 2rem;
-  margin-bottom: 20px;
+  font-size: 1.75rem;
+  margin-bottom: 15px;
   text-align: center;
   color: #1a1a1a;
 }
@@ -16,7 +15,7 @@
 .posts-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 15px;
   justify-content: center;
 }
 
@@ -25,31 +24,32 @@
   border: 2px solid #ff8c00;
   border-radius: 8px;
   overflow: hidden;
-  width: 300px;
+  width: 90%;
+  max-width: 300px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
 }
 
 .post-image {
   width: 100%;
-  height: 200px;
+  height: 150px;
   object-fit: cover;
 }
 
 .post-content {
-  padding: 15px;
+  padding: 12px;
 }
 
 .recentpost-title {
   font-family: "Press Start 2P", cursive;
-  font-size: 1.25rem;
+  font-size: 1.125rem;
   color: #ff8c00;
   text-align: justify;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .post-excerpt {
-  font-size: 0.9rem;
-  margin-bottom: 15px;
+  font-size: 0.85rem;
+  margin-bottom: 12px;
 }
 
 .read-more-btn {
@@ -57,7 +57,7 @@
   color: #fff;
   border: none;
   border-radius: 5px;
-  padding: 10px 15px;
+  padding: 8px 12px;
   cursor: pointer;
   font-family: "Press Start 2P", cursive;
   text-transform: uppercase;
@@ -69,20 +69,21 @@
 }
 
 .subscription {
-  margin-top: 40px;
+  margin-top: 30px;
   text-align: center;
 }
 
 .subscription-title {
   font-family: "Press Start 2P", cursive;
-  font-size: 1.5rem;
-  margin-bottom: 20px;
+  font-size: 1.25rem;
+  margin-bottom: 15px;
   color: #1a1a1a;
 }
 
 .subscription-form {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   gap: 10px;
 }
 
@@ -93,6 +94,8 @@
   background: #333;
   color: #fff;
   font-family: "Press Start 2P", cursive;
+  width: 100%;
+  max-width: 300px;
 }
 
 .subscription-btn {
@@ -109,4 +112,188 @@
 
 .subscription-btn:hover {
   background-color: #e07b00;
+}
+
+@media (max-width: 1200px) {
+  .recent-posts {
+    padding: 4%;
+    margin: 4% auto;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+  }
+
+  .post-card {
+    width: 90%;
+    max-width: 280px;
+  }
+
+  .post-image {
+    height: 130px;
+  }
+
+  .recentpost-title {
+    font-size: 1rem;
+  }
+
+  .post-excerpt {
+    font-size: 0.8rem;
+  }
+
+  .read-more-btn {
+    font-size: 0.9rem;
+    padding: 8px 12px;
+  }
+
+  .subscription-title {
+    font-size: 1.125rem;
+  }
+
+  .subscription-input {
+    max-width: 250px;
+  }
+
+  .subscription-btn {
+    font-size: 0.9rem;
+    padding: 8px 16px;
+  }
+}
+
+@media (max-width: 992px) {
+  .recent-posts {
+    padding: 3%;
+    margin: 3% auto;
+  }
+
+  .section-title {
+    font-size: 1.25rem;
+  }
+
+  .post-card {
+    width: 95%;
+    max-width: 260px;
+  }
+
+  .post-image {
+    height: 120px;
+  }
+
+  .recentpost-title {
+    font-size: 0.9rem;
+  }
+
+  .post-excerpt {
+    font-size: 0.75rem;
+  }
+
+  .read-more-btn {
+    font-size: 0.8rem;
+    padding: 7px 12px;
+  }
+
+  .subscription-title {
+    font-size: 1rem;
+  }
+
+  .subscription-input {
+    max-width: 200px;
+  }
+
+  .subscription-btn {
+    font-size: 0.8rem;
+    padding: 8px 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .recent-posts {
+    padding: 2%;
+    margin: 2% auto;
+  }
+
+  .section-title {
+    font-size: 1rem;
+  }
+
+  .post-card {
+    width: 100%;
+    max-width: 240px;
+  }
+
+  .post-image {
+    height: 100px;
+  }
+
+  .recentpost-title {
+    font-size: 0.8rem;
+  }
+
+  .post-excerpt {
+    font-size: 0.7rem;
+  }
+
+  .read-more-btn {
+    font-size: 0.7rem;
+    padding: 6px 12px;
+  }
+
+  .subscription-title {
+    font-size: 0.9rem;
+  }
+
+  .subscription-input {
+    max-width: 180px;
+  }
+
+  .subscription-btn {
+    font-size: 0.7rem;
+    padding: 6px 12px;
+  }
+}
+
+@media (max-width: 576px) {
+  .recent-posts {
+    padding: 1%;
+    margin: 1% auto;
+  }
+
+  .section-title {
+    font-size: 0.8rem;
+  }
+
+  .post-card {
+    width: 100%;
+    max-width: 200px;
+  }
+
+  .post-image {
+    height: 80px;
+  }
+
+  .recentpost-title {
+    font-size: 0.7rem;
+  }
+
+  .post-excerpt {
+    font-size: 0.65rem;
+  }
+
+  .read-more-btn {
+    font-size: 0.6rem;
+    padding: 5px 10px;
+  }
+
+  .subscription-title {
+    font-size: 0.75rem;
+  }
+
+  .subscription-input {
+    max-width: 150px;
+  }
+
+  .subscription-btn {
+    font-size: 0.6rem;
+    padding: 5px 10px;
+  }
 }

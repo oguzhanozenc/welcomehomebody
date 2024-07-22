@@ -5,6 +5,7 @@ import Home from "./components/Home";
 import BlogPage from "./components/BlogPage";
 import BlogPost from "./components/BlogPost"; // Import BlogPost
 import Navbar from "./components/Navbar";
+import MobileNavbar from "./components/MobileNavbar";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import ProductPage from "./components/ProductPage";
@@ -15,6 +16,18 @@ import Products from "./components/Products";
 function App() {
   const [basket, setBasket] = useState([]);
   const [isOrderNavbarOpen, setOrderNavbarOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   const addToBasket = (product) => {
     setBasket((prevBasket) => [...prevBasket, product]);
@@ -31,7 +44,11 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Navbar basket={basket} toggleOrderNavbar={toggleOrderNavbar} />
+      {isMobile ? (
+        <MobileNavbar basket={basket} toggleOrderNavbar={toggleOrderNavbar} />
+      ) : (
+        <Navbar basket={basket} toggleOrderNavbar={toggleOrderNavbar} />
+      )}
       <AppContent
         addToBasket={addToBasket}
         basket={basket}

@@ -90,3 +90,99 @@
 .cancel-button:hover {
   opacity: 0.8;
 }
+
+@media (max-width: 1200px) {
+  .checkout-page {
+    padding: 4%;
+  }
+
+  .basket-item-name {
+    font-size: 1.1rem;
+  }
+
+  .basket-item-price {
+    font-size: 0.9rem;
+  }
+
+  .confirm-button,
+  .cancel-button {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .checkout-page {
+    padding: 3%;
+  }
+
+  .basket-item-name {
+    font-size: 1rem;
+  }
+
+  .basket-item-price {
+    font-size: 0.8rem;
+  }
+
+  .confirm-button,
+  .cancel-button {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .checkout-page {
+    padding: 2%;
+  }
+
+  .basket-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .basket-item-image {
+    width: 60px;
+    height: 60px;
+  }
+
+  .basket-item-name {
+    font-size: 0.9rem;
+  }
+
+  .basket-item-price {
+    font-size: 0.7rem;
+  }
+
+  .confirm-button,
+  .cancel-button {
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .checkout-page {
+    padding: 1%;
+    margin: 5% auto;
+  }
+
+  .basket-item {
+    padding: 8px;
+  }
+
+  .basket-item-image {
+    width: 50px;
+    height: 50px;
+  }
+
+  .basket-item-name {
+    font-size: 0.8rem;
+  }
+
+  .basket-item-price {
+    font-size: 0.6rem;
+  }
+
+  .confirm-button,
+  .cancel-button {
+    font-size: 0.6rem;
+  }
+}
