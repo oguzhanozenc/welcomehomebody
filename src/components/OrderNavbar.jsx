@@ -18,26 +18,21 @@ const OrderNavbar = ({ basket, setBasket, isOpen, toggleNavbar }) => {
             {basket.map((item, index) => (
               <li key={index}>
                 <Link to={`/product/${item.id}`} className="basket-item-link">
-                  <div>
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="basket-item-image"
-                    />
-                  </div>
-                  <div>
-                    <span className="basket-item-name">{item.name}</span>
-                    <span className="basket-item-price">{item.price}</span>
-                  </div>
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="basket-item-image"
+                  />
+                  <span className="basket-item-name">{item.name}</span>
+                  <span className="basket-item-price">{item.price}</span>
                 </Link>
-                <div>
-                  <button
-                    className="remove-btn"
-                    onClick={() => removeItem(index)}
-                  >
-                    <FaTrash />
-                  </button>
-                </div>
+
+                <button
+                  className="remove-btn"
+                  onClick={() => removeItem(index)}
+                >
+                  <FaTrash />
+                </button>
               </li>
             ))}
           </ul>

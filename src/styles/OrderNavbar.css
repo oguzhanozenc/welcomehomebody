@@ -2,37 +2,43 @@
   position: fixed;
   top: 0;
   right: 0;
-  width: 300px;
+  width: 250px;
   height: 100%;
   background-color: #fff;
-  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
   transform: translateX(100%);
   transition: transform 0.3s ease;
-  z-index: 1000;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 2% 0;
+}
+
+.order-navbar ul li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .order-navbar.open {
   transform: translateX(0);
 }
 
-.order-navbar h2 {
-  padding: 15px;
-  border-bottom: 1px solid #ddd;
-  font-size: 1.2rem;
-  margin: 0;
+.order-navbar.closed {
+  transform: translateX(100%);
 }
 
-.order-navbar ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.order-navbar li {
-  display: flex;
-  align-items: center;
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
+.toggle-btn {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: none;
+  border: none;
+  font-size: 2.5rem;
+  cursor: pointer;
+  color: red;
 }
 
 .basket-item-link {
@@ -40,7 +46,6 @@
   align-items: center;
   text-decoration: none;
   color: inherit;
-  flex: 1;
 }
 
 .basket-item-image {
@@ -52,13 +57,11 @@
 }
 
 .basket-item-name {
-  display: block;
   font-size: 1rem;
   color: #333;
 }
 
 .basket-item-price {
-  display: block;
   font-size: 0.9rem;
   color: #666;
 }
@@ -74,24 +77,14 @@
 .checkout-link {
   display: block;
   text-align: center;
-  padding: 15px;
   background-color: #4caf50;
   color: white;
+  padding: 10px;
   text-decoration: none;
-  font-size: 1.2rem;
-  border-top: 1px solid #ddd;
+  margin: 20px;
+  border-radius: 4px;
 }
 
 .checkout-link:hover {
   background-color: #45a049;
-}
-
-.toggle-btn {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 1.5rem;
 }
