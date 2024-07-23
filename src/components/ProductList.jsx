@@ -1,18 +1,17 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import "../styles/ProductList.css";
 
-const ProductList = ({ title, products, addToBasket, filter, setFilter }) => {
+const ProductList = ({ title, products, addToBasket }) => {
   const location = useLocation();
-  const isProductsPage = location.pathname === "/products";
+  const isProductsPage = location.pathname.startsWith("/products");
 
   return (
     <div
       className={`product-list ${title.toLowerCase()}`}
       id={title.toLowerCase()}
     >
-      {" "}
-      <h1 className="product-type">{title}</h1>
+      <h1 className="product-type section-title">{title}</h1>
       <div className="window">
         <div className="title-bar">
           <div className="buttons">
@@ -25,26 +24,27 @@ const ProductList = ({ title, products, addToBasket, filter, setFilter }) => {
         <div className="content">
           {isProductsPage && (
             <div className="filter-buttons">
-              <button
-                className={`filter-btn ${filter === "all" ? "active" : ""}`}
-                onClick={() => setFilter("all")}
+              <NavLink
+                to="/products/all"
+                className="filter-btn btn"
+                activeClassName="active"
               >
                 All Products
-              </button>
-              <button
-                className={`filter-btn ${filter === "apparel" ? "active" : ""}`}
-                onClick={() => setFilter("apparel")}
+              </NavLink>
+              <NavLink
+                to="/products/apparel"
+                className="filter-btn btn"
+                activeClassName="active"
               >
                 Apparel
-              </button>
-              <button
-                className={`filter-btn ${
-                  filter === "accessories" ? "active" : ""
-                }`}
-                onClick={() => setFilter("accessories")}
+              </NavLink>
+              <NavLink
+                to="/products/accessories"
+                className="filter-btn btn"
+                activeClassName="active"
               >
                 Accessories
-              </button>
+              </NavLink>
             </div>
           )}
           <div className="products">
@@ -59,9 +59,9 @@ const ProductList = ({ title, products, addToBasket, filter, setFilter }) => {
                   <h3 className="product-name">{product.name}</h3>
                   <p className="product-price">{product.price}</p>
                   <div className="productbtns">
-                    <Link to={`/product/${product.id}`}>
+                    <NavLink to={`/product/${product.id}`}>
                       <button className="btn">VIEW</button>
-                    </Link>
+                    </NavLink>
                     <button
                       className="btn"
                       onClick={() => addToBasket(product)}
@@ -77,9 +77,9 @@ const ProductList = ({ title, products, addToBasket, filter, setFilter }) => {
       </div>
       {!isProductsPage && (
         <div className="see-all-products">
-          <Link to="/products">
+          <NavLink to="/products/all">
             <button className="btn see-all-btn">See All Products</button>
-          </Link>
+          </NavLink>
         </div>
       )}
     </div>

@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import "./App.css";
 import Home from "./components/Home";
 import BlogPage from "./components/BlogPage";
-import BlogPost from "./components/BlogPost"; // Import BlogPost
+import BlogPost from "./components/BlogPost";
 import Navbar from "./components/Navbar";
 import MobileNavbar from "./components/MobileNavbar";
 import Contact from "./components/Contact";
@@ -12,6 +12,7 @@ import ProductPage from "./components/ProductPage";
 import OrderNavbar from "./components/OrderNavbar";
 import CheckoutPage from "./components/CheckoutPage";
 import Products from "./components/Products";
+import ScrollToSection from "./components/ScrollToSection";
 
 function App() {
   const [basket, setBasket] = useState([]);
@@ -44,6 +45,7 @@ function App() {
 
   return (
     <BrowserRouter>
+      <ScrollToSection />
       {isMobile ? (
         <MobileNavbar basket={basket} toggleOrderNavbar={toggleOrderNavbar} />
       ) : (
@@ -111,14 +113,14 @@ function AppContent({
       <Routes>
         <Route path="/" element={<Home addToBasket={addToBasket} />} />
         <Route path="blog" element={<BlogPage />} />
-        <Route path="blog/:slug" element={<BlogPost />} />{" "}
+        <Route path="blog/:slug" element={<BlogPost />} />
         <Route path="contact" element={<Contact />} />
         <Route
           path="product/:id"
           element={<ProductPage addToBasket={addToBasket} />}
         />
         <Route
-          path="products"
+          path="products/:filter"
           element={<Products addToBasket={addToBasket} />}
         />
         <Route

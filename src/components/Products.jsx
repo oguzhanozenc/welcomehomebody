@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
+import { useParams, Link } from "react-router-dom";
 import ProductList from "./ProductList";
 import { products } from "./ProductData";
 
 const Products = ({ addToBasket }) => {
-  const [filter, setFilter] = useState("all");
+  const { filter = "all" } = useParams();
 
   const filteredProducts =
     filter === "all"
       ? [...products.apparel, ...products.accessories]
-      : products[filter];
+      : products[filter] || [];
 
   return (
     <div className="products-page">
@@ -20,8 +21,6 @@ const Products = ({ addToBasket }) => {
         }
         products={filteredProducts}
         addToBasket={addToBasket}
-        filter={filter}
-        setFilter={setFilter}
       />
     </div>
   );

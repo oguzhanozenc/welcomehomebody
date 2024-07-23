@@ -17,44 +17,23 @@ export default function MobileNavbar({ basket, toggleOrderNavbar }) {
           <img src="/navbarlogo.png" alt="Logo" />
         </Link>
       </div>
+      <div>
+        <a
+          href="#about"
+          className="mobile-nav-link"
+          onClick={(e) => {
+            e.preventDefault();
+            handleNavClick("about");
+          }}
+        >
+          ABOUT{" "}
+        </a>
+      </div>
       <div className="mobile-nav-menu">
         <div>
-          <a
-            href="#home"
-            className="mobile-nav-link"
-            onClick={(e) => {
-              e.preventDefault();
-              handleNavClick("home");
-            }}
-          >
-            HOME
-          </a>
-        </div>
-
-        <div>
-          <a
-            href="#apparel"
-            className="mobile-nav-link"
-            onClick={(e) => {
-              e.preventDefault();
-              handleNavClick("apparel");
-            }}
-          >
-            APPAREL
-          </a>
-        </div>
-
-        <div>
-          <a
-            href="#accessories"
-            className="mobile-nav-link"
-            onClick={(e) => {
-              e.preventDefault();
-              handleNavClick("accessories");
-            }}
-          >
-            ACCESSORIES
-          </a>
+          <Link to="/products" key="mobile-navbarlink">
+            PRODUCTS
+          </Link>
         </div>
 
         <div>

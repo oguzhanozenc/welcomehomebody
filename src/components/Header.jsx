@@ -20,7 +20,7 @@ export default function Header() {
   }, []);
 
   return (
-    <header className="header">
+    <header className="header" id="home">
       <div className="header-container">
         <img
           src="./logo-close.png"

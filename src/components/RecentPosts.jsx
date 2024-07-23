@@ -5,7 +5,7 @@ import "../styles/RecentPosts.css";
 
 const RecentPosts = () => {
   return (
-    <div className="recent-posts">
+    <div className="recent-posts" id="blog">
       <h2 className="section-title">Latest Posts from HomeBody Blog</h2>
       <div className="posts-container">
         {BlogData.map((post) => (

@@ -1,7 +1,19 @@
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+
+:root {
+  --background-color: #f0f0f0;
+  --form-bg: #ffffff;
+  --border-color: #cccccc;
+  --highlight-color: #000080;
+  --text-color: #333333;
+  --button-bg: #008080;
+  --button-hover-bg: #ffbd2e;
+  --font-family: "Press Start 2P", cursive;
+}
+
 .contact-section {
-  padding: 4rem 0;
-  background-color: #000;
-  color: #fff;
+  padding: 4% 2%;
+
   text-align: center;
 }
 
@@ -10,7 +22,8 @@
   margin-bottom: 2rem;
   text-transform: uppercase;
   letter-spacing: 0.1rem;
-  color: #f0f0f0;
+  color: var(--highlight-color);
+  font-family: var(--font-family);
 }
 
 .contact-container {
@@ -20,24 +33,20 @@
   flex-direction: column;
 }
 
-.form-container {
-  background-color: rgba(0, 0, 0, 0.8);
-  padding: 2rem;
-  border-radius: 1rem;
-  width: 90%;
-  max-width: 600px;
-}
-
+.form-container,
 .confirmation-message {
-  background-color: rgba(0, 0, 0, 0.8);
-  padding: 2rem;
-  border-radius: 1rem;
+  background-color: var(--form-bg);
+  padding: 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
   width: 90%;
-  max-width: 600px;
+  max-width: 40rem;
+  margin: 1rem auto;
 }
 
 .arcade-label {
-  color: #fff;
+  color: var(--text-color);
   font-size: 1.2rem;
   margin-bottom: 0.5rem;
   display: block;
@@ -47,9 +56,9 @@
   width: 100%;
   padding: 1rem;
   font-size: 1rem;
-  border: 2px solid #fff;
-  background-color: transparent;
-  color: #fff;
+  border: 1px solid var(--border-color);
+  background-color: var(--form-bg);
+  color: var(--text-color);
   border-radius: 0.5rem;
   margin-bottom: 1rem;
   transition: border-color 0.3s ease;
@@ -57,7 +66,7 @@
 
 .arcade-input:focus {
   outline: none;
-  border-color: #00ff00;
+  border-color: var(--highlight-color);
 }
 
 .arcade-icon {
@@ -65,7 +74,7 @@
   margin-right: 0.5rem;
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 75rem) {
   .contact-title {
     font-size: 2.2rem;
   }
@@ -79,7 +88,7 @@
   }
 }
 
-@media (max-width: 992px) {
+@media (max-width: 62rem) {
   .contact-title {
     font-size: 2rem;
   }
@@ -93,7 +102,7 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 48rem) {
   .contact-title {
     font-size: 1.8rem;
   }
@@ -113,7 +122,7 @@
   }
 }
 
-@media (max-width: 576px) {
+@media (max-width: 36rem) {
   .contact-title {
     font-size: 1.6rem;
   }

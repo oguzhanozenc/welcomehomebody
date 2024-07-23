@@ -16,7 +16,6 @@
   cursor: pointer;
 }
 
-/* Mobile menu styles */
 .mobile-nav-menu {
   display: flex;
   flex-direction: column;

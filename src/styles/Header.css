@@ -63,6 +63,7 @@
   background-position: center;
   object-fit: cover;
   opacity: 0.5;
+  mask-image: linear-gradient(to top, rgba(0, 0, 0, 0) 1%, black 40%);
 }
 
 .welcome-text {

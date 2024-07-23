@@ -49,28 +49,21 @@ export default function Navbar({ basket, toggleOrderNavbar }) {
 
         <div>
           <a
-            href="#apparel"
+            href="#about"
             className="nav-link"
             onClick={(e) => {
               e.preventDefault();
-              handleNavClick("apparel");
+              handleNavClick("about");
             }}
           >
-            APPAREL
+            ABOUT
           </a>
         </div>
 
         <div>
-          <a
-            href="#accessories"
-            className="nav-link"
-            onClick={(e) => {
-              e.preventDefault();
-              handleNavClick("accessories");
-            }}
-          >
-            ACCESSORIES
-          </a>
+          <Link to="/products/all" className="nav-link">
+            PRODUCTS
+          </Link>
         </div>
 
         <div>

@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
 
 .recent-posts {
   padding: 5%;
@@ -24,7 +23,7 @@
 
 .post-card {
   background: #333;
-  border: 2px solid #ff8c00;
+  border: 2px solid #f00;
   border-radius: 8px;
   overflow: hidden;
   width: 90%;
@@ -56,7 +55,7 @@
 }
 
 .read-more-btn {
-  background-color: #ff8c00;
+  background-color: #f00;
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -68,7 +67,8 @@
 }
 
 .read-more-btn:hover {
-  background-color: #e07b00;
+  background-color: #fff;
+  color: #1a1a1a;
 }
 
 .subscription {
@@ -91,7 +91,7 @@
 }
 
 .subscription-input {
-  border: 2px solid #ff8c00;
+  border: 2px solid #f00;
   border-radius: 5px;
   padding: 10px;
   background: #333;
@@ -102,7 +102,7 @@
 }
 
 .subscription-btn {
-  background-color: #ff8c00;
+  background-color: #1a1a1a;
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -114,7 +114,7 @@
 }
 
 .subscription-btn:hover {
-  background-color: #e07b00;
+  background-color: #f00;
 }
 
 @media (max-width: 1200px) {

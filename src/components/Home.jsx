@@ -1,5 +1,6 @@
 import React from "react";
 import Header from "./Header";
+import About from "./About";
 import ProductList from "./ProductList";
 import RecentPosts from "./RecentPosts";
 import Contact from "./Contact";
@@ -9,6 +10,7 @@ const Home = ({ addToBasket }) => {
   return (
     <div>
       <Header />
+      <About />
       <ProductList
         title="Apparel"
         products={products.apparel}

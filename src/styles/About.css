@@ -1,0 +1,94 @@
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+
+.about-section {
+  color: #fff;
+  font-family: "Press Start 2P", cursive;
+  padding: 10% 5%;
+  margin: 10% auto;
+}
+
+.about-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.window {
+  background: #222;
+  border: 0.25rem solid #333;
+  border-radius: 0.625rem;
+  width: 80%;
+  box-shadow: 0 0 0.625rem rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+
+.abouttitle-bar {
+  background: #444;
+  color: #fff;
+  padding: 0.625rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 0.25rem solid #333;
+}
+
+.title-bar-text {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.title-bar-controls button {
+  background: #333;
+  border: none;
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  margin-left: 0.3125rem;
+}
+
+.title-bar-controls button:focus {
+  outline: none;
+}
+
+.window-body {
+  padding: 1.25rem;
+  line-height: 1.4;
+}
+
+.about-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  border-bottom: 0.125rem solid #f00;
+  padding-bottom: 0.625rem;
+  margin-bottom: 1.25rem;
+}
+
+.about-subtitle {
+  font-size: 1rem;
+  font-weight: bold;
+  margin-top: 1.25rem;
+  border-bottom: 0.125rem dashed #f00;
+  padding-bottom: 0.3125rem;
+}
+
+.about-text {
+  font-size: 0.85rem;
+  margin-bottom: 0.625rem;
+}
+
+.about-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.about-list li {
+  background: #333;
+  padding: 0.625rem;
+  margin-bottom: 0.3125rem;
+  border-radius: 0.3125rem;
+}
+
+.about-list li strong {
+  color: #f00;
+}
