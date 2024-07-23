@@ -6,7 +6,7 @@ import "../styles/RecentPosts.css";
 const RecentPosts = () => {
   return (
     <div className="recent-posts">
-      <h2 className="section-title">Latest from HomeBody Blog</h2>
+      <h2 className="section-title">Latest Posts from HomeBody Blog</h2>
       <div className="posts-container">
         {BlogData.map((post) => (
           <Link to={`/blog/${post.slug}`} key={post.id} className="post-link">
