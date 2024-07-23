@@ -1,19 +1,29 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import "../styles/ProductPage.css";
 import { products } from "./ProductData";
+import { useBasket } from "./BasketContext";
 
-const ProductPage = ({ addToBasket }) => {
+const ProductPage = () => {
   const { id } = useParams();
   const allProducts = [...products.apparel, ...products.accessories];
   const product = allProducts.find((p) => p.id.toString() === id);
+
+  const { addToBasket } = useBasket();
 
   if (!product) {
     return <div>Product not found</div>;
   }
 
+  const handleAddToBasket = () => {
+    addToBasket(product);
+  };
+
   return (
     <div className="product-page">
+      <Link to="/products" className="return-link btn">
+        Return to Products
+      </Link>
       <div className="retro-window">
         <div className="title-bar">
           <div className="title">Product Details</div>
@@ -27,10 +37,7 @@ const ProductPage = ({ addToBasket }) => {
           <h1 className="product-name">{product.name}</h1>
           <p className="product-price">{product.price}</p>
           <p className="product-description">{product.description}</p>
-          <button
-            onClick={() => addToBasket(product)}
-            className="bag-it-button btn"
-          >
+          <button onClick={handleAddToBasket} className="bag-it-button btn">
             Bag it
           </button>
         </div>

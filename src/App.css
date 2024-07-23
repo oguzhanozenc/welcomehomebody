@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=VT323&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
 
 :root {
   --color-top: #000;
@@ -53,11 +53,11 @@ body {
   letter-spacing: 1px;
   outline: none;
   text-align: center;
-  border: 2px solid #ff4c4c;
+  border: 2px solid #000;
 }
 
 .btn:hover {
-  box-shadow: 2.5px 5px #ff4c4c;
+  box-shadow: 2.5px 5px #000080;
   color: #000;
 }
 

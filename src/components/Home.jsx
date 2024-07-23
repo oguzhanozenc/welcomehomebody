@@ -5,10 +5,13 @@ import ProductList from "./ProductList";
 import RecentPosts from "./RecentPosts";
 import Contact from "./Contact";
 import { products } from "./ProductData";
+import { useBasket } from "./BasketContext";
 
-const Home = ({ addToBasket }) => {
+const Home = ({ showOrderNavbar }) => {
+  const { addToBasket } = useBasket();
+
   return (
-    <div>
+    <>
       <Header />
       <About />
       <ProductList
@@ -23,7 +26,7 @@ const Home = ({ addToBasket }) => {
       />
       <RecentPosts />
       <Contact />
-    </div>
+    </>
   );
 };
 

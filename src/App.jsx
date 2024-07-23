@@ -1,83 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 import Home from "./components/Home";
 import BlogPage from "./components/BlogPage";
 import BlogPost from "./components/BlogPost";
 import Navbar from "./components/Navbar";
-import MobileNavbar from "./components/MobileNavbar";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import ProductPage from "./components/ProductPage";
-import OrderNavbar from "./components/OrderNavbar";
-import CheckoutPage from "./components/CheckoutPage";
 import Products from "./components/Products";
+import CheckoutPage from "./components/CheckoutPage";
 import ScrollToSection from "./components/ScrollToSection";
+import { BasketProvider } from "./components/BasketContext";
 
 function App() {
-  const [basket, setBasket] = useState([]);
-  const [isOrderNavbarOpen, setOrderNavbarOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
-  const addToBasket = (product) => {
-    setBasket((prevBasket) => [...prevBasket, product]);
-    setOrderNavbarOpen(true);
-  };
-
-  const clearBasket = () => {
-    setBasket([]);
-  };
-
-  const toggleOrderNavbar = () => {
-    setOrderNavbarOpen(!isOrderNavbarOpen);
-  };
-
-  return (
-    <BrowserRouter>
-      <ScrollToSection />
-      {isMobile ? (
-        <MobileNavbar basket={basket} toggleOrderNavbar={toggleOrderNavbar} />
-      ) : (
-        <Navbar basket={basket} toggleOrderNavbar={toggleOrderNavbar} />
-      )}
-      <AppContent
-        addToBasket={addToBasket}
-        basket={basket}
-        clearBasket={clearBasket}
-        setBasket={setBasket}
-        toggleOrderNavbar={toggleOrderNavbar}
-      />
-      {basket.length > 0 && (
-        <OrderNavbar
-          basket={basket}
-          setBasket={setBasket}
-          isOpen={isOrderNavbarOpen}
-          toggleNavbar={toggleOrderNavbar}
-        />
-      )}
-    </BrowserRouter>
-  );
-}
-
-function AppContent({
-  addToBasket,
-  basket,
-  clearBasket,
-  setBasket,
-  toggleOrderNavbar,
-}) {
-  const location = useLocation();
+  const [isNavbarOpen, setNavbarOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -106,36 +43,38 @@ function AppContent({
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [location]);
+  }, []);
+
+  const toggleNavbar = () => {
+    setNavbarOpen((prev) => !prev);
+  };
 
   return (
-    <>
-      <Routes>
-        <Route path="/" element={<Home addToBasket={addToBasket} />} />
-        <Route path="blog" element={<BlogPage />} />
-        <Route path="blog/:slug" element={<BlogPost />} />
-        <Route path="contact" element={<Contact />} />
-        <Route
-          path="product/:id"
-          element={<ProductPage addToBasket={addToBasket} />}
-        />
-        <Route
-          path="products/:filter"
-          element={<Products addToBasket={addToBasket} />}
-        />
-        <Route
-          path="checkout"
-          element={
-            <CheckoutPage
-              basket={basket}
-              setBasket={setBasket}
-              clearBasket={clearBasket}
-            />
-          }
-        />
-      </Routes>
-      <Footer />
-    </>
+    <BasketProvider>
+      <BrowserRouter>
+        <ScrollToSection />
+        <Navbar isOpen={isNavbarOpen} toggleNavbar={toggleNavbar} />
+        <Routes>
+          <Route
+            path="/"
+            element={<Home showOrderNavbar={() => setNavbarOpen(true)} />}
+          />
+          <Route path="blog" element={<BlogPage />} />
+          <Route path="blog/:slug" element={<BlogPost />} />
+          <Route path="contact" element={<Contact />} />
+          <Route
+            path="product/:id"
+            element={<ProductPage showNavbar={() => setNavbarOpen(true)} />}
+          />
+          <Route
+            path="products/:filter?"
+            element={<Products showNavbar={() => setNavbarOpen(true)} />}
+          />
+          <Route path="checkout" element={<CheckoutPage />} />
+        </Routes>
+        <Footer />
+      </BrowserRouter>
+    </BasketProvider>
   );
 }
 

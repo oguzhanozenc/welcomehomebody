@@ -22,6 +22,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  color: #fff;
 }
 
 .product-list .window {
@@ -62,7 +63,9 @@
 
 .product-list .content {
   padding: 2rem;
-  background-color: var(--body-bg);
+  background-size: 40px 40px;
+  background-image: linear-gradient(to right, grey 1px, transparent 1px),
+    linear-gradient(to bottom, grey 1px, transparent 1px);
 
   color: var(--body-text-color);
 }
@@ -137,27 +140,12 @@
   gap: 0.5rem;
 }
 
-.see-all,
 .see-all-products {
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 1rem auto;
   text-align: center;
-}
-
-.see-all-btn {
-  background-color: var(--highlight-color);
-  color: var(--title-bar-text-color);
-  border: none;
-  border-radius: 0.3rem;
-  padding: 0.625rem 1.25rem;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.see-all-btn:hover {
-  background-color: #ffbd2e;
 }
 
 .filter-buttons {

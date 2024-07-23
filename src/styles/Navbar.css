@@ -1,89 +1,191 @@
 .navbar {
-  display: grid;
-  grid-template-columns: 1fr 3fr 1fr;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.5rem 0.5rem;
-  width: 100%;
   position: fixed;
-  font-style: normal;
-  z-index: 99;
-  font-size: 1.5rem;
   top: 0;
-}
-
-#navbarlogo {
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  color: #000080;
+  border-bottom: 2px solid #000080;
+  z-index: 1000;
   display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  margin-left: 2rem;
+  flex-direction: column;
+  font-family: "Press Start 2P", cursive;
 }
 
-.navbarmenu {
+.navbar-header {
   display: flex;
-  justify-content: center;
   align-items: center;
-
-  font-weight: 500;
+  justify-content: space-between;
+  padding: 1rem 1rem;
+  width: 100%;
 }
 
-.navbarmenu a {
-  padding: 0.5rem 0;
-  transition: all 300ms ease;
-  width: 50%;
-  height: 50vh;
-  margin: 2rem auto;
-  padding: 0.5rem 1rem;
-  box-shadow: -3px 0 0 0 black, 3px 0 0 0 black, 0 -3px 0 0 black,
-    0 3px 0 0 black;
-  color: #000;
-  background-color: #ff4c4c;
+.logo {
+  height: 2.5rem;
 }
 
-.navbarmenu a:hover {
-  background-color: #ffde4d;
-  color: #000;
+.menu-toggle,
+.basket-toggle {
+  background: none;
+  border: 2px solid #000080;
+  cursor: pointer;
+  border-radius: 5px;
+  padding: 0.5rem;
+  color: #000080;
 }
 
-#navbarlogo img {
-  margin-top: 0.25rem;
-  width: 10rem;
-  height: auto;
-  overflow: hidden;
-  transition: all 500ms ease;
+.menu-toggle {
+  display: none;
 }
 
-#navbarlogo:hover {
-  -webkit-filter: drop-shadow(5px 5px 10px #ffde4d);
-  filter: drop-shadow(5px 5px 10px #ffde4d);
-}
-
-.basket {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  margin-right: 2rem;
-  position: relative;
-}
-
-.basket img {
-  width: 3.5rem;
-  height: auto;
+.basket-toggle img {
+  height: 1.875rem;
 }
 
 .basket-count {
   position: absolute;
-  top: 1rem;
-  right: -1rem;
-  background: red;
-  color: white;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: #f00;
+  color: #fff;
   border-radius: 50%;
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  box-shadow: 0 0 5px #000080;
+}
+
+@media (max-width: 48rem) {
+  .menu-toggle {
+    display: block;
+  }
+
+  .basket-toggle {
+    display: none;
+  }
+
+  .nav-links {
+    display: none;
+  }
+}
+
+@media (min-width: 48rem) {
+  .menu-toggle {
+    display: none;
+  }
+
+  .basket-toggle {
+    display: block;
+  }
+}
+
+.navbar-menu {
   display: flex;
   justify-content: center;
-  align-items: center;
-  margin: 0 auto;
+  background-color: #fff;
+  padding: 0.625rem;
+  width: 100%;
+  overflow-x: auto;
+  border-bottom: 2px solid #ff00ff;
+}
+
+.navbar-menu.open {
+  display: flex;
+}
+
+.nav-link {
+  margin: 0 1rem;
+  text-decoration: none;
+  color: #000080;
   font-size: 1rem;
-  font-weight: bold;
+  text-shadow: 1px 1px 2px #ff00ff;
+}
+
+.nav-link:hover {
+  color: #000080;
+  text-shadow: 1px 1px 5px #0ff;
+  transition: all 300ms ease;
+}
+
+.basket-content {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 18.75rem;
+  height: 100vh;
+  background-color: #fff;
+  box-shadow: -0.125rem 0 0.3125rem rgba(0, 0, 128, 0.7);
+  border-left: 2px solid #000080;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+  transition: transform 0.3s ease-in-out;
+  transform: translateX(100%);
+}
+
+.basket-content.open {
+  transform: translateX(0);
+}
+
+.basket-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #000080;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.basket-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  overflow-y: auto;
+}
+
+.basket-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.9375rem;
+  border-bottom: 1px solid #000080;
+  padding-bottom: 0.5rem;
+}
+
+.basket-item-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #000080;
+}
+
+.basket-item-image {
+  width: 3.125rem;
+  height: 3.125rem;
+  object-fit: cover;
+  margin-right: 0.625rem;
+}
+
+.basket-item-details {
+  flex: 1;
+}
+
+.remove-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #f00;
+  font-size: 1rem;
+}
+
+.checkout-link {
+  margin-top: auto;
+  text-align: center;
+  text-decoration: none;
+  color: #000080;
+  font-size: 1.25rem;
+  text-shadow: 1px 1px 2px #ff00ff;
 }

@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import "../styles/CheckoutPage.css";
 import { FaTrash } from "react-icons/fa";
+import { useBasket } from "./BasketContext";
 
-const CheckoutPage = ({ basket, setBasket, clearBasket }) => {
+const CheckoutPage = () => {
   const navigate = useNavigate();
+  const { basket, clearBasket, removeFromBasket } = useBasket();
   const [showConfirmation, setShowConfirmation] = useState(false);
 
   const handleCheckout = () => {
@@ -18,10 +20,6 @@ const CheckoutPage = ({ basket, setBasket, clearBasket }) => {
 
   const handleCancel = () => {
     setShowConfirmation(false);
-  };
-
-  const removeItem = (index) => {
-    setBasket(basket.filter((_, i) => i !== index));
   };
 
   return (
@@ -47,7 +45,7 @@ const CheckoutPage = ({ basket, setBasket, clearBasket }) => {
                 </Link>
                 <button
                   className="remove-btn"
-                  onClick={() => removeItem(index)}
+                  onClick={() => removeFromBasket(index)}
                 >
                   <FaTrash />
                 </button>

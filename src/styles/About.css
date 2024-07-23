@@ -92,3 +92,13 @@
 .about-list li strong {
   color: #f00;
 }
+
+@media (max-width: 1200px) {
+  .about-section {
+    padding: 1rem;
+    margin: 10% auto;
+  }
+  .window {
+    width: 90%;
+  }
+}

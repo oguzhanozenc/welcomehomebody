@@ -1,13 +1,15 @@
 import React from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import ProductList from "./ProductList";
 import { products } from "./ProductData";
+import { useBasket } from "./BasketContext";
 
-const Products = ({ addToBasket }) => {
-  const { filter = "all" } = useParams();
+const Products = () => {
+  const { filter } = useParams();
+  const { addToBasket } = useBasket();
 
   const filteredProducts =
-    filter === "all"
+    filter === undefined || filter === "all"
       ? [...products.apparel, ...products.accessories]
       : products[filter] || [];
 
@@ -15,7 +17,7 @@ const Products = ({ addToBasket }) => {
     <div className="products-page">
       <ProductList
         title={
-          filter === "all"
+          filter === undefined || filter === "all"
             ? "All Products"
             : filter.charAt(0).toUpperCase() + filter.slice(1)
         }

@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, Link } from "react-router-dom";
 import "../styles/ProductList.css";
 
 const ProductList = ({ title, products, addToBasket }) => {
@@ -24,25 +24,13 @@ const ProductList = ({ title, products, addToBasket }) => {
         <div className="content">
           {isProductsPage && (
             <div className="filter-buttons">
-              <NavLink
-                to="/products/all"
-                className="filter-btn btn"
-                activeClassName="active"
-              >
+              <NavLink to="/products" className="filter-btn btn" end>
                 All Products
               </NavLink>
-              <NavLink
-                to="/products/apparel"
-                className="filter-btn btn"
-                activeClassName="active"
-              >
+              <NavLink to="/products/apparel" className="filter-btn btn">
                 Apparel
               </NavLink>
-              <NavLink
-                to="/products/accessories"
-                className="filter-btn btn"
-                activeClassName="active"
-              >
+              <NavLink to="/products/accessories" className="filter-btn btn">
                 Accessories
               </NavLink>
             </div>
@@ -59,15 +47,15 @@ const ProductList = ({ title, products, addToBasket }) => {
                   <h3 className="product-name">{product.name}</h3>
                   <p className="product-price">{product.price}</p>
                   <div className="productbtns">
-                    <NavLink to={`/product/${product.id}`}>
-                      <button className="btn">VIEW</button>
-                    </NavLink>
                     <button
                       className="btn"
                       onClick={() => addToBasket(product)}
                     >
-                      BAG IT
+                      Bag it
                     </button>
+                    <NavLink to={`/product/${product.id}`} className="btn">
+                      View
+                    </NavLink>
                   </div>
                 </div>
               </div>
@@ -77,9 +65,9 @@ const ProductList = ({ title, products, addToBasket }) => {
       </div>
       {!isProductsPage && (
         <div className="see-all-products">
-          <NavLink to="/products/all">
-            <button className="btn see-all-btn">See All Products</button>
-          </NavLink>
+          <Link to="/products" className="btn">
+            SEE ALL PRODUCTS
+          </Link>
         </div>
       )}
     </div>
