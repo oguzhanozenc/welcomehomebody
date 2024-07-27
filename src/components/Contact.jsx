@@ -21,71 +21,49 @@ export default function Contact() {
   };
 
   return (
-    <section className="contact-section" id="contact">
-      <h2 className="contact-title">Contact Us</h2>
-
-      <div className="contact-container arcade">
+    <section className="contact-section">
+      <div className="contact-container">
         {formSubmitted ? (
-          <div className="confirmation-message arcade">
+          <div className="confirmation-message">
             <p>Your message has been submitted successfully!</p>
-            <button onClick={() => setFormSubmitted(false)} className="arcade">
-              <RiArrowGoBackLine className="arcade-icon" /> Back to the form
+            <button
+              onClick={() => setFormSubmitted(false)}
+              className="arcade-button"
+            >
+              <RiArrowGoBackLine className="arcade-icon" /> Back to the Form
             </button>
           </div>
         ) : (
-          <div className="form-container arcade">
-            <form
-              name="contact"
-              method="POST"
-              data-netlify="true"
-              onSubmit={handleSubmit}
-            >
-              <input type="hidden" name="form-name" value="contact" />
-              <p>
-                <label htmlFor="name" className="arcade-label">
-                  Name:
-                </label>
-                <input
-                  type="text"
-                  name="name"
-                  id="name"
-                  required
-                  autoComplete="name"
-                  className="arcade-input"
-                />
-              </p>
-              <p>
-                <label htmlFor="email" className="arcade-label">
-                  Email:
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  required
-                  autoComplete="email"
-                  className="arcade-input"
-                />
-              </p>
-
-              <p>
-                <label htmlFor="message" className="arcade-label">
-                  Message:
-                </label>
-                <textarea
-                  name="message"
-                  id="message"
-                  required
-                  className="arcade-input"
-                ></textarea>
-              </p>
-              <p>
-                <button type="submit" className="btn">
-                  Submit
-                </button>
-              </p>
-            </form>
-          </div>
+          <form
+            name="contact"
+            method="POST"
+            netlify-honeypot="bot-field"
+            data-netlify="true"
+            onSubmit={handleSubmit}
+            className="contact-form"
+          >
+            <input type="hidden" name="form-name" value="contact" />
+            <p className="hidden">
+              <label>
+                Don’t fill this out if you’re human: <input name="bot-field" />
+              </label>
+            </p>
+            <label className="form-label">
+              Name:
+              <input type="text" name="name" required />
+            </label>
+            <label className="form-label">
+              Email:
+              <input type="email" name="email" required />
+            </label>
+            <label className="form-label">
+              Message:
+              <textarea name="message" required></textarea>
+            </label>
+            <button type="submit" className="arcade-button">
+              Submit
+            </button>
+          </form>
         )}
       </div>
     </section>

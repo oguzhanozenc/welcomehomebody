@@ -49,7 +49,10 @@ const Navbar = ({ isOpen, toggleNavbar }) => {
         <div className="nav-links">
           <NavLink to="/" className="nav-link" onClick={toggleNavbar}>
             HOME
-          </NavLink>
+          </NavLink>{" "}
+          <a href="#about" className="nav-link" onClick={toggleNavbar}>
+            ABOUT
+          </a>
           <NavLink
             to="/products/all"
             className="nav-link"
@@ -63,9 +66,6 @@ const Navbar = ({ isOpen, toggleNavbar }) => {
           <NavLink to="/contact" className="nav-link" onClick={toggleNavbar}>
             CONTACT
           </NavLink>
-          <a href="#about" className="nav-link" onClick={toggleNavbar}>
-            ABOUT
-          </a>
         </div>
         <button
           className="basket-toggle"

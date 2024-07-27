@@ -1,137 +1,74 @@
-@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
-
-:root {
-  --background-color: #f0f0f0;
-  --form-bg: #ffffff;
-  --border-color: #cccccc;
-  --highlight-color: #000080;
-  --text-color: #333333;
-  --button-bg: #008080;
-  --button-hover-bg: #ffbd2e;
-  --font-family: "Press Start 2P", cursive;
-}
-
 .contact-section {
-  padding: 4% 2%;
-
-  text-align: center;
-}
-
-.contact-title {
-  font-size: 2.5rem;
-  margin-bottom: 2rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1rem;
-  color: var(--highlight-color);
-  font-family: var(--font-family);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin: 10% auto;
+  font-family: "Roboto Mono", monospace;
 }
 
 .contact-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-
-.form-container,
-.confirmation-message {
-  background-color: var(--form-bg);
-  padding: 1rem;
-  border: 1px solid var(--border-color);
-  border-radius: 0.5rem;
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
-  width: 90%;
-  max-width: 40rem;
-  margin: 1rem auto;
-}
-
-.arcade-label {
-  color: var(--text-color);
-  font-size: 1.2rem;
-  margin-bottom: 0.5rem;
-  display: block;
-}
-
-.arcade-input {
+  max-width: 50rem;
   width: 100%;
-  padding: 1rem;
-  font-size: 1rem;
-  border: 1px solid var(--border-color);
-  background-color: var(--form-bg);
-  color: var(--text-color);
+  position: relative;
+  z-index: 2;
+}
+
+.arcade-button {
+  color: #fff;
+  font-family: "Press Start 2P", cursive;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.contact-form {
+  background-color: #222;
+  padding: 2rem;
   border-radius: 0.5rem;
-  margin-bottom: 1rem;
-  transition: border-color 0.3s ease;
+  color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  font-family: "Roboto Mono", monospace;
 }
 
-.arcade-input:focus {
-  outline: none;
-  border-color: var(--highlight-color);
+.form-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
 }
 
-.arcade-icon {
-  vertical-align: middle;
-  margin-right: 0.5rem;
+.form-label input,
+.form-label textarea {
+  font-size: 1rem;
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.25rem;
+  border: 1px solid #555;
+  border-radius: 5px;
+  background-color: #333;
+  font-family: "Roboto Mono", monospace;
+  color: #fff;
 }
 
-@media (max-width: 75rem) {
-  .contact-title {
-    font-size: 2.2rem;
-  }
-
-  .arcade-label {
-    font-size: 1.1rem;
-  }
-
-  .arcade-input {
-    font-size: 0.9rem;
-  }
+.form-label textarea {
+  resize: none;
+  height: 10rem;
 }
 
-@media (max-width: 62rem) {
-  .contact-title {
-    font-size: 2rem;
-  }
-
-  .arcade-label {
-    font-size: 1rem;
-  }
-
-  .arcade-input {
-    font-size: 0.8rem;
-  }
+.arcade-button {
+  background-color: #ffbd2e;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  font-family: "Press Start 2P", cursive;
+  transition: all 300ms ease;
 }
 
-@media (max-width: 48rem) {
-  .contact-title {
-    font-size: 1.8rem;
-  }
-
-  .form-container,
-  .confirmation-message {
-    width: 100%;
-    padding: 1rem;
-  }
-
-  .arcade-label {
-    font-size: 0.9rem;
-  }
-
-  .arcade-input {
-    font-size: 0.7rem;
-  }
+.arcade-button:hover {
+  background-color: #e74c3c;
 }
 
-@media (max-width: 36rem) {
-  .contact-title {
-    font-size: 1.6rem;
-  }
-
-  .arcade-label {
-    font-size: 0.8rem;
-  }
-
-  .arcade-input {
-    font-size: 0.6rem;
-  }
+.hidden {
+  display: none;
 }
