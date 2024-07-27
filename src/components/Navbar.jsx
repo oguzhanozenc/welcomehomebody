@@ -1,37 +1,65 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { NavLink, Link } from "react-router-dom";
 import "../styles/Navbar.css";
 import { FaTrash } from "react-icons/fa";
 import { GiHamburgerMenu, GiCancel } from "react-icons/gi";
 import { useBasket } from "./BasketContext";
 
-const Navbar = ({ isOpen, toggleNavbar }) => {
-  const [isBasketOpen, setBasketOpen] = React.useState(false);
+const Navbar = () => {
+  const [isNavOpen, setNavOpen] = useState(false);
+  const [isBasketOpen, setBasketOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const { basket, removeFromBasket } = useBasket();
 
+  const navRef = useRef(null);
+  const basketRef = useRef(null);
+
   const handleMenuToggle = () => {
-    toggleNavbar();
+    setNavOpen((prev) => !prev);
+    if (isBasketOpen) {
+      setBasketOpen(false);
+    }
   };
 
   const handleBasketToggle = () => {
     setBasketOpen((prev) => !prev);
+    if (isNavOpen) {
+      setNavOpen(false);
+    }
   };
 
   const closeBasket = () => {
     setBasketOpen(false);
   };
 
-  React.useEffect(() => {
+  const handleClickOutside = (event) => {
+    if (navRef.current && !navRef.current.contains(event.target)) {
+      setNavOpen(false);
+    }
+    if (basketRef.current && !basketRef.current.contains(event.target)) {
+      setBasketOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  useEffect(() => {
     if (basket.length > 0) {
       setBasketOpen(true);
     }
   }, [basket.length]);
-
-  React.useEffect(() => {
-    if (isOpen) {
-      setBasketOpen(true);
-    }
-  }, [isOpen]);
 
   return (
     <nav className="navbar">
@@ -39,31 +67,47 @@ const Navbar = ({ isOpen, toggleNavbar }) => {
         <button
           className="menu-toggle"
           onClick={handleMenuToggle}
-          aria-expanded={isOpen}
+          aria-expanded={isNavOpen}
         >
-          {isOpen ? <GiCancel size={24} /> : <GiHamburgerMenu size={24} />}
+          {isNavOpen ? <GiCancel size={24} /> : <GiHamburgerMenu size={24} />}
         </button>
         <Link to="/">
           <img src="/navbarlogo.png" alt="Logo" className="logo" />
         </Link>
-        <div className="nav-links">
-          <NavLink to="/" className="nav-link" onClick={toggleNavbar}>
+        <div ref={navRef} className={`nav-links ${isNavOpen ? "open" : ""}`}>
+          <NavLink
+            to="/"
+            className="nav-link"
+            onClick={isMobile ? handleMenuToggle : undefined}
+          >
             HOME
-          </NavLink>{" "}
-          <a href="#about" className="nav-link" onClick={toggleNavbar}>
+          </NavLink>
+          <a
+            href="#about"
+            className="nav-link"
+            onClick={isMobile ? handleMenuToggle : undefined}
+          >
             ABOUT
           </a>
           <NavLink
             to="/products/all"
             className="nav-link"
-            onClick={toggleNavbar}
+            onClick={isMobile ? handleMenuToggle : undefined}
           >
             PRODUCTS
           </NavLink>
-          <NavLink to="/blog" className="nav-link" onClick={toggleNavbar}>
+          <NavLink
+            to="/blog"
+            className="nav-link"
+            onClick={isMobile ? handleMenuToggle : undefined}
+          >
             BLOG
           </NavLink>
-          <NavLink to="/contact" className="nav-link" onClick={toggleNavbar}>
+          <NavLink
+            to="/contact"
+            className="nav-link"
+            onClick={isMobile ? handleMenuToggle : undefined}
+          >
             CONTACT
           </NavLink>
         </div>
@@ -79,7 +123,10 @@ const Navbar = ({ isOpen, toggleNavbar }) => {
         </button>
       </div>
 
-      <div className={`basket-content ${isBasketOpen ? "open" : ""}`}>
+      <div
+        ref={basketRef}
+        className={`basket-content ${isBasketOpen ? "open" : ""}`}
+      >
         <div className="basket-header">
           <h2>Basket</h2>
           <button className="close-basket" onClick={closeBasket}>

@@ -135,7 +135,7 @@
   }
 
   .basket-item {
-    flex-direction: column;
+    flex-direction: row;
     align-items: flex-start;
   }
 
@@ -165,7 +165,7 @@
   }
 
   .basket-item {
-    padding: 8px;
+    padding: 0.5rem;
   }
 
   .basket-item-image {

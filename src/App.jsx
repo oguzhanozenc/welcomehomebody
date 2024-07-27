@@ -25,7 +25,9 @@ function App() {
       const scrollPercentage = scrollTop / (documentHeight - windowHeight);
 
       let backgroundColor;
-      if (scrollPercentage <= 0.25) {
+      if (scrollPercentage <= 0.15) {
+        backgroundColor = "#000";
+      } else if (scrollPercentage <= 0.25) {
         backgroundColor = "#ffde4d";
       } else if (scrollPercentage <= 0.5) {
         backgroundColor = "#ff4c4c";

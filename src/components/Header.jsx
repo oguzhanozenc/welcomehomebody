@@ -12,7 +12,7 @@ export default function Header() {
       "./logo-semiclose.png",
       "./logo-open.png",
       "./logo.png",
-      "./city.png",
+      "./city.jpg",
     ];
 
     let loadedImages = 0;
@@ -75,7 +75,7 @@ export default function Header() {
       </div>
       {showWelcomeText && (
         <div className="welcome-text">
-          <a href="#apparel" className="btn">
+          <a href="#apparel" className="explore-btn">
             EXPLORE»
           </a>
         </div>

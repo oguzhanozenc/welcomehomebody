@@ -11,7 +11,6 @@ const ProductList = ({ title, products, addToBasket }) => {
       className={`product-list ${title.toLowerCase()}`}
       id={title.toLowerCase()}
     >
-      <h1 className="product-type section-title">{title}</h1>
       <div className="window">
         <div className="title-bar">
           {" "}
