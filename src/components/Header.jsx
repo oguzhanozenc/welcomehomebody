@@ -40,7 +40,7 @@ export default function Header() {
 
       setTimeout(() => {
         setShowWelcomeText(true);
-      }, 4500);
+      }, 3500);
 
       return () => timers.forEach(clearTimeout);
     }
