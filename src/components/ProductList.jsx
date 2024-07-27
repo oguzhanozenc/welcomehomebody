@@ -14,12 +14,13 @@ const ProductList = ({ title, products, addToBasket }) => {
       <h1 className="product-type section-title">{title}</h1>
       <div className="window">
         <div className="title-bar">
+          {" "}
+          <div className="title">{title}</div>
           <div className="buttons">
             <div className="button close"></div>
             <div className="button minimize"></div>
             <div className="button maximize"></div>
           </div>
-          <div className="title">{title}</div>
         </div>
         <div className="content">
           {isProductsPage && (

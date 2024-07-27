@@ -2,7 +2,7 @@
 
 .about-section {
   color: #fff;
-  font-family: "Press Start 2P", cursive;
+  font-family: Roboto Mono, monospace;
   padding: 10% 5%;
   margin: 10% auto;
 }
@@ -15,90 +15,98 @@
 }
 
 .window {
-  background: #222;
-  border: 0.25rem solid #333;
-  border-radius: 0.625rem;
+  background: #fff;
+  color: #222;
+  border: 0.125rem solid #333;
+  border-radius: 0.5rem;
   width: 80%;
-  box-shadow: 0 0 0.625rem rgba(0, 0, 0, 0.5);
   overflow: hidden;
-}
-
-.abouttitle-bar {
-  background: #444;
-  color: #fff;
-  padding: 0.625rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 0.25rem solid #333;
-}
-
-.title-bar-text {
-  font-size: 1rem;
-  font-weight: bold;
-}
-
-.title-bar-controls button {
-  background: #333;
-  border: none;
-  width: 0.75rem;
-  height: 0.75rem;
-  border-radius: 50%;
-  margin-left: 0.3125rem;
-}
-
-.title-bar-controls button:focus {
-  outline: none;
+  box-shadow: 0 0 0.625rem rgba(255, 0, 255, 0.6);
 }
 
 .window-body {
-  padding: 1.25rem;
-  line-height: 1.4;
+  padding: 1rem;
+  line-height: 1.5;
 }
 
 .about-title {
-  font-size: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.75rem;
   font-weight: bold;
-  border-bottom: 0.125rem solid #f00;
-  padding-bottom: 0.625rem;
-  margin-bottom: 1.25rem;
+  border-bottom: 2px solid #000080;
+  padding-bottom: 0.25rem;
+  margin: 0.5rem auto;
+  color: #000080;
 }
 
 .about-subtitle {
-  font-size: 1rem;
+  color: #000080;
+  font-size: 1.25rem;
   font-weight: bold;
-  margin-top: 1.25rem;
-  border-bottom: 0.125rem dashed #f00;
+  margin: 1rem 0;
+  border-bottom: 0.125rem dashed #000080;
   padding-bottom: 0.3125rem;
 }
 
 .about-text {
-  font-size: 0.85rem;
+  font-size: 1.1rem;
   margin-bottom: 0.625rem;
+  line-height: 1.6;
+  text-align: justify;
 }
 
 .about-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
   list-style-type: none;
   padding: 0;
 }
 
 .about-list li {
-  background: #333;
+  background: #edebeb;
   padding: 0.625rem;
+  color: #111;
+  text-align: justify;
   margin-bottom: 0.3125rem;
   border-radius: 0.3125rem;
+  font-family: "Roboto Mono", monospace;
 }
 
 .about-list li strong {
-  color: #f00;
+  color: #7f00ff;
+  padding: 0.25rem;
 }
 
 @media (max-width: 1200px) {
   .about-section {
     padding: 1rem;
-    margin: 10% auto;
+    margin: 5% auto;
   }
   .window {
     width: 90%;
   }
+}
+
+.ending-line {
+  background-color: #222;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 0.625rem rgba(255, 0, 255, 0.6);
+  border: 0.125rem solid #fff;
+  padding: 0.5rem;
+  margin: 1rem auto;
+}
+
+.ending-line p {
+  font-size: 1.5rem;
+  color: #fff;
+  text-align: center;
+  background: linear-gradient(45deg, #ff007f, #00bfff, #7f00ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0.0625rem 0.0625rem 0.3125rem #ff00ffb3,
+    0 0 1.25rem rgba(255, 0, 255, 0.5);
+  font-family: "Press Start 2P", cursive;
 }

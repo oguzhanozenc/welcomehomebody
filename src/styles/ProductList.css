@@ -1,20 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
 
-:root {
-  --background-color: #008080;
-  --window-border: 0.2rem solid #000;
-  --window-shadow: 0.2rem 0.2rem #aaa;
-  --window-bg: #c0c0c0;
-  --title-bar-bg: #000080;
-  --title-bar-text-color: #fff;
-
-  --body-bg: #fff;
-  --body-text-color: #000;
-  --body-font: "Courier New", Courier, monospace;
-  --highlight-color: #008080;
-  --subtitle-color: #000080;
-}
-
 .product-list {
   margin: 0 auto;
   padding: 5%;
@@ -28,37 +13,9 @@
 .product-list .window {
   width: 90%;
   max-width: 60rem;
-  background-color: var(--window-bg);
-  border: var(--window-border);
-  box-shadow: var(--window-shadow);
+  background-color: #c0c0c0;
+  border: 1px solid #333;
   overflow: hidden;
-}
-
-.product-list .title-bar {
-  background-color: var(--title-bar-bg);
-  color: var(--title-bar-text-color);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.5rem;
-  font-size: 1rem;
-}
-
-.product-list .title-bar .title-bar-text {
-  padding-left: 0.5rem;
-}
-
-.product-list .title-bar .title-bar-controls button {
-  width: 1rem;
-  height: 1rem;
-  margin-left: 0.2rem;
-  background-color: var(--title-bar-bg);
-  border: none;
-  color: var(--title-bar-text-color);
-}
-
-.product-list .title-bar .title-bar-controls button:hover {
-  background-color: #ff0000;
 }
 
 .product-list .content {
@@ -67,7 +24,7 @@
   background-image: linear-gradient(to right, grey 1px, transparent 1px),
     linear-gradient(to bottom, grey 1px, transparent 1px);
 
-  color: var(--body-text-color);
+  color: #000;
 }
 
 .product-list .products {
@@ -80,7 +37,7 @@
   background-color: #000;
   padding: 0.75rem;
   border-radius: 0.5rem;
-  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
+
   transition: transform 0.3s ease-in-out;
   position: relative;
 }
@@ -103,35 +60,12 @@
   font-size: 1.2rem;
   margin-bottom: 0.25rem;
 
-  color: var(--highlight-color);
+  color: #008080;
 }
 
 .product-list .product-price {
   font-size: 1rem;
   color: #555;
-}
-
-.product-list .buttons {
-  display: flex;
-  gap: 0.25rem;
-}
-
-.product-list .button {
-  width: 0.75rem;
-  height: 0.75rem;
-  border-radius: 50%;
-}
-
-.product-list .button.close {
-  background-color: #ff5f56;
-}
-
-.product-list .button.minimize {
-  background-color: #ffbd2e;
-}
-
-.product-list .button.maximize {
-  background-color: #27c93f;
 }
 
 .productbtns {
@@ -165,7 +99,7 @@
 
 .filter-btn.active {
   background-color: #ff4c4c;
-  color: var(--title-bar-text-color);
+  color: #fff;
   border: 1px solid #ff4c4c;
 }
 
@@ -174,7 +108,7 @@
 }
 
 .product-type {
-  color: var(--body-text-color);
+  color: #000;
   font-size: 2.5rem;
 }
 

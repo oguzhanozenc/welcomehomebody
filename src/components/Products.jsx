@@ -14,7 +14,7 @@ const Products = () => {
       : products[filter] || [];
 
   return (
-    <div className="products-page">
+    <div className="products-page section">
       <ProductList
         title={
           filter === undefined || filter === "all"

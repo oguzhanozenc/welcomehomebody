@@ -13,19 +13,21 @@ const Home = ({ showOrderNavbar }) => {
   return (
     <>
       <Header />
-      <About />
-      <ProductList
-        title="Apparel"
-        products={products.apparel}
-        addToBasket={addToBasket}
-      />
-      <ProductList
-        title="Accessories"
-        products={products.accessories}
-        addToBasket={addToBasket}
-      />
-      <RecentPosts />
-      <Contact />
+      <main>
+        <About />
+        <ProductList
+          title="Apparel"
+          products={products.apparel}
+          addToBasket={addToBasket}
+        />
+        <ProductList
+          title="Accessories"
+          products={products.accessories}
+          addToBasket={addToBasket}
+        />
+        <RecentPosts />
+        <Contact />
+      </main>
     </>
   );
 };
