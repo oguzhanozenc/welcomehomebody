@@ -4,20 +4,47 @@ import "../styles/Header.css";
 export default function Header() {
   const [currentImage, setCurrentImage] = useState(0);
   const [showWelcomeText, setShowWelcomeText] = useState(false);
+  const [imagesLoaded, setImagesLoaded] = useState(false);
 
   useEffect(() => {
-    const timers = [
-      setTimeout(() => setCurrentImage(1), 1500),
-      setTimeout(() => setCurrentImage(2), 3000),
-      setTimeout(() => setCurrentImage(3), 5000),
+    const imageSources = [
+      "./logo-close.png",
+      "./logo-semiclose.png",
+      "./logo-open.png",
+      "./logo.png",
+      "./city.png",
     ];
 
-    setTimeout(() => {
-      setShowWelcomeText(true);
-    }, 4500);
+    let loadedImages = 0;
+    const totalImages = imageSources.length;
 
-    return () => timers.forEach(clearTimeout);
-  }, []);
+    const checkAllImagesLoaded = () => {
+      loadedImages += 1;
+      if (loadedImages === totalImages) {
+        setImagesLoaded(true);
+      }
+    };
+
+    imageSources.forEach((src) => {
+      const img = new Image();
+      img.src = src;
+      img.onload = checkAllImagesLoaded;
+    });
+
+    if (imagesLoaded) {
+      const timers = [
+        setTimeout(() => setCurrentImage(1), 1500),
+        setTimeout(() => setCurrentImage(2), 3000),
+        setTimeout(() => setCurrentImage(3), 5000),
+      ];
+
+      setTimeout(() => {
+        setShowWelcomeText(true);
+      }, 4500);
+
+      return () => timers.forEach(clearTimeout);
+    }
+  }, [imagesLoaded]);
 
   return (
     <header className="header" id="home">
