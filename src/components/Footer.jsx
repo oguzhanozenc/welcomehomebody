@@ -1,62 +1,55 @@
 import React from "react";
 import "../styles/Footer.css";
+import { NavLink, Link } from "react-router-dom";
+import { IoLogoInstagram, IoLogoTiktok } from "react-icons/io5";
+import { FaFacebook } from "react-icons/fa";
+import { RiTwitterXLine } from "react-icons/ri";
 
 const Footer = () => {
   return (
     <footer className="footer">
-      <div className="container">
-        <div className="footer-content">
-          <div className="footer-section">
-            <h2 className="footer-heading">Explore</h2>
-            <ul className="footer-nav">
-              <li>
-                <a href="#">Home</a>
-              </li>
-              <li>
-                <a href="#">Apparel</a>
-              </li>
-              <li>
-                <a href="#">Accessories</a>
-              </li>
-              <li>
-                <a href="#">Blog</a>
-              </li>
-              <li>
-                <a href="#">Contact</a>
-              </li>
-            </ul>
+      <div className="footer-content">
+        {" "}
+        <div className="footer-section">
+          <h2 className="footer-heading">Explore</h2>
+          <div className="footer-nav">
+            <NavLink to="/">HOME</NavLink>
+            <a href="#about">ABOUT</a>
+            <NavLink to="/products/all" className="footer-nav-link">
+              PRODUCTS
+            </NavLink>
+            <NavLink to="/blog">BLOG</NavLink>
+            <NavLink to="/contact">CONTACT</NavLink>
           </div>
-          <div className="footer-section">
-            <h2 className="footer-heading">Connect</h2>
-            <ul className="footer-social">
-              <li>
-                <a href="#">
-                  <i className="fab fa-facebook">Facebook</i>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <i className="fab fa-twitter">Twitter</i>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <i className="fab fa-instagram">Instagram</i>
-                </a>
-              </li>{" "}
-              <li>
-                <a href="#">
-                  <i className="fab fa-tiktok">Tiktok</i>
-                </a>
-              </li>
-            </ul>
+        </div>{" "}
+        <div className="footer-section footer-card">
+          <div className="footer-logocontainer">
+            <img src="./navbarlogo.png" alt="" />
+          </div>
+          <div>
+            <p className="footer-slogan">Retro Arcade Magic at Your Doorstep</p>
+          </div>
+          <div className="footer-social">
+            <a href="#">
+              <FaFacebook />
+            </a>
+
+            <a href="#">
+              <RiTwitterXLine />
+            </a>
+
+            <a href="#">
+              <IoLogoInstagram />
+            </a>
+
+            <a href="#">
+              <IoLogoTiktok />
+            </a>
           </div>
         </div>
-        <div className="footer-bottom">
-          <p>
-            &copy; {new Date().getFullYear()} Homebody. All rights reserved.
-          </p>
-        </div>
+      </div>
+      <div className="footer-bottom">
+        <p>&copy; {new Date().getFullYear()} Homebody. All rights reserved.</p>
       </div>
     </footer>
   );

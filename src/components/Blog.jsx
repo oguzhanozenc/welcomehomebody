@@ -47,7 +47,7 @@ const Blog = () => {
         ))}
       </div>
       <div className="subscription">
-        <h2 className="subscription-title">Stay Updated on HomeBody Blog</h2>
+        <h2 className="subscription-title">Stay Updated on HomeBody </h2>
         <form className="subscription-form">
           <input
             type="email"
