@@ -121,7 +121,7 @@
   }
   .footer-content {
     flex-direction: row-reverse;
-    gap: 1rem;
+    gap: 2rem;
   }
   .footer-card {
     padding: 1rem;
