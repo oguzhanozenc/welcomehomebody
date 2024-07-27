@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 import Home from "./components/Home";
-import BlogPage from "./components/BlogPage";
+import Blog from "./components/Blog";
 import BlogPost from "./components/BlogPost";
 import Navbar from "./components/Navbar";
 import Contact from "./components/Contact";
@@ -59,7 +59,7 @@ function App() {
             path="/"
             element={<Home showOrderNavbar={() => setNavbarOpen(true)} />}
           />
-          <Route path="blog" element={<BlogPage />} />
+          <Route path="blog" element={<Blog />} />
           <Route path="blog/:slug" element={<BlogPost />} />
           <Route path="contact" element={<Contact />} />
           <Route

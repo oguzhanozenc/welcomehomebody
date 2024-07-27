@@ -14,15 +14,6 @@
   width: 100%;
 }
 
-.window {
-  background: #fff;
-  color: #222;
-  border: 0.125rem solid #333;
-  border-radius: 0.5rem;
-  width: 80%;
-  overflow: hidden;
-}
-
 .window-body {
   padding: 1rem;
   line-height: 1.5;
@@ -65,7 +56,7 @@
 }
 
 .about-list li {
-  background: #edebeb;
+  background: rgba(255, 255, 255, 0.9);
   padding: 0.625rem;
   color: #111;
   text-align: justify;
@@ -88,7 +79,6 @@
     width: 90%;
   }
 }
-
 .ending-line {
   background-color: #222;
   border-radius: 0.5rem;
@@ -103,6 +93,7 @@
   color: #fff;
   text-align: center;
   background: linear-gradient(45deg, #ff007f, #00bfff, #7f00ff);
+  background-size: 300% 300%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-shadow: 0.5px 0.5px 2px #ff00ffb3, 0 0 10px rgba(255, 0, 255, 0.3);
@@ -110,4 +101,32 @@
   letter-spacing: 0.05em;
   line-height: 1.2;
   padding: 0.5rem;
+  transition: text-shadow 0.3s ease;
+}
+
+.ending-line p:hover {
+  animation: gradient-move 3s ease infinite, blink 1s ease-in-out infinite;
+}
+
+@keyframes gradient-move {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    text-shadow: 0.5px 0.5px 2px #ff00ffb3, 0 0 10px rgba(255, 0, 255, 0.3);
+  }
+  50% {
+    text-shadow: 0.5px 0.5px 2px rgba(255, 0, 255, 0.1),
+      0 0 10px rgba(255, 0, 255, 0.1);
+  }
 }

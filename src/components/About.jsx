@@ -1,5 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "../styles/About.css";
+import { TbHandClick } from "react-icons/tb";
 
 const About = () => {
   return (
@@ -60,12 +62,14 @@ const About = () => {
               today.
             </p>
             <div className="ending-line">
-              <p className="about-text ">
-                <strong>
-                  THANK YOU FOR VISITING HOMEBODY. LET'S MAKE EVERY DAY A BIT
-                  MORE RETRO!
-                </strong>
-              </p>
+              <Link to="/products">
+                <p className="about-text ">
+                  <strong>
+                    THANK YOU FOR VISITING HOMEBODY. LET'S MAKE EVERY DAY A BIT
+                    MORE RETRO! <TbHandClick />
+                  </strong>
+                </p>
+              </Link>
             </div>
           </div>
         </div>

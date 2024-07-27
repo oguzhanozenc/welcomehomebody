@@ -8,14 +8,14 @@ const RecentPosts = () => {
     <div className="recent-posts" id="blog">
       <div className="window">
         <div className="title-bar">
-          <div className="title">About Homebody</div>
+          <div className="title">Latest Posts from HomeBody Blog</div>
           <div className="buttons">
             <div className="button close"></div>
             <div className="button minimize"></div>
             <div className="button maximize"></div>
           </div>
         </div>
-        <h2 className="section-title">Latest Posts from HomeBody Blog</h2>
+
         <div className="posts-container">
           {BlogData.map((post) => (
             <Link to={`/blog/${post.slug}`} key={post.id} className="post-link">
