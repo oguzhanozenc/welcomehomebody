@@ -33,9 +33,9 @@ export default function Header() {
 
     if (imagesLoaded) {
       const timers = [
-        setTimeout(() => setCurrentImage(1), 1500),
-        setTimeout(() => setCurrentImage(2), 3000),
-        setTimeout(() => setCurrentImage(3), 5000),
+        setTimeout(() => setCurrentImage(1), 1000),
+        setTimeout(() => setCurrentImage(2), 2000),
+        setTimeout(() => setCurrentImage(3), 3000),
       ];
 
       setTimeout(() => {
