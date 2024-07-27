@@ -13,10 +13,10 @@ const BlogPost = () => {
 
   return (
     <div className="blog-post">
-      <h1 className="post-title">{post.title}</h1>
-      <img src={post.image} alt={post.title} className="post-image" />
+      <h1 className="blogpost-post-title">{post.title}</h1>
+      <img src={post.image} alt={post.title} className="blogpost-post-image" />
       <div
-        className="post-content"
+        className="blogpost-post-content"
         dangerouslySetInnerHTML={{ __html: post.content }}
       />
     </div>

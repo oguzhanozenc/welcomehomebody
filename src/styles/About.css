@@ -21,7 +21,6 @@
   border-radius: 0.5rem;
   width: 80%;
   overflow: hidden;
-  box-shadow: 0 0 0.625rem rgba(255, 0, 255, 0.6);
 }
 
 .window-body {
@@ -94,7 +93,7 @@
   background-color: #222;
   border-radius: 0.5rem;
   box-shadow: 0 0 0.625rem rgba(255, 0, 255, 0.6);
-  border: 0.125rem solid #fff;
+  border: 0.125rem solid #222;
   padding: 0.5rem;
   margin: 1rem auto;
 }
@@ -106,7 +105,9 @@
   background: linear-gradient(45deg, #ff007f, #00bfff, #7f00ff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0.0625rem 0.0625rem 0.3125rem #ff00ffb3,
-    0 0 1.25rem rgba(255, 0, 255, 0.5);
+  text-shadow: 0.5px 0.5px 2px #ff00ffb3, 0 0 10px rgba(255, 0, 255, 0.3);
   font-family: "Press Start 2P", cursive;
+  letter-spacing: 0.05em;
+  line-height: 1.2;
+  padding: 0.5rem;
 }
