@@ -8,11 +8,11 @@ export default function Header() {
 
   useEffect(() => {
     const imageSources = [
-      "./logo-close.png",
-      "./logo-semiclose.png",
-      "./logo-open.png",
-      "./logo.png",
-      "./city.jpg",
+      "./logo-close.webp",
+      "./logo-semiclose.webp",
+      "./logo-open.webp",
+      "./logo.webp",
+      "./city.webp",
     ];
 
     let loadedImages = 0;
@@ -50,22 +50,22 @@ export default function Header() {
     <header className="header" id="home">
       <div className="header-container">
         <img
-          src="./logo-close.png"
+          src="./logo-close.webp"
           alt="Logo Close"
           className={`image ${currentImage === 0 ? "visible" : "hidden"}`}
         />
         <img
-          src="./logo-semiclose.png"
+          src="./logo-semiclose.webp"
           alt="Logo Semi Close"
           className={`image ${currentImage === 1 ? "visible" : "hidden"}`}
         />
         <img
-          src="./logo-open.png"
+          src="./logo-open.webp"
           alt="Logo Open"
           className={`image ${currentImage === 2 ? "visible" : "hidden"}`}
         />
         <img
-          src="./logo.png"
+          src="./logo.webp"
           alt="Logo Final"
           className={`image ${
             currentImage === 3 ? "falling visible" : "hidden"

@@ -1,7 +1,7 @@
 .header {
   position: relative;
   width: 100%;
-  height: 100vh;
+  height: 100dvh;
   overflow: hidden;
   display: flex;
   justify-content: center;
@@ -57,7 +57,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: url("./city.jpg");
+  background: url("./city.webp");
   z-index: -1;
   background-size: cover;
   background-position: center;
@@ -147,17 +147,8 @@
 }
 
 @media (max-width: 768px) {
-  .header {
-    height: 80vh;
-  }
-
   .header img {
-    width: 15rem;
-    top: 15%;
-  }
-
-  .welcome-text {
-    bottom: 5%;
+    width: 20rem;
   }
 
   .welcome-text .btn {
@@ -167,18 +158,14 @@
 
 @media (max-width: 576px) {
   .header {
-    height: 60vh;
+    height: 95dvh;
   }
-
   .header img {
-    width: 12rem;
-    top: 10%;
+    width: 16rem;
   }
-
   .welcome-text {
-    bottom: 3%;
+    bottom: 20%;
   }
-
   .welcome-text .btn {
     padding: 0.5rem 0.8rem;
   }
