@@ -39,6 +39,22 @@
   animation: fallAnimation 3s ease-in-out forwards;
 }
 
+.header img.visible:hover {
+  animation: flash 3s alternate infinite;
+  transition: all 300ms ease;
+  cursor: url("/pointer.png"), auto;
+}
+
+@keyframes flash {
+  0%,
+  100% {
+    filter: hue-rotate(0deg);
+  }
+  50% {
+    filter: hue-rotate(360deg);
+  }
+}
+
 @keyframes fallAnimation {
   0% {
     transform: translateY(-100%) translateX(-50%);

@@ -4,27 +4,16 @@ import About from "./About";
 import ProductList from "./ProductList";
 import RecentPosts from "./RecentPosts";
 import Contact from "./Contact";
-import { products } from "./ProductData";
-import { useBasket } from "./BasketContext";
 
-const Home = ({ showOrderNavbar }) => {
-  const { addToBasket } = useBasket();
-
+const Home = () => {
   return (
     <>
       <Header />
       <main>
         <About />
-        <ProductList
-          title="Apparel"
-          products={products.apparel}
-          addToBasket={addToBasket}
-        />
-        <ProductList
-          title="Accessories"
-          products={products.accessories}
-          addToBasket={addToBasket}
-        />
+
+        <ProductList />
+
         <RecentPosts />
         <Contact />
       </main>

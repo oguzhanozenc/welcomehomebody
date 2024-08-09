@@ -1,12 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { Provider } from "react-redux";
+import store from "./store/store.js";
 import App from "./App";
-import { BasketProvider } from "./components/BasketContext";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <BasketProvider>
+    <Provider store={store}>
       <App />
-    </BasketProvider>
+    </Provider>
   </React.StrictMode>
 );
