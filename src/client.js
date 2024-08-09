@@ -1,8 +1,8 @@
 import Client from "shopify-buy";
 
 const client = Client.buildClient({
-  domain: process.env.SHOPIFY_DOMAIN,
-  storefrontAccessToken: process.env.SHOPIFY_ACCESS_TOKEN,
+  domain: import.meta.env.VITE_SHOPIFY_DOMAIN,
+  storefrontAccessToken: import.meta.env.VITE_SHOPIFY_ACCESS_TOKEN,
 });
 
 export default client;
