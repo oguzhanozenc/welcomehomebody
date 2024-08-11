@@ -1,37 +1,29 @@
 @import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
 
 .product-list {
-  margin: 0 auto;
-  padding: 5%;
+  margin: 10% auto;
+  padding: 10 2.5%;
   display: flex;
   flex-direction: column;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   color: #fff;
-}
-
-.product-list .window {
-  width: 90%;
-  max-width: 60rem;
-  background-color: #c0c0c0;
-  border: 1px solid #333;
-  overflow: hidden;
+  width: 80%;
 }
 
 .product-list .content {
   padding: 2rem;
-  background-size: 40px 40px;
-  background-image: linear-gradient(to right, grey 1px, transparent 1px),
-    linear-gradient(to bottom, grey 1px, transparent 1px);
-
-  color: #000;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
 }
 
 .product-list .products {
-  display: grid;
   display: flex;
   flex-wrap: wrap;
-
   justify-content: center;
   align-items: stretch;
   margin: 0 auto;
@@ -47,8 +39,8 @@
   width: 12rem;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-between;
+  align-items: stretch;
 }
 
 .product-list .product:hover {
@@ -57,7 +49,7 @@
 
 .product-list .product-image {
   width: 100%;
-  height: auto;
+  aspect-ratio: 1/1;
   border-radius: 0.5rem;
 }
 

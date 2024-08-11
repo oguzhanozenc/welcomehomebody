@@ -4,11 +4,12 @@ import Home from "./components/Home";
 import Blog from "./components/Blog";
 import BlogPost from "./components/BlogPost";
 import ProductList from "./components/ProductList";
+import ProductPage from "./components/ProductPage";
 import Navbar from "./components/Navbar";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
-import "./App.css";
 import ScrollToSection from "./components/ScrollToSection";
+import "./App.css";
 
 function App() {
   const [isNavbarOpen, setNavbarOpen] = useState(false);
@@ -58,7 +59,10 @@ function App() {
         <Route path="blog/:slug" element={<BlogPost />} />
         <Route path="contact" element={<Contact />} />
         <Route path="products" element={<ProductList />} />
+        <Route path="products/:id" element={<ProductPage />} />
+        <Route path="*" element={<Home />} />
       </Routes>
+
       <Footer />
     </BrowserRouter>
   );

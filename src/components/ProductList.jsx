@@ -1,16 +1,29 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { fetchProducts } from "../actions/productActions";
-import { NavLink, useLocation, Link } from "react-router-dom";
+import { fetchProducts, fetchCategories } from "../actions/productActions";
+import { NavLink, useParams } from "react-router-dom";
 import "../styles/ProductList.css";
 
-const ProductList = ({ dispatch, loading, products, error }) => {
-  const location = useLocation();
-  const isProductsPage = location.pathname.startsWith("/products");
+const ProductList = ({ dispatch, loading, products, categories, error }) => {
+  const { category } = useParams();
+  const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(() => {
     dispatch(fetchProducts());
+    dispatch(fetchCategories()); // Fetch categories when component mounts
   }, [dispatch]);
+
+  useEffect(() => {
+    if (products.length > 0) {
+      if (category) {
+        setFilteredProducts(
+          products.filter((product) => product.category === category)
+        );
+      } else {
+        setFilteredProducts(products);
+      }
+    }
+  }, [products, category]);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error! {error.message}</div>;
@@ -26,62 +39,62 @@ const ProductList = ({ dispatch, loading, products, error }) => {
             <div className="button maximize"></div>
           </div>
         </div>
-      </div>
-      <div className="content">
-        {isProductsPage && (
+        <div className="content">
           <div className="filter-buttons">
             <NavLink to="/products" className="filter-btn btn" end>
               All Products
             </NavLink>
-            <NavLink to="/products/apparel" className="filter-btn btn">
-              Apparel
-            </NavLink>
-            <NavLink to="/products/accessories" className="filter-btn btn">
-              Accessories
-            </NavLink>
+            {categories.map((category) => (
+              <NavLink
+                key={category.id}
+                to={`/products/${category.handle}`}
+                className="filter-btn btn"
+              >
+                {category.title}
+              </NavLink>
+            ))}
           </div>
-        )}
-        <div className="products">
-          {products.map((product) => (
-            <div className="product" key={product.id}>
-              {product.image && (
-                <img
-                  src={product.image}
-                  alt={product.title}
-                  className="product-image"
-                  style={{ maxWidth: "200px", height: "auto" }}
-                />
-              )}
-              <div className="product-details">
-                <h3 className="product-name">{product.title}</h3>
-                <p className="product-price">
-                  {typeof product.price === "object" &&
-                  product.price.currencyCode === "USD"
-                    ? `${product.price.amount} ${product.price.currencyCode}`
-                    : typeof product.price === "object"
-                    ? `${product.price.amount} USD`
-                    : `${product.price} USD`}
-                </p>
-                <div className="productbtns">
-                  <button className="btn" onClick={() => addToBasket(product)}>
-                    Bag it
-                  </button>
-                  <NavLink to={`/product/${product.id}`} className="btn">
-                    View
-                  </NavLink>
+
+          <div className="products">
+            {filteredProducts.map((product) => (
+              <div className="product" key={product.id}>
+                {product.image && (
+                  <img
+                    src={product.image}
+                    alt={product.title}
+                    className="product-image"
+                  />
+                )}
+                <div className="product-details">
+                  <h3 className="product-name">{product.title}</h3>
+                  <p className="product-price">
+                    {typeof product.price === "object" &&
+                    product.price.currencyCode === "USD"
+                      ? `${product.price.amount} ${product.price.currencyCode}`
+                      : typeof product.price === "object"
+                      ? `${product.price.amount} USD`
+                      : `${product.price} USD`}
+                  </p>
+                  <div className="productbtns">
+                    <button
+                      className="btn"
+                      onClick={() => addToBasket(product)}
+                    >
+                      Bag it
+                    </button>
+                    <NavLink
+                      to={`/products/${product.id.split("/").pop()}`}
+                      className="btn"
+                    >
+                      View
+                    </NavLink>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
-      {!isProductsPage && (
-        <div className="see-all-products">
-          <Link to="/products" className="btn">
-            SEE ALL PRODUCTS
-          </Link>
-        </div>
-      )}
     </div>
   );
 };
@@ -89,6 +102,7 @@ const ProductList = ({ dispatch, loading, products, error }) => {
 const mapStateToProps = (state) => ({
   loading: state.products.loading,
   products: state.products.products,
+  categories: state.products.categories,
   error: state.products.error,
 });
 
