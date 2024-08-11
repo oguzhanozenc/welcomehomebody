@@ -4,7 +4,7 @@ import Home from "./components/Home";
 import Blog from "./components/Blog";
 import BlogPost from "./components/BlogPost";
 import ProductList from "./components/ProductList";
-import ProductPage from "./components/ProductPage";
+import ProductDetails from "./components/ProductDetails";
 import Navbar from "./components/Navbar";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
@@ -59,7 +59,7 @@ function App() {
         <Route path="blog/:slug" element={<BlogPost />} />
         <Route path="contact" element={<Contact />} />
         <Route path="products" element={<ProductList />}>
-          <Route path="gid://shopify/Product/:id" element={<ProductPage />} />
+          <Route path=":id" element={<ProductDetails />} />
         </Route>
         <Route path="*" element={<Home />} />
       </Routes>

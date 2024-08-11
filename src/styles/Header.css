@@ -18,20 +18,22 @@
   position: absolute;
   top: 20%;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-50%) translateZ(-2000px) scale(0.1);
   width: 25rem;
   height: auto;
   object-fit: cover;
   opacity: 0;
-  transition: opacity 0.2s ease-in-out;
+  transition: opacity 1s ease-in-out, transform 2s ease-in-out;
 }
 
 .header img.visible {
   opacity: 1;
+  transform: translateX(-50%) translateZ(0) scale(1);
 }
 
 .header img.hidden {
   opacity: 0;
+  transform: translateX(-50%) translateZ(-2000px) scale(0.1);
 }
 
 .header img.falling {
@@ -39,31 +41,17 @@
   animation: fallAnimation 3s ease-in-out forwards;
 }
 
-.header img.visible:hover {
-  animation: flash 3s alternate infinite;
-  transition: all 300ms ease;
-  cursor: url("/pointer.png"), auto;
-}
-
-@keyframes flash {
-  0%,
-  100% {
-    filter: hue-rotate(0deg);
-  }
-  50% {
-    filter: hue-rotate(360deg);
-  }
-}
-
 @keyframes fallAnimation {
   0% {
-    transform: translateY(-100%) translateX(-50%);
+    transform: translateY(-100%) translateX(-50%) translateZ(-2000px) scale(0.1);
+    opacity: 0;
   }
   80% {
-    transform: translateY(10%) translateX(-50%);
+    transform: translateY(10%) translateX(-50%) translateZ(100px) scale(1.1);
+    opacity: 1;
   }
   100% {
-    transform: translateY(0%) translateX(-50%);
+    transform: translateY(0%) translateX(-50%) translateZ(0) scale(1);
   }
 }
 
@@ -111,7 +99,6 @@
 
 .welcome-text:hover {
   border-color: #7f00ff;
-
   transition: all 300ms ease;
 }
 
