@@ -1,16 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { fetchProducts, fetchCategories } from "../actions/productActions";
 import { NavLink, useParams } from "react-router-dom";
+import {
+  fetchProducts,
+  fetchCategories,
+  fetchProductById,
+} from "../actions/productActions";
 import "../styles/ProductList.css";
 
-const ProductList = ({ dispatch, loading, products, categories, error }) => {
-  const { category } = useParams();
+const ProductList = ({
+  dispatch,
+  loading,
+  products,
+  categories,
+  error,
+  product,
+}) => {
+  const { category, id } = useParams();
   const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(() => {
     dispatch(fetchProducts());
-    dispatch(fetchCategories()); // Fetch categories when component mounts
+    dispatch(fetchCategories());
   }, [dispatch]);
 
   useEffect(() => {
@@ -25,6 +36,12 @@ const ProductList = ({ dispatch, loading, products, categories, error }) => {
     }
   }, [products, category]);
 
+  useEffect(() => {
+    if (id) {
+      dispatch(fetchProductById(id));
+    }
+  }, [dispatch, id]);
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error! {error.message}</div>;
 
@@ -32,7 +49,7 @@ const ProductList = ({ dispatch, loading, products, categories, error }) => {
     <div className="product-list">
       <div className="window">
         <div className="title-bar">
-          <div className="title">Product List</div>
+          <div className="title">{id ? product?.title : "Product List"}</div>
           <div className="buttons">
             <div className="button close"></div>
             <div className="button minimize"></div>
@@ -40,59 +57,84 @@ const ProductList = ({ dispatch, loading, products, categories, error }) => {
           </div>
         </div>
         <div className="content">
-          <div className="filter-buttons">
-            <NavLink to="/products" className="filter-btn btn" end>
-              All Products
-            </NavLink>
-            {categories.map((category) => (
-              <NavLink
-                key={category.id}
-                to={`/products/${category.handle}`}
-                className="filter-btn btn"
-              >
-                {category.title}
-              </NavLink>
-            ))}
-          </div>
-
-          <div className="products">
-            {filteredProducts.map((product) => (
-              <div className="product" key={product.id}>
-                {product.image && (
-                  <img
-                    src={product.image}
-                    alt={product.title}
-                    className="product-image"
-                  />
-                )}
-                <div className="product-details">
-                  <h3 className="product-name">{product.title}</h3>
-                  <p className="product-price">
-                    {typeof product.price === "object" &&
-                    product.price.currencyCode === "USD"
-                      ? `${product.price.amount} ${product.price.currencyCode}`
-                      : typeof product.price === "object"
-                      ? `${product.price.amount} USD`
-                      : `${product.price} USD`}
-                  </p>
-                  <div className="productbtns">
-                    <button
-                      className="btn"
-                      onClick={() => addToBasket(product)}
-                    >
-                      Bag it
-                    </button>
-                    <NavLink
-                      to={`/products/${product.id.split("/").pop()}`}
-                      className="btn"
-                    >
-                      View
-                    </NavLink>
-                  </div>
-                </div>
+          {id ? (
+            <div className="product-details">
+              {product?.image && (
+                <img
+                  src={product.image}
+                  alt={product.title}
+                  className="product-image"
+                />
+              )}
+              <h3 className="product-name">{product?.title}</h3>
+              <p className="product-price">
+                {typeof product?.price === "object" &&
+                product?.price.currencyCode === "USD"
+                  ? `${product.price.amount} ${product.price.currencyCode}`
+                  : typeof product?.price === "object"
+                  ? `${product.price.amount} USD`
+                  : `${product?.price} USD`}
+              </p>
+              <p className="product-description">{product?.description}</p>
+              <div className="product-btns">
+                <button className="btn">Bag it</button>
+                <NavLink to="/products" className="btn">
+                  Back to Products
+                </NavLink>
               </div>
-            ))}
-          </div>
+            </div>
+          ) : (
+            <>
+              <div className="filter-buttons">
+                <NavLink to="/products" className="filter-btn btn" end>
+                  All Products
+                </NavLink>
+                {categories.map((category) => (
+                  <NavLink
+                    key={category.id}
+                    to={`/products/${category.handle}`}
+                    className="filter-btn btn"
+                  >
+                    {category.title}
+                  </NavLink>
+                ))}
+              </div>
+
+              <div className="products">
+                {filteredProducts.map((product) => (
+                  <div className="product" key={product.id}>
+                    {product.image && (
+                      <img
+                        src={product.image}
+                        alt={product.title}
+                        className="product-image"
+                      />
+                    )}
+                    <div className="product-details">
+                      <h3 className="product-name">{product.title}</h3>
+                      <p className="product-price">
+                        {typeof product.price === "object" &&
+                        product.price.currencyCode === "USD"
+                          ? `${product.price.amount} ${product.price.currencyCode}`
+                          : typeof product.price === "object"
+                          ? `${product.price.amount} USD`
+                          : `${product.price} USD`}
+                      </p>
+                      <div className="productbtns">
+                        <NavLink
+                          to={`/products/${product.id}`}
+                          className="btn"
+                          onClick={() => console.log(product.id)}
+                        >
+                          View
+                        </NavLink>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>
@@ -104,6 +146,7 @@ const mapStateToProps = (state) => ({
   products: state.products.products,
   categories: state.products.categories,
   error: state.products.error,
+  product: state.products.product,
 });
 
 export default connect(mapStateToProps)(ProductList);

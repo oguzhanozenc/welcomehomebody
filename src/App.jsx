@@ -58,11 +58,11 @@ function App() {
         <Route path="blog" element={<Blog />} />
         <Route path="blog/:slug" element={<BlogPost />} />
         <Route path="contact" element={<Contact />} />
-        <Route path="products" element={<ProductList />} />
-        <Route path="products/:id" element={<ProductPage />} />
+        <Route path="products" element={<ProductList />}>
+          <Route path="gid://shopify/Product/:id" element={<ProductPage />} />
+        </Route>
         <Route path="*" element={<Home />} />
       </Routes>
-
       <Footer />
     </BrowserRouter>
   );

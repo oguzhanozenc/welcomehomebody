@@ -1,51 +1,55 @@
-import React, { useEffect } from "react";
-import { connect } from "react-redux";
-import { fetchProductById } from "../actions/productActions";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import "../styles/ProductPage.css";
 
-const ProductPage = ({ dispatch, loading, product, error }) => {
+const ProductPage = () => {
   const { id } = useParams();
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    dispatch(fetchProductById(id));
-  }, [dispatch, id]);
+    const numericId = id.split("/").pop();
+
+    const fetchProduct = async () => {
+      try {
+        const response = await fetch(`/api/products/${numericId}`);
+        if (!response.ok) throw new Error("Product not found");
+        const data = await response.json();
+        setProduct(data);
+      } catch (error) {
+        setError(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProduct();
+  }, [id]);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error! {error.message}</div>;
 
-  // Add a check to ensure product is not null or undefined
-  if (!product) return <div>Product not found.</div>;
-
   return (
     <div className="product-page">
-      <div className="product-details">
-        {product.image && (
-          <img
-            src={product.image}
-            alt={product.title}
-            className="product-image"
-          />
-        )}
-        <h3 className="product-name">{product.title}</h3>
-        <p className="product-price">
-          {typeof product.price === "object" &&
-          product.price.currencyCode === "USD"
-            ? `${product.price.amount} ${product.price.currencyCode}`
-            : typeof product.price === "object"
-            ? `${product.price.amount} USD`
-            : `${product.price} USD`}
-        </p>
-        <p className="product-description">{product.description}</p>
-      </div>
+      {product ? (
+        <div className="product-details">
+          {product.image && (
+            <img
+              src={product.image}
+              alt={product.title}
+              className="product-image"
+            />
+          )}
+          <h3 className="product-name">{product.title}</h3>
+          <p className="product-price">{product.price}</p>
+          <p className="product-description">{product.description}</p>
+          <button className="btn">Add to Cart</button>
+        </div>
+      ) : (
+        <div>Product not found.</div>
+      )}
     </div>
   );
 };
 
-const mapStateToProps = (state) => ({
-  loading: state.products.loading,
-  product: state.products.product,
-  error: state.products.error,
-});
-
-export default connect(mapStateToProps)(ProductPage);
+export default ProductPage;

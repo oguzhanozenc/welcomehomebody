@@ -3,6 +3,7 @@ import client from "../client";
 export const FETCH_PRODUCTS_BEGIN = "FETCH_PRODUCTS_BEGIN";
 export const FETCH_PRODUCTS_SUCCESS = "FETCH_PRODUCTS_SUCCESS";
 export const FETCH_PRODUCTS_FAILURE = "FETCH_PRODUCTS_FAILURE";
+
 export const FETCH_PRODUCT_BY_ID_BEGIN = "FETCH_PRODUCT_BY_ID_BEGIN";
 export const FETCH_PRODUCT_BY_ID_SUCCESS = "FETCH_PRODUCT_BY_ID_SUCCESS";
 export const FETCH_PRODUCT_BY_ID_FAILURE = "FETCH_PRODUCT_BY_ID_FAILURE";
@@ -41,7 +42,6 @@ export const fetchProductById = (id) => {
         price: product.variants[0].price,
         image: product.images[0]?.src,
         description: product.description,
-        category: product.category,
       };
       dispatch({
         type: FETCH_PRODUCT_BY_ID_SUCCESS,
@@ -58,9 +58,6 @@ export const fetchCategories = () => {
     dispatch({ type: FETCH_CATEGORIES_BEGIN });
     try {
       const collections = await client.collection.fetchAll();
-
-      console.log(collections);
-
       const formattedCollections = collections.map((collection) => ({
         id: collection.id,
         title: collection.title,
