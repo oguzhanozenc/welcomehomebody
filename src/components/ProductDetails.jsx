@@ -1,56 +1,190 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import client from "../client"; // Ensure client is properly imported
+import { React, useState, useRef } from "react";
+import { useLocation } from "react-router-dom";
+import "../styles/ProductDetails.css";
+import { motion } from "framer-motion";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { GrPrevious, GrNext } from "react-icons/gr";
 
 const ProductDetails = () => {
-  const { id } = useParams();
-  const [product, setProduct] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalImage, setModalImage] = useState("");
+  const slider = useRef(null);
 
-  console.log("ProductDetails component rendered"); // Basic log to verify rendering
+  const settings = {
+    dots: false,
+    arrows: false,
+    infinite: true,
+    slidesToShow: 2,
+    slidesToScroll: 1,
+    afterChange: (current) => setCurrentSlide(current),
+  };
 
-  useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        console.log("Fetching product with ID:", id); // Log the ID being fetched
-        const response = await client.product.fetchById(id);
-        console.log("Product fetched:", response); // Log the response from API
-        setProduct(response);
-        setLoading(false);
-      } catch (err) {
-        console.error("Error fetching product:", err); // Log the error
-        setError(err);
-        setLoading(false);
-      }
-    };
+  const handlePrev = () => {
+    slider.current.slickPrev();
+  };
 
-    fetchProduct();
-  }, [id]);
+  const handleNext = () => {
+    slider.current.slickNext();
+  };
 
-  if (loading) {
-    console.log("Loading product details..."); // Log when loading
-    return <div>Loading...</div>;
-  }
+  const handleSlideClick = (index) => {
+    slider.current.slickGoTo(index);
+    setCurrentSlide(index);
+    if (product.images[index]) {
+      setModalImage(product.images[index]);
+      setIsModalOpen(true);
+    }
+  };
 
-  if (error) {
-    console.error("Error occurred:", error); // Log the error
-    return <div>Error! {error.message}</div>;
-  }
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setModalImage("");
+  };
 
-  if (!product) {
-    console.log("No product found"); // Log when no product is found
-    return <div>No product found</div>;
-  }
+  const handleClickOutside = (e) => {
+    if (e.target.classList.contains("modal-overlay")) {
+      closeModal();
+    }
+  };
 
-  console.log("Product details:", product); // Log product details before rendering
+  const location = useLocation();
+  const product = location.state?.product;
+
+  const hasMultipleImages = product.images && product.images.length > 1;
 
   return (
-    <div>
-      <h1>{product.title}</h1>
-      <img src={product.image} alt={product.title} />
-      <p>{product.description}</p>
-      <p>{product.price}</p>
+    <div className="product-details-container">
+      <div className="product-page">
+        <div className="window retro-window">
+          <div className="title-bar">
+            <div className="title">{product.title}</div>
+            <div className="buttons">
+              <div className="button close"></div>
+              <div className="button minimize"></div>
+              <div className="button maximize"></div>
+            </div>
+          </div>
+          <div className="content">
+            <div className="product-details">
+              {product.images && product.images.length > 0 && (
+                <>
+                  {hasMultipleImages ? (
+                    <div className="slider-container">
+                      <button
+                        className="slider-button prev"
+                        onClick={handlePrev}
+                      >
+                        <GrPrevious />
+                      </button>
+                      <Slider ref={slider} {...settings}>
+                        {product.images.map((img, index) => (
+                          <motion.div
+                            key={index}
+                            className="productimg-unit"
+                            onClick={() => handleSlideClick(index)}
+                            style={{
+                              filter:
+                                index === currentSlide ? "none" : "blur(4px)",
+                              opacity: index === currentSlide ? 1 : 0.5,
+                              transform:
+                                index === currentSlide
+                                  ? "scale(1.05)"
+                                  : "scale(1)",
+                              zIndex: index === currentSlide ? 1 : 0,
+                              transition:
+                                "filter 0.5s, opacity 0.5s, transform 0.5s",
+                            }}
+                            animate={{
+                              opacity: index === currentSlide ? 1 : 0.5,
+                              scale: index === currentSlide ? 1.05 : 1,
+                            }}
+                            transition={{ duration: 0.5 }}
+                            whileHover={{ scale: 1.1 }}
+                          >
+                            <img
+                              src={img}
+                              alt={`${product.title} image ${index + 1}`}
+                              className="product-image"
+                            />
+                          </motion.div>
+                        ))}
+                      </Slider>
+                      <button
+                        className="slider-button next"
+                        onClick={handleNext}
+                      >
+                        <GrNext />
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="single-image-container">
+                      <img
+                        src={product.images[0]}
+                        alt={`${product.title} image`}
+                        className="product-image"
+                        onClick={() => {
+                          setModalImage(product.images[0]);
+                          setIsModalOpen(true);
+                        }}
+                      />
+                    </div>
+                  )}
+                  {hasMultipleImages && (
+                    <div className="thumbnail-preview">
+                      {product.images.map((img, index) => (
+                        <img
+                          key={index}
+                          src={img}
+                          alt={`Thumbnail ${index + 1}`}
+                          className={`thumbnail ${
+                            index === currentSlide ? "active" : ""
+                          }`}
+                          onClick={() => handleSlideClick(index)}
+                        />
+                      ))}
+                    </div>
+                  )}
+                </>
+              )}
+              {product.videos && product.videos.length > 0 && (
+                <div className="product-videos">
+                  {product.videos.map((video, index) => (
+                    <video
+                      key={index}
+                      controls
+                      src={video}
+                      className="product-video"
+                    />
+                  ))}
+                </div>
+              )}
+              <div className="product-info">
+                <p className="product-description">{product.description}</p>
+                <p className="product-price">
+                  {typeof product.price === "object" &&
+                  product.price.currencyCode === "USD"
+                    ? `${product.price.amount} ${product.price.currencyCode}`
+                    : typeof product.price === "object"
+                    ? `${product.price.amount} USD`
+                    : `${product.price} USD`}
+                </p>
+                <button className="btn">Add to Cart</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {isModalOpen && (
+        <div className="modal-overlay" onClick={handleClickOutside}>
+          <div className="modal-content">
+            <img src={modalImage} alt="Enlarged view" className="modal-image" />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

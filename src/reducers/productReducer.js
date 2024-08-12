@@ -2,14 +2,15 @@ import {
   FETCH_PRODUCTS_BEGIN,
   FETCH_PRODUCTS_SUCCESS,
   FETCH_PRODUCTS_FAILURE,
-  FETCH_CATEGORIES_BEGIN,
-  FETCH_CATEGORIES_SUCCESS,
-  FETCH_CATEGORIES_FAILURE,
 } from "../actions/productActions";
 
 const initialState = {
   products: [],
-  product: null,
+  productDetails: {
+    product: null,
+    loading: false,
+    error: null,
+  },
   categories: [],
   loading: false,
   error: null,
@@ -18,8 +19,6 @@ const initialState = {
 export default function productReducer(state = initialState, action) {
   switch (action.type) {
     case FETCH_PRODUCTS_BEGIN:
-
-    case FETCH_CATEGORIES_BEGIN:
       return {
         ...state,
         loading: true,
@@ -33,27 +32,11 @@ export default function productReducer(state = initialState, action) {
         products: action.payload,
       };
 
-    case FETCH_CATEGORIES_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        categories: action.payload,
-      };
-
     case FETCH_PRODUCTS_FAILURE:
       return {
         ...state,
         loading: false,
         error: action.payload,
-        products: [],
-      };
-
-    case FETCH_CATEGORIES_FAILURE:
-      return {
-        ...state,
-        loading: false,
-        error: action.payload,
-        categories: [],
       };
 
     default:
