@@ -7,7 +7,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { GrPrevious, GrNext } from "react-icons/gr";
-import { addToCart } from "../actions/cartActions";
+import { addToCart, updateCart } from "../actions/cartActions";
 import CheckoutButton from "./CheckoutButton";
 
 const ProductDetails = () => {
@@ -56,27 +56,12 @@ const ProductDetails = () => {
     }
   };
 
-  const handleAddToCart = () => {
-    if (product) {
-      console.log("Adding to cart:", product);
-      fetch("https://quickstart-a4135580.myshopify.com/cart/add.js", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id: product.variantId, // Ensure this is the correct variant ID
-          quantity: 1,
-        }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("Success:", data);
-          // Update cart state or UI as needed
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
+  const handleAddToCart = async () => {
+    try {
+      await dispatch(addToCart(product.variantId, 1));
+      dispatch(updateCart());
+    } catch (error) {
+      console.error("Error adding to cart:", error);
     }
   };
 

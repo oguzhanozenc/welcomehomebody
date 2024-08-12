@@ -1,18 +1,16 @@
 export const addToCart = (variantId, quantity) => async (dispatch) => {
   try {
-    // Ensure the request body matches Shopify’s expected format
     const response = await fetch("/cart/add.js", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        items: [{ id: variantId, quantity }], // Correct format for Shopify AJAX API
+        items: [{ id: variantId, quantity }],
       }),
     });
 
     if (!response.ok) {
-      // Log detailed error response
       const errorText = await response.text();
       console.error("Error response:", errorText);
       throw new Error(`Failed to add item to cart: ${response.statusText}`);
@@ -25,12 +23,12 @@ export const addToCart = (variantId, quantity) => async (dispatch) => {
     dispatch({ type: "ADD_TO_CART_FAILURE", payload: error.message });
   }
 };
+
 export const updateCart = () => async (dispatch) => {
   try {
     const response = await fetch("/cart.js");
 
     if (!response.ok) {
-      // Log detailed error response
       const errorText = await response.text();
       console.error("Error response:", errorText);
       throw new Error(`Failed to update cart: ${response.statusText}`);
