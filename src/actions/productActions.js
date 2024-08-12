@@ -9,15 +9,15 @@ export const fetchProducts = () => {
     dispatch({ type: FETCH_PRODUCTS_BEGIN });
     try {
       const products = await client.product.fetchAll();
-      console.log("Fetched products:", products); // Log the products to inspect the structure
+      console.log("Fetched products:", products);
       const formattedProducts = products.map((product) => ({
         id: product.id,
         title: product.title,
         price: product.variants[0].price,
-        images: product.images ? product.images.map((img) => img.src) : [], // Ensure default value
-        videos: product.videos ? product.videos.map((vid) => vid.src) : [], // Ensure default value
+        images: product.images ? product.images.map((img) => img.src) : [],
+        videos: product.videos ? product.videos.map((vid) => vid.src) : [],
         category: product.category,
-        description: product.description || "", // Ensure default value
+        description: product.description || "",
       }));
       dispatch({ type: FETCH_PRODUCTS_SUCCESS, payload: formattedProducts });
     } catch (error) {

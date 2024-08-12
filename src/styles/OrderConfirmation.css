@@ -1,0 +1,12 @@
+.order-completed-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.order-summary {
+  padding: 2rem;
+  text-align: center;
+  font-family: "Roboto Mono", monospace;
+}

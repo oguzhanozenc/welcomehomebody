@@ -5,10 +5,13 @@ import Blog from "./components/Blog";
 import BlogPost from "./components/BlogPost";
 import ProductList from "./components/ProductList";
 import ProductDetails from "./components/ProductDetails";
+import StickyCart from "./components/StickyCart";
+import CheckoutPage from "./components/CheckoutPage";
 import Navbar from "./components/Navbar";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import ScrollToSection from "./components/ScrollToSection";
+import OrderConfirmation from "./components/OrderConfirmation";
 import "./App.css";
 
 function App() {
@@ -60,9 +63,12 @@ function App() {
         <Route path="contact" element={<Contact />} />
         <Route path="/products" element={<ProductList />} />
         <Route path="/products/:id" element={<ProductDetails />} />
+        <Route path="/checkout" element={<CheckoutPage />} />
+        <Route path="/order-confirmation" element={<OrderConfirmation />} />
         <Route path="*" element={<Home />} />
       </Routes>
       <Footer />
+      <StickyCart />
     </BrowserRouter>
   );
 }

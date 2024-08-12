@@ -1,188 +1,28 @@
 .checkout-page {
-  max-width: 800px;
-  margin: 10% auto;
-  padding: 10 5%;
-  background-color: #f8f8f8;
-  color: #333;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
 }
 
-.basket-items {
-  margin-bottom: 20px;
+.checkout-summary {
+  padding: 2rem;
 }
 
-.basket-item {
+.cart-item {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin-bottom: 15px;
-  padding: 10px;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1rem;
+  font-family: "Roboto Mono", monospace;
 }
 
-.basket-item-image {
-  width: 80px;
-  height: 80px;
+.cart-item-image {
+  width: 100px;
+  height: 100px;
   object-fit: cover;
-  border-radius: 4px;
-  margin-right: 15px;
+  margin-right: 1rem;
 }
 
-.basket-item-details {
+.cart-item-details {
   flex: 1;
-}
-
-.basket-item-name {
-  display: block;
-  font-size: 1.2rem;
-  color: #333;
-}
-
-.basket-item-price {
-  display: block;
-  font-size: 1rem;
-  color: #666;
-}
-
-.remove-btn {
-  background: none;
-  border: none;
-  color: #ff4c4c;
-  cursor: pointer;
-  font-size: 1.2rem;
-}
-
-.checkout-button {
-  background-color: #4caf50;
-  color: white;
-}
-
-.confirmation-dialog {
-  margin-top: 20px;
-  padding: 20px;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  color: #333;
-}
-
-.confirm-button,
-.cancel-button {
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 1rem;
-  margin: 5px;
-}
-
-.cancel-button {
-  background-color: #f44336;
-}
-
-.confirm-button:hover,
-.cancel-button:hover {
-  opacity: 0.8;
-}
-
-@media (max-width: 1200px) {
-  .checkout-page {
-    padding: 4%;
-  }
-
-  .basket-item-name {
-    font-size: 1.1rem;
-  }
-
-  .basket-item-price {
-    font-size: 0.9rem;
-  }
-
-  .confirm-button,
-  .cancel-button {
-    font-size: 0.9rem;
-  }
-}
-
-@media (max-width: 992px) {
-  .checkout-page {
-    padding: 3%;
-  }
-
-  .basket-item-name {
-    font-size: 1rem;
-  }
-
-  .basket-item-price {
-    font-size: 0.8rem;
-  }
-
-  .confirm-button,
-  .cancel-button {
-    font-size: 0.8rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .checkout-page {
-    padding: 2%;
-  }
-
-  .basket-item {
-    flex-direction: row;
-    align-items: flex-start;
-  }
-
-  .basket-item-image {
-    width: 60px;
-    height: 60px;
-  }
-
-  .basket-item-name {
-    font-size: 0.9rem;
-  }
-
-  .basket-item-price {
-    font-size: 0.7rem;
-  }
-
-  .confirm-button,
-  .cancel-button {
-    font-size: 0.7rem;
-  }
-}
-
-@media (max-width: 576px) {
-  .checkout-page {
-    padding: 1%;
-    margin: 5% auto;
-  }
-
-  .basket-item {
-    padding: 0.5rem;
-  }
-
-  .basket-item-image {
-    width: 50px;
-    height: 50px;
-  }
-
-  .basket-item-name {
-    font-size: 0.8rem;
-  }
-
-  .basket-item-price {
-    font-size: 0.6rem;
-  }
-
-  .confirm-button,
-  .cancel-button {
-    font-size: 0.6rem;
-  }
 }

@@ -1,11 +1,14 @@
 import React, { useState, useRef } from "react";
 import { useLocation } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import "../styles/ProductDetails.css";
 import { motion } from "framer-motion";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { GrPrevious, GrNext } from "react-icons/gr";
+import { addToCart } from "../actions/cartActions";
+import CheckoutButton from "./CheckoutButton";
 
 const ProductDetails = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -14,6 +17,9 @@ const ProductDetails = () => {
   const slider = useRef(null);
   const location = useLocation();
   const product = location.state?.product;
+
+  const cartItems = useSelector((state) => state.cart.items);
+  const dispatch = useDispatch();
 
   const settings = {
     dots: false,
@@ -47,6 +53,30 @@ const ProductDetails = () => {
   const handleClickOutside = (e) => {
     if (e.target.classList.contains("modal-overlay")) {
       closeModal();
+    }
+  };
+
+  const handleAddToCart = () => {
+    if (product) {
+      console.log("Adding to cart:", product);
+      fetch("https://quickstart-a4135580.myshopify.com/cart/add.js", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: product.variantId, // Ensure this is the correct variant ID
+          quantity: 1,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Success:", data);
+          // Update cart state or UI as needed
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
     }
   };
 
@@ -163,15 +193,16 @@ const ProductDetails = () => {
               <div className="product-info">
                 <p className="product-description">{product.description}</p>
                 <p className="product-price">
-                  <p className="product-price">
-                    {typeof product.price === "object"
-                      ? product.price.currencyCode === "USD"
-                        ? `${product.price.amount} ${product.price.currencyCode}`
-                        : `${product.price.amount} USD`
-                      : `${product.price} USD`}
-                  </p>
+                  {typeof product.price === "object"
+                    ? product.price.currencyCode === "USD"
+                      ? `${product.price.amount} ${product.price.currencyCode}`
+                      : `${product.price.amount} USD`
+                    : `${product.price} USD`}
                 </p>
-                <button className="btn">Add to Cart</button>
+                <button className="btn" onClick={handleAddToCart}>
+                  BAG IT
+                </button>
+                {cartItems.length > 0 && <CheckoutButton />}
               </div>
             </div>
           </div>

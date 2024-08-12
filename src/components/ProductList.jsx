@@ -83,7 +83,6 @@ const ProductList = ({ dispatch, loading, products, error }) => {
 const mapStateToProps = (state) => ({
   loading: state.products.loading,
   products: state.products.products,
-  categories: state.products.categories,
   error: state.products.error,
 });
 
