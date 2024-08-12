@@ -1,4 +1,4 @@
-import { React, useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import "../styles/ProductDetails.css";
 import { motion } from "framer-motion";
@@ -12,6 +12,8 @@ const ProductDetails = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalImage, setModalImage] = useState("");
   const slider = useRef(null);
+  const location = useLocation();
+  const product = location.state?.product;
 
   const settings = {
     dots: false,
@@ -22,19 +24,17 @@ const ProductDetails = () => {
     afterChange: (current) => setCurrentSlide(current),
   };
 
-  const handlePrev = () => {
-    slider.current.slickPrev();
-  };
-
-  const handleNext = () => {
-    slider.current.slickNext();
-  };
+  const handlePrev = () => slider.current.slickPrev();
+  const handleNext = () => slider.current.slickNext();
 
   const handleSlideClick = (index) => {
     slider.current.slickGoTo(index);
     setCurrentSlide(index);
-    if (product.images[index]) {
-      setModalImage(product.images[index]);
+  };
+
+  const handleImageClick = () => {
+    if (product.images[currentSlide]) {
+      setModalImage(product.images[currentSlide]);
       setIsModalOpen(true);
     }
   };
@@ -49,9 +49,6 @@ const ProductDetails = () => {
       closeModal();
     }
   };
-
-  const location = useLocation();
-  const product = location.state?.product;
 
   const hasMultipleImages = product.images && product.images.length > 1;
 
@@ -108,6 +105,11 @@ const ProductDetails = () => {
                               src={img}
                               alt={`${product.title} image ${index + 1}`}
                               className="product-image"
+                              onClick={
+                                index === currentSlide
+                                  ? handleImageClick
+                                  : undefined
+                              }
                             />
                           </motion.div>
                         ))}
@@ -125,10 +127,7 @@ const ProductDetails = () => {
                         src={product.images[0]}
                         alt={`${product.title} image`}
                         className="product-image"
-                        onClick={() => {
-                          setModalImage(product.images[0]);
-                          setIsModalOpen(true);
-                        }}
+                        onClick={handleImageClick}
                       />
                     </div>
                   )}
@@ -164,12 +163,13 @@ const ProductDetails = () => {
               <div className="product-info">
                 <p className="product-description">{product.description}</p>
                 <p className="product-price">
-                  {typeof product.price === "object" &&
-                  product.price.currencyCode === "USD"
-                    ? `${product.price.amount} ${product.price.currencyCode}`
-                    : typeof product.price === "object"
-                    ? `${product.price.amount} USD`
-                    : `${product.price} USD`}
+                  <p className="product-price">
+                    {typeof product.price === "object"
+                      ? product.price.currencyCode === "USD"
+                        ? `${product.price.amount} ${product.price.currencyCode}`
+                        : `${product.price.amount} USD`
+                      : `${product.price} USD`}
+                  </p>
                 </p>
                 <button className="btn">Add to Cart</button>
               </div>
