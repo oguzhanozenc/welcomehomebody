@@ -8,12 +8,7 @@ export default defineConfig({
       "/cart": {
         target: "https://quickstart-a4135580.myshopify.com",
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/cart/, ""),
-      },
-      "/api": {
-        target: "https://quickstart-a4135580.myshopify.com",
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ""),
+        rewrite: (path) => path.replace(/^\/cart/, "/cart"),
       },
     },
   },

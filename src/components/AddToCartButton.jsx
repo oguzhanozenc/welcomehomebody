@@ -1,15 +1,24 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import { addToCart } from "../actions/cartActions";
+import client from "./shopifyClient";
 
-const AddToCartButton = ({ productId, quantity }) => {
-  const dispatch = useDispatch();
+const AddToCartButton = ({ productId }) => {
+  const handleAddToCart = async () => {
+    const checkout = await client.checkout.create();
+    const lineItemsToAdd = [
+      {
+        variantId: productId,
+        quantity: 1,
+      },
+    ];
 
-  const handleClick = () => {
-    dispatch(addToCart(productId, quantity));
+    const checkoutWithLineItems = await client.checkout.addLineItems(
+      checkout.id,
+      lineItemsToAdd
+    );
+    console.log(checkoutWithLineItems);
   };
 
-  return <button onClick={handleClick}>Add to Cart</button>;
+  return <button onClick={handleAddToCart}>Add to Cart</button>;
 };
 
 export default AddToCartButton;

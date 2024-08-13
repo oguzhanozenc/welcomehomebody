@@ -1,26 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { fetchProducts } from "../actions/productActions";
 import "../styles/ProductList.css";
 
 const ProductList = ({ dispatch, loading, products, error }) => {
-  const [productsById, setProductsById] = useState({});
-
   useEffect(() => {
     dispatch(fetchProducts());
   }, [dispatch]);
-
-  useEffect(() => {
-    if (products && products.length > 0) {
-      const productsObject = products.reduce((acc, product) => {
-        const productId = product.id.split("/").pop();
-        acc[productId] = product;
-        return acc;
-      }, {});
-      setProductsById(productsObject);
-    }
-  }, [products]);
 
   if (loading) return <div>Loading...</div>;
   if (error)
@@ -39,33 +26,31 @@ const ProductList = ({ dispatch, loading, products, error }) => {
         </div>
         <div className="content">
           <div className="products">
-            {Object.keys(productsById).map((productId) => {
-              const product = productsById[productId];
+            {products.map((product) => {
+              const productId = product.id.split("/").pop();
+              console.log("Product ID in ProductList:", productId);
               return (
                 <div className="product" key={productId}>
-                  {product.images && product.images.length > 0 && (
+                  {product.images && product.images.length > 0 ? (
                     <img
                       src={product.images[0]}
-                      alt={product.title}
+                      alt={product.title || "Product Image"}
                       className="product-image"
                     />
+                  ) : (
+                    <div className="no-image-placeholder">
+                      No Image Available
+                    </div>
                   )}
                   <div className="product-details">
                     <h3 className="product-name">{product.title}</h3>
                     <p className="product-price">
-                      {typeof product.price === "object" &&
-                      product.price.currencyCode === "USD"
+                      {typeof product.price === "object"
                         ? `${product.price.amount} ${product.price.currencyCode}`
-                        : typeof product.price === "object"
-                        ? `${product.price.amount} USD`
                         : `${product.price} USD`}
                     </p>
                     <div className="product-btns">
-                      <NavLink
-                        to={`/products/${productId}`}
-                        state={{ product }}
-                        className="btn"
-                      >
+                      <NavLink to={`/products/${productId}`} className="btn">
                         View
                       </NavLink>
                     </div>
