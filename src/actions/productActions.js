@@ -8,7 +8,6 @@ export const FETCH_PRODUCT_DETAILS_SUCCESS = "FETCH_PRODUCT_DETAILS_SUCCESS";
 export const FETCH_PRODUCT_DETAILS_BEGIN = "FETCH_PRODUCT_DETAILS_BEGIN";
 export const FETCH_PRODUCT_DETAILS_FAILURE = "FETCH_PRODUCT_DETAILS_FAILURE";
 
-// Action to fetch all products for the product list
 export const fetchProducts = (limit = 50) => {
   return async (dispatch) => {
     dispatch({ type: FETCH_PRODUCTS_BEGIN });

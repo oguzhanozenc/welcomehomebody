@@ -66,9 +66,9 @@ function App() {
         <Route path="/checkout" element={<CheckoutPage />} />
 
         <Route path="*" element={<Home />} />
-      </Routes>
-      <Footer />
+      </Routes>{" "}
       <StickyCart />
+      <Footer />
     </BrowserRouter>
   );
 }

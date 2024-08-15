@@ -14,7 +14,7 @@ const ProductList = ({ dispatch, loading, products, error }) => {
     return <div>Error! {error.message || "An unknown error occurred"}</div>;
 
   return (
-    <div className="product-list">
+    <div className="product-list" id="products">
       <div className="window">
         <div className="title-bar">
           <div className="title">Product List</div>
