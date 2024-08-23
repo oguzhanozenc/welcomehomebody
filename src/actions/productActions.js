@@ -4,8 +4,8 @@ import client from "../client";
 export const FETCH_PRODUCTS_BEGIN = "FETCH_PRODUCTS_BEGIN";
 export const FETCH_PRODUCTS_SUCCESS = "FETCH_PRODUCTS_SUCCESS";
 export const FETCH_PRODUCTS_FAILURE = "FETCH_PRODUCTS_FAILURE";
-export const FETCH_PRODUCT_DETAILS_SUCCESS = "FETCH_PRODUCT_DETAILS_SUCCESS";
 export const FETCH_PRODUCT_DETAILS_BEGIN = "FETCH_PRODUCT_DETAILS_BEGIN";
+export const FETCH_PRODUCT_DETAILS_SUCCESS = "FETCH_PRODUCT_DETAILS_SUCCESS";
 export const FETCH_PRODUCT_DETAILS_FAILURE = "FETCH_PRODUCT_DETAILS_FAILURE";
 
 export const fetchProducts = (limit = 50) => {
@@ -48,11 +48,8 @@ export const fetchProducts = (limit = 50) => {
 
       const variables = { first: limit };
       const response = await client.request(query, variables);
-      console.log("API Response:", response);
-
       const products = response.products.edges.map((edge) => edge.node);
 
-      // Format the products
       const formattedProducts = products.map((product) => ({
         id: product.id,
         title: product.title,
@@ -65,11 +62,11 @@ export const fetchProducts = (limit = 50) => {
 
       dispatch({ type: FETCH_PRODUCTS_SUCCESS, payload: formattedProducts });
     } catch (error) {
-      console.error("Error fetching products:", error);
       dispatch({ type: FETCH_PRODUCTS_FAILURE, payload: error.message });
     }
   };
 };
+
 export const fetchProductDetails = (productId) => {
   return async (dispatch) => {
     dispatch({ type: FETCH_PRODUCT_DETAILS_BEGIN });
@@ -106,15 +103,8 @@ export const fetchProductDetails = (productId) => {
 
       const variables = { id: productId };
       const response = await client.request(query, variables);
-      console.log("Product Details API Response:", response);
-
       const product = response.product;
 
-      if (!product) {
-        throw new Error("Product not found.");
-      }
-
-      // Format the product
       const formattedProduct = {
         id: product.id,
         title: product.title,
@@ -130,7 +120,6 @@ export const fetchProductDetails = (productId) => {
         payload: formattedProduct,
       });
     } catch (error) {
-      console.error("Error fetching product details:", error);
       dispatch({ type: FETCH_PRODUCT_DETAILS_FAILURE, payload: error.message });
     }
   };

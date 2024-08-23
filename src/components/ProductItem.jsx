@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -174,9 +174,13 @@ const ProductItem = ({
                   ))}
                 </select>
               )}
-              <button className="btn" onClick={handleAddToCart}>
+              <button
+                className="btn"
+                onClick={() => handleAddToCart(selectedVariant?.id)}
+              >
                 BAG IT
               </button>
+
               {checkout && checkout.lineItems.length > 0 && <CheckoutButton />}
             </div>
           </div>

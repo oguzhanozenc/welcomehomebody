@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./components/Home";
+import Cart from "./components/Cart";
 import Blog from "./components/Blog";
 import BlogPost from "./components/BlogPost";
 import ProductList from "./components/ProductList";
 import ProductDetails from "./components/ProductDetails";
-import StickyCart from "./components/StickyCart";
 import CheckoutPage from "./components/CheckoutPage";
 import Navbar from "./components/Navbar";
 import Contact from "./components/Contact";
@@ -64,10 +64,9 @@ function App() {
         <Route path="/products" element={<ProductList />} />
         <Route path="/products/:productId" element={<ProductDetails />} />
         <Route path="/checkout" element={<CheckoutPage />} />
-
+        <Route path="/cart" element={<Cart />} />
         <Route path="*" element={<Home />} />
       </Routes>{" "}
-      <StickyCart />
       <Footer />
     </BrowserRouter>
   );

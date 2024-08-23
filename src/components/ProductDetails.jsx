@@ -1,9 +1,9 @@
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProductDetails } from "../actions/productActions";
-
 import ProductItem from "./ProductItem";
+import { useShopifyCart } from "../hooks/useShopifyCart";
 
 const ProductDetails = () => {
   const { productId } = useParams();
@@ -17,6 +17,8 @@ const ProductDetails = () => {
   const [selectedVariant, setSelectedVariant] = useState(null);
   const slider = useRef(null);
 
+  const { handleAddToCart, handleCheckout } = useShopifyCart();
+
   useEffect(() => {
     if (productId) {
       const fullProductId = `gid://shopify/Product/${productId}`;
@@ -29,17 +31,6 @@ const ProductDetails = () => {
       setSelectedVariant(product.variants[0]);
     }
   }, [product]);
-
-  const handleAddToCart = async () => {
-    try {
-      if (!selectedVariant?.id) {
-        console.error("No valid variant selected.");
-        return;
-      }
-    } catch (error) {
-      console.error("Error adding to cart:", error);
-    }
-  };
 
   const settings = {
     dots: false,
@@ -68,7 +59,8 @@ const ProductDetails = () => {
         handleSlideClick={handleSlideClick}
         selectedVariant={selectedVariant}
         setSelectedVariant={setSelectedVariant}
-        handleAddToCart={handleAddToCart}
+        handleAddToCart={() => handleAddToCart(selectedVariant?.id)}
+        handleCheckout={handleCheckout}
         slider={slider}
       />
     </div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import "../styles/Header.css";
 
 export default function Header() {
@@ -13,6 +13,8 @@ export default function Header() {
       "./logo-close.webp",
       "./logo-semiclose.webp",
       "./logo-open.webp",
+      "./logo-mascot.webp",
+      "./logo-mascot-2.webp",
       "./city.webp",
     ];
 
@@ -37,19 +39,28 @@ export default function Header() {
   useEffect(() => {
     let interval;
     if (imagesLoaded) {
-      const imageDurations = [1500, 1500, 2500, 1000, 1000];
-      const imageSequence = [0, 1, 2, 1, 0];
+      const initialSequence = [0, 1, 2, 3, 4];
+      const loopSequence = [3, 4];
+      const imageDurations = [1500, 1500, 2500, 2000, 2000, 2000];
 
       let currentIndex = 0;
+      let initialCompleted = false;
 
       interval = setInterval(() => {
-        setCurrentImage(imageSequence[currentIndex]);
-        currentIndex = (currentIndex + 1) % imageSequence.length;
+        if (!initialCompleted) {
+          setCurrentImage(initialSequence[currentIndex]);
+          if (currentIndex === initialSequence.length - 1) {
+            initialCompleted = true;
+            currentIndex = 0;
+            setShowWelcomeText(true);
+          } else {
+            currentIndex++;
+          }
+        } else {
+          setCurrentImage(loopSequence[currentIndex]);
+          currentIndex = (currentIndex + 1) % loopSequence.length;
+        }
       }, imageDurations[currentIndex]);
-
-      setTimeout(() => {
-        setShowWelcomeText(true);
-      }, 3500);
     }
 
     return () => clearInterval(interval);
@@ -88,6 +99,21 @@ export default function Header() {
               src="./logo-open.webp"
               alt="Logo Open"
               className={`image ${currentImage === 2 ? "visible" : "hidden"}`}
+            />
+            <img
+              src="./logo-mascot.webp"
+              alt="Logo Mascot"
+              className={`image ${currentImage === 3 ? "visible" : "hidden"}`}
+            />
+            <img
+              src="./logo-mascot-2.webp"
+              alt="Logo Mascot 2"
+              className={`image ${currentImage === 4 ? "visible" : "hidden"}`}
+            />
+            <img
+              src="./city.webp"
+              alt="City Background"
+              className={`image ${currentImage === 5 ? "visible" : "hidden"}`}
             />
 
             <div className="background-overlay"></div>
