@@ -40,21 +40,25 @@ const aboutData = [
 const renderContent = (content) => {
   return (
     <>
-      {content.logoSrc && (
-        <div className="logo-container">
-          <img
-            src={content.logoSrc}
-            alt="Homebody Logo"
-            className="about-logo"
-          />
+      <div className="ourstory-content">
+        {content.logoSrc && (
+          <div className="logo-container">
+            <img
+              src={content.logoSrc}
+              alt="Homebody Logo"
+              className="about-logo"
+            />
+          </div>
+        )}{" "}
+        <div className="abouttext-container">
+          {content.paragraphs &&
+            content.paragraphs.map((text, index) => (
+              <p className="about-text" key={index}>
+                {text}
+              </p>
+            ))}
         </div>
-      )}
-      {content.paragraphs &&
-        content.paragraphs.map((text, index) => (
-          <p className="about-text" key={index}>
-            {text}
-          </p>
-        ))}
+      </div>
       {content.list && (
         <ul className="about-list">
           {content.list.map((item, index) => (
@@ -95,7 +99,7 @@ const About = () => {
           </button>
         ))}
       </div>
-      <motion.div layout className="retro-window">
+      <motion.div layout className="window">
         <div className="title-bar">
           <div className="title">{activeContent.title}</div>
           <div className="buttons">
@@ -111,7 +115,7 @@ const About = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
-            className="retro-window-body"
+            className="about-retro-window-body"
             style={{ overflowY: "auto", maxHeight: "60vh" }}
           >
             {renderContent(activeContent)}
