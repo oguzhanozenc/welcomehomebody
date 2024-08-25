@@ -34,7 +34,7 @@
   padding: 0;
   margin: 0;
   overflow-y: auto;
-  max-height: calc(100% - 200px); /* Adjust for header/footer */
+  max-height: calc(100% - 200px);
 }
 
 .cart-item {

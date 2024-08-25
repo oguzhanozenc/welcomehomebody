@@ -122,7 +122,7 @@ export default function Header() {
       </div>
       {showWelcomeText && (
         <div className="welcome-text">
-          <a href="#products" className="explore-btn">
+          <a href="#about" className="explore-btn">
             EXPLORE»
           </a>
         </div>

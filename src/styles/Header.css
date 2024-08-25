@@ -77,57 +77,53 @@
   left: 50%;
   transform: translateX(-50%);
   text-align: center;
-  background-color: #000;
-  padding: 1rem;
   border-radius: 2rem;
   border: 2px solid #222;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .explore-btn {
   text-align: center;
-  font-size: 1.25rem;
-  color: #fff;
-  text-align: center;
-  background: linear-gradient(45deg, #ff007f, #00bfff, #7f00ff);
-  background-size: 300% 300%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 0.5px 0.5px 2px #ff00ffb3, 0 0 10px rgba(255, 0, 255, 0.3);
+  font-size: 1rem;
+  color: #00ff00;
+  background-color: #000;
+  padding: 0.5rem 2rem;
+  border: 3px solid #ff0000;
+  border-radius: 5px;
   font-family: "Press Start 2P", cursive;
-  letter-spacing: 0.1rem;
-  transition: text-shadow 0.3s ease;
-}
-
-.welcome-text:hover {
-  border-color: #7f00ff;
-  transition: all 300ms ease;
+  letter-spacing: 0.2rem;
+  text-transform: uppercase;
+  box-shadow: 0 0 5px #ff0000, 0 0 10px #ff0000, 0 0 15px #ff0000;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
 .explore-btn:hover {
-  animation: gradient-move 3s ease infinite, blink 1s ease-in-out infinite;
-}
-
-@keyframes gradient-move {
-  0% {
-    background-position: 0% 0%;
-  }
-  50% {
-    background-position: 100% 100%;
-  }
-  100% {
-    background-position: 0% 0%;
-  }
+  box-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 30px #ff0000;
+  transform: scale(1.1);
+  background-color: #222;
+  border-color: #ff0000;
 }
 
 @keyframes blink {
   0%,
   100% {
-    text-shadow: 0.5px 0.5px 2px #ff00ffb3, 0 0 10px rgba(255, 0, 255, 0.3);
+    text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00;
   }
   50% {
-    text-shadow: 0.5px 0.5px 2px rgba(255, 0, 255, 0.1),
-      0 0 10px rgba(255, 0, 255, 0.1);
+    text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 30px #ff0000;
   }
+}
+
+.explore-btn:hover::after {
+  content: "Press Start";
+  display: block;
+  font-size: 0.8rem;
+  color: #ff0000;
+  margin-top: 0.5rem;
+  text-shadow: 0 0 5px #ff0000, 0 0 10px #ff0000;
+  animation: blink 1s infinite;
 }
 
 @media (max-width: 1200px) {

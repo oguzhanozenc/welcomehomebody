@@ -99,9 +99,9 @@ const About = () => {
           </button>
         ))}
       </div>
-      <motion.div layout className="window">
+      <motion.div layout className="window" id="about-window">
         <div className="title-bar">
-          <div className="title">{activeContent.title}</div>
+          <div className="title"></div>
           <div className="buttons">
             <div className="button minimize"></div>
             <div className="button maximize"></div>

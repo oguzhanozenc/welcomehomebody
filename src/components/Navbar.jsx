@@ -3,29 +3,19 @@ import { NavLink, Link } from "react-router-dom";
 import "../styles/Navbar.css";
 import { GiHamburgerMenu, GiCancel } from "react-icons/gi";
 import { FaShoppingCart } from "react-icons/fa";
-import Cart from "./Cart"; // Import the Cart component here
+import Cart from "./Cart";
 
 const Navbar = () => {
   const [isNavOpen, setNavOpen] = useState(false);
-  const [isCartOpen, setCartOpen] = useState(false); // State to toggle cart
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [isCartOpen, setCartOpen] = useState(false);
   const navRef = useRef(null);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   const toggleNav = () => {
     setNavOpen((prev) => !prev);
   };
 
   const toggleCart = () => {
-    setCartOpen((prev) => !prev); // Toggle cart drawer
+    setCartOpen((prev) => !prev);
   };
 
   return (
@@ -38,9 +28,11 @@ const Navbar = () => {
         >
           {isNavOpen ? <GiCancel size={24} /> : <GiHamburgerMenu size={24} />}
         </button>
-        <Link to="/">
-          <img src="/navbarlogo.png" alt="Logo" className="logo" />
-        </Link>
+        <div>
+          <Link to="/">
+            <img src="/navbarlogo.png" alt="Logo" className="logo" />
+          </Link>
+        </div>
         <div ref={navRef} className={`nav-links ${isNavOpen ? "open" : ""}`}>
           <NavLink to="/" className="nav-link" onClick={toggleNav}>
             HOME
@@ -59,13 +51,12 @@ const Navbar = () => {
           </NavLink>
         </div>
         <div>
-          {" "}
           <button className="cart-toggle" onClick={toggleCart}>
-            <FaShoppingCart size={24} />
+            <img src="/basket.png" className="card-icon" alt="" />
           </button>
         </div>
       </div>
-      <Cart isOpen={isCartOpen} toggleCart={toggleCart} />{" "}
+      <Cart isOpen={isCartOpen} toggleCart={toggleCart} />
     </nav>
   );
 };
