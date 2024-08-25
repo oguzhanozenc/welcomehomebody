@@ -57,6 +57,9 @@ const Navbar = () => {
           <NavLink to="/contact" className="nav-link" onClick={toggleNav}>
             CONTACT
           </NavLink>
+        </div>
+        <div>
+          {" "}
           <button className="cart-toggle" onClick={toggleCart}>
             <FaShoppingCart size={24} />
           </button>

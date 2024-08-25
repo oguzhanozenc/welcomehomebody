@@ -56,7 +56,7 @@
   overflow-x: auto;
 }
 
-.thumbnail {
+.product-thumbnail {
   width: 5rem;
   aspect-ratio: 1;
   object-fit: cover;

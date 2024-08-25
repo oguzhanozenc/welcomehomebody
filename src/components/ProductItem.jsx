@@ -126,7 +126,7 @@ const ProductItem = ({
                         key={index}
                         src={img}
                         alt={`Thumbnail ${index + 1}`}
-                        className={`thumbnail ${
+                        className={`product-thumbnail ${
                           index === currentSlide ? "active" : ""
                         }`}
                         onClick={() => handleSlideClick(index)}

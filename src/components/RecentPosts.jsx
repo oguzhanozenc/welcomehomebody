@@ -1,50 +1,129 @@
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { BlogData } from "./BlogData";
+import slugify from "slug";
+import { motion } from "framer-motion";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { BsArrowLeftCircleFill, BsArrowRightCircleFill } from "react-icons/bs";
+import { v4 as uuidv4 } from "uuid";
+
 import "../styles/RecentPosts.css";
 
 const RecentPosts = () => {
+  const [recentPosts, setRecentPosts] = useState([]);
+  const slider = useRef(null);
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  useEffect(() => {
+    fetch("/data/posts.json")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setRecentPosts(data.map((post) => ({ ...post, uuid: uuidv4() })));
+        slider.current.slickGoTo(0);
+      })
+      .catch((error) => console.error("Failed to fetch recent posts:", error));
+  }, []);
+
+  const settings = {
+    dots: false,
+    arrows: false,
+    infinite: true,
+    slidesToShow: 2,
+    slidesToScroll: 1,
+    afterChange: (current) => setCurrentSlide(current),
+  };
+
+  const handlePrev = () => {
+    slider.current.slickPrev();
+  };
+
+  const handleNext = () => {
+    slider.current.slickNext();
+  };
+
   return (
-    <div className="recent-posts" id="blog">
+    <section className="recentposts--section">
+      {" "}
       <div className="window">
         <div className="title-bar">
-          <div className="title">Latest Posts from HomeBody Blog</div>
+          <div className="title">Recent Posts</div>
           <div className="buttons">
             <div className="button close"></div>
             <div className="button minimize"></div>
             <div className="button maximize"></div>
           </div>
         </div>
-
-        <div className="posts-container">
-          {BlogData.map((post) => (
-            <Link to={`/blog/${post.slug}`} key={post.id} className="post-link">
-              <div className="post-card">
-                <img src={post.image} alt={post.title} className="post-image" />
-                <div className="post-content">
-                  <h3 className="recentpost-title">{post.title}</h3>
-                  <p className="post-excerpt">{post.excerpt}</p>
-                  <button className="read-more-btn">Read More</button>
+        <div className="content">
+          <div className="recentposts-container">
+            <div className="recent-posts" id="blog">
+              <div className="recent-posts-slider">
+                <Slider ref={slider} {...settings}>
+                  {recentPosts.map((post, index) => (
+                    <motion.div
+                      key={post.uuid}
+                      className="recentpost-unit"
+                      style={{
+                        filter: index === currentSlide ? "none" : "blur(4px)",
+                        opacity: index === currentSlide ? 1 : 0.5,
+                        transform:
+                          index === currentSlide ? "scale(1.05)" : "scale(1)",
+                        zIndex: index === currentSlide ? 1 : 0,
+                        transition: "filter 0.5s, opacity 0.5s, transform 0.5s",
+                      }}
+                      animate={{
+                        opacity: index === currentSlide ? 1 : 0.5,
+                        scale: index === currentSlide ? 1.05 : 1,
+                      }}
+                      transition={{ duration: 0.5 }}
+                      whileHover={{ scale: 1.1 }}
+                    >
+                      <Link
+                        to={`/blog/${slugify(post.title, { lower: true })}`}
+                      >
+                        <div className="recentpost-content">
+                          <div className="post-thumbnail">
+                            <img src={post.thumbnail} alt={post.title} />
+                          </div>
+                          <div className="post-info">
+                            <p>{post.title}</p>
+                          </div>
+                        </div>
+                      </Link>
+                    </motion.div>
+                  ))}
+                </Slider>
+                <div className="custom-arrows">
+                  <button
+                    className="custom-arrow custom-prev"
+                    onClick={handlePrev}
+                  >
+                    <BsArrowLeftCircleFill />
+                  </button>
+                  <button
+                    className="custom-arrow custom-next"
+                    onClick={handleNext}
+                  >
+                    <BsArrowRightCircleFill />
+                  </button>
                 </div>
+              </div>{" "}
+              <div className="linktoblog">
+                <Link to="/" className=" btn " id="linktoblog">
+                  {" "}
+                  View all posts{" "}
+                </Link>{" "}
               </div>
-            </Link>
-          ))}
-        </div>
-        <div className="subscription">
-          <h2 className="subscription-title">Stay Updated on HomeBody </h2>
-          <form className="subscription-form">
-            <input
-              type="email"
-              placeholder="Enter your email for updates"
-              className="subscription-input"
-              required
-            />
-            <button type="submit" className="subscription-btn">
-              Subscribe
-            </button>
-          </form>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

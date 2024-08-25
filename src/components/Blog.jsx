@@ -1,67 +1,133 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { BlogData } from "./BlogData";
-import "../styles/Blog.css";
+import { useEffect, useState } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { RiArrowRightDoubleLine, RiArrowLeftDoubleLine } from "react-icons/ri";
+import { v4 as uuidv4 } from "uuid";
+import slug from "slug";
+import "../styles/BlogPage.css";
+import { FaCircleUser } from "react-icons/fa6";
 
-const POSTS_PER_PAGE = 5;
+const BlogPage = () => {
+  const [posts, setPosts] = useState([]);
+  const postsPerPage = 2;
+  const navigate = useNavigate();
+  const location = useLocation();
 
-const Blog = () => {
-  const [currentPage, setCurrentPage] = useState(1);
-
-  const totalPages = Math.ceil(BlogData.length / POSTS_PER_PAGE);
-  const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
-  const currentPosts = BlogData.slice(startIndex, startIndex + POSTS_PER_PAGE);
-
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
+  const getPageNumberFromURL = () => {
+    const params = new URLSearchParams(location.search);
+    const page = parseInt(params.get("page"), 10);
+    return page && page > 0 ? page : 1;
   };
 
+  const [currentPage, setCurrentPage] = useState(getPageNumberFromURL());
+
+  useEffect(() => {
+    setCurrentPage(getPageNumberFromURL());
+  }, [location]);
+
+  useEffect(() => {
+    fetch("/data/posts.json")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => setPosts(data))
+      .catch((error) => console.error("Failed to fetch posts:", error));
+  }, []);
+
+  useEffect(() => {
+    navigate(`?page=${currentPage}`);
+  }, [currentPage, navigate]);
+
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+
+  const isLastPage = indexOfLastPost >= posts.length;
+
   return (
-    <div className="blog-page">
-      <h2 className="section-title">Latest Posts from HomeBody Blog</h2>
-      <div className="blogposts-container">
-        {currentPosts.map((post) => (
-          <Link to={`/blog/${post.slug}`} key={post.id} className="post-link">
-            <div className="post-card">
-              <img src={post.image} alt={post.title} className="post-image" />
-              <div className="post-content">
-                <h3 className="post-title">{post.title}</h3>
-                <p className="post-excerpt">{post.excerpt}</p>
-                <button className="blog-read-more-btn">Read More</button>
-              </div>
+    <section className="blogpage--section">
+      <div id="blogsectiontitle">
+        <h2 className="section-title">Recent Posts</h2>
+      </div>
+      <div className="blogpage-postscontainer">
+        {currentPosts.map((post, index) => {
+          const postUrl = `${window.location.origin}/blog/${slug(post.title, {
+            lower: true,
+          })}`;
+          const postKey = uuidv4();
+
+          return (
+            <div className="blogpage-griditem" key={postKey}>
+              <Link
+                to={`/blog/${slug(post.title, { lower: true })}`}
+                className="blogpage-link"
+              >
+                <div className="blogpage-postunit">
+                  {post.thumbnail && (
+                    <img
+                      src={post.thumbnail}
+                      alt={post.title}
+                      style={{ maxWidth: "100%" }}
+                    />
+                  )}
+                  <div className="blogpage-postcontent">
+                    <h2>{post.title}</h2>
+                    <div className="blogpage-postinfo">
+                      <small id="blogpage-postdate">
+                        {new Date(post.date).toLocaleDateString()}
+                      </small>
+                    </div>
+                    <div className="featuredtext">
+                      {post.featuredText && (
+                        <p>
+                          {post.featuredText.length > 150
+                            ? `${post.featuredText.substring(0, 150)}...`
+                            : post.featuredText}
+                        </p>
+                      )}
+                    </div>
+                    <div className="readmorelink">
+                      <p className="readmorebtn">
+                        Read More
+                        <RiArrowRightDoubleLine />
+                      </p>
+                    </div>
+                    <div className="blogpage-bottomcontainer">
+                      <div id="blogpage-postauthor">
+                        <FaCircleUser />
+                        <span>
+                          {post?.author ? `${post.author}` : "Offbeat Security"}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </Link>
             </div>
-          </Link>
-        ))}
+          );
+        })}
       </div>
-      <div className="pagination">
-        {Array.from({ length: totalPages }, (_, index) => (
-          <button
-            key={index}
-            className={`pagination-button ${
-              currentPage === index + 1 ? "active" : ""
-            }`}
-            onClick={() => handlePageChange(index + 1)}
-          >
-            {index + 1}
-          </button>
-        ))}
+
+      <div className="pagination" id="pagination">
+        <button
+          onClick={() => setCurrentPage(currentPage - 1)}
+          disabled={currentPage === 1}
+          className={currentPage === 1 ? "disabled" : ""}
+        >
+          <RiArrowLeftDoubleLine /> Prev
+        </button>
+        <button
+          onClick={() => setCurrentPage(currentPage + 1)}
+          disabled={isLastPage}
+          className={isLastPage ? "disabled" : ""}
+        >
+          Next <RiArrowRightDoubleLine />
+        </button>
       </div>
-      <div className="subscription">
-        <h2 className="subscription-title">Stay Updated on HomeBody </h2>
-        <form className="subscription-form">
-          <input
-            type="email"
-            placeholder="Enter your email for updates"
-            className="subscription-input"
-            required
-          />
-          <button type="submit" className="subscription-btn">
-            Subscribe
-          </button>
-        </form>
-      </div>
-    </div>
+    </section>
   );
 };
 
-export default Blog;
+export default BlogPage;
