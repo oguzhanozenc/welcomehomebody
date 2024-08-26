@@ -40,7 +40,7 @@ const generatePostsJSON = async () => {
         // Resolve thumbnail path
         const thumbnailPath = data.thumbnail.startsWith("http")
           ? data.thumbnail
-          : `/${data.thumbnail}`;
+          : `${data.thumbnail}`;
 
         return {
           title: data.title,
