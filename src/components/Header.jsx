@@ -3,10 +3,12 @@ import "../styles/Header.css";
 
 export default function Header() {
   const [currentImage, setCurrentImage] = useState(0);
+  const [showPressStart, setShowPressStart] = useState(false);
+  const [showMainScene, setShowMainScene] = useState(false);
   const [showWelcomeText, setShowWelcomeText] = useState(false);
   const [imagesLoaded, setImagesLoaded] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [isFirstRender, setIsFirstRender] = useState(true);
+  const [backgroundVisible, setBackgroundVisible] = useState(false);
 
   useEffect(() => {
     const imageSources = [
@@ -24,8 +26,14 @@ export default function Header() {
     const checkAllImagesLoaded = () => {
       loadedImages += 1;
       if (loadedImages === totalImages) {
-        setImagesLoaded(true);
-        setLoading(false);
+        setTimeout(() => {
+          setImagesLoaded(true);
+          setLoading(false);
+          setBackgroundVisible(true);
+          setTimeout(() => {
+            setShowPressStart(true);
+          }, 500);
+        }, 2000);
       }
     };
 
@@ -36,12 +44,19 @@ export default function Header() {
     });
   }, []);
 
+  const handlePressStart = () => {
+    setShowPressStart(false);
+    setTimeout(() => {
+      setShowMainScene(true);
+    }, 500);
+  };
+
   useEffect(() => {
     let interval;
-    if (imagesLoaded) {
+    if (showMainScene) {
       const initialSequence = [0, 1, 2, 3, 4];
       const loopSequence = [3, 4];
-      const imageDurations = [1500, 1500, 2500, 2000, 2000, 2000];
+      const imageDurations = [1000, 1500, 2500, 2000, 2000, 2000];
 
       let currentIndex = 0;
       let initialCompleted = false;
@@ -64,31 +79,41 @@ export default function Header() {
     }
 
     return () => clearInterval(interval);
-  }, [imagesLoaded]);
-
-  useEffect(() => {
-    if (isFirstRender) {
-      const timer = setTimeout(() => {
-        setIsFirstRender(false);
-      }, 3000);
-
-      return () => clearTimeout(timer);
-    }
-  }, [isFirstRender]);
+  }, [showMainScene]);
 
   return (
     <header className="header" id="home">
-      <div className="header-container">
-        {loading ? (
-          <div className="loading-indicator">Loading...</div>
-        ) : (
+      <div
+        className={`header-container ${loading ? "loading" : ""} ${
+          backgroundVisible ? "background-visible" : ""
+        }`}
+      >
+        {loading && (
+          <div className="loading-screen fade-out">
+            <div className="loading-animation">
+              <div className="loading-text">
+                <span>Loading</span>
+                <span className="dots">...</span>
+              </div>
+              <div className="arcade-animation"></div>
+            </div>
+          </div>
+        )}
+
+        {showPressStart && (
+          <div className="press-start-screen fade-in">
+            <button className="press-start-btn" onClick={handlePressStart}>
+              Press Start
+            </button>
+          </div>
+        )}
+
+        {showMainScene && (
           <>
             <img
               src="./logo-close.webp"
               alt="Logo Close"
-              className={`image ${currentImage === 0 ? "visible" : "hidden"} ${
-                isFirstRender ? "falling" : ""
-              }`}
+              className={`image ${currentImage === 0 ? "visible" : "hidden"}`}
             />
             <img
               src="./logo-semiclose.webp"
@@ -110,18 +135,12 @@ export default function Header() {
               alt="Logo Mascot 2"
               className={`image ${currentImage === 4 ? "visible" : "hidden"}`}
             />
-            <img
-              src="./city.webp"
-              alt="City Background"
-              className={`image ${currentImage === 5 ? "visible" : "hidden"}`}
-            />
-
-            <div className="background-overlay"></div>
           </>
         )}
       </div>
+
       {showWelcomeText && (
-        <div className="welcome-text">
+        <div className="welcome-text fade-in">
           <a href="#about" className="explore-btn">
             EXPLORE»
           </a>

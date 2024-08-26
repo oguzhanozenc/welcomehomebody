@@ -24,7 +24,7 @@
   font-size: 1.35rem;
   font-weight: bold;
   margin-bottom: 0.5rem;
-  color: #ff00ff;
+  color: #b8b7b7;
   text-shadow: 0 0 5px #ff00ff, 0 0 10px #ff00ff;
 }
 
@@ -52,7 +52,7 @@
 .footer-card:hover {
   filter: contrast(1.2);
   transform: scale(1.05);
-  box-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff;
+  box-shadow: 0 0 10px #ff00ff, 0 0 10px #ff00ff;
 }
 
 .footer-card img {
@@ -106,7 +106,7 @@
 }
 
 .footer-social a {
-  color: #00ff00;
+  color: #7f00ff;
   margin: 0.25rem 0;
   font-size: 1rem;
   text-decoration: none;
@@ -135,8 +135,10 @@
     padding: 2rem 1rem;
   }
   .footer-content {
-    flex-direction: row-reverse;
+    flex-direction: column-reverse;
     gap: 2rem;
+
+    align-items: stretch;
   }
   .footer-card {
     padding: 1rem;

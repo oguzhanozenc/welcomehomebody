@@ -61,7 +61,7 @@ body {
 }
 
 .btn:hover {
-  box-shadow: 2.5px 5px #ff0000;
+  box-shadow: 2.5px 5px #ff00ff;
   color: #000;
 }
 

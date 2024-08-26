@@ -59,7 +59,7 @@ const RecentPosts = () => {
             <div className="button maximize"></div>
           </div>
         </div>
-        <div className="content">
+        <div className="recentposts-content">
           <div className="recentposts-container">
             <div className="recent-posts" id="blog">
               <div className="recent-posts-slider">

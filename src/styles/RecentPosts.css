@@ -146,6 +146,7 @@
 
   .recentposts--section {
     padding: 10% 0;
+    width: 100%;
   }
   .recentpost-unit {
     margin: 1rem auto;

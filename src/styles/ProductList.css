@@ -125,7 +125,8 @@
 
 @media (max-width: 1200px) {
   .product-list {
-    padding: 4%;
+    padding: 1rem;
+    width: 100%;
   }
 
   .product-list .window {
