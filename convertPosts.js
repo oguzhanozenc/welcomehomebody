@@ -25,7 +25,6 @@ export default defineConfig({
 // Function to generate posts JSON
 const generatePostsJSON = async () => {
   try {
-    // Create the output directory if it doesn't exist
     await fs.mkdir(outputDir, { recursive: true });
 
     const filenames = await fs.readdir(postsDir);
@@ -38,19 +37,19 @@ const generatePostsJSON = async () => {
         // Transform markdown content to HTML
         const htmlContent = marked(content);
 
-        // Additional data
-        const tags = data.tags || [];
+        // Resolve thumbnail path
+        const thumbnailPath = data.thumbnail.startsWith("http")
+          ? data.thumbnail
+          : `/img/uploads/${data.thumbnail}`;
 
         return {
           title: data.title,
           author: data.author,
           date: data.date,
-          thumbnail: data.thumbnail.startsWith("http")
-            ? data.thumbnail
-            : `${data.thumbnail}`,
+          thumbnail: thumbnailPath,
           featuredText: data.featuredText,
           content: htmlContent,
-          tags: tags,
+          tags: data.tags || [],
         };
       })
     );
@@ -58,7 +57,6 @@ const generatePostsJSON = async () => {
     // Sort posts by date in descending order (latest to oldest)
     posts.sort((a, b) => new Date(b.date) - new Date(a.date));
 
-    // Write posts to a JSON file
     await fs.writeFile(
       path.join(outputDir, "posts.json"),
       JSON.stringify(posts, null, 2)
