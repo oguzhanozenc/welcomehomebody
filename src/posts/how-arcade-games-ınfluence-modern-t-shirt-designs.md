@@ -2,7 +2,7 @@
 title: How Arcade Games Influence Modern T-Shirt Designs
 author: Homebody Blog
 date: 2024-08-25T22:34:00.000Z
-thumbnail: /img/post2.jpg
+thumbnail: /img/uploads/post2.jpg
 featuredText: Discover how classic arcade games inspire today's t-shirt designs,
   merging retro nostalgia with modern fashion trends.
 tags:
