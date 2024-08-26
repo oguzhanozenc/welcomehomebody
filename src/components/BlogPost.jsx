@@ -68,7 +68,7 @@ const BlogPost = () => {
                 <div className="blogpost-info">
                   <div className="blogpost-author">
                     <div id="author-avatar">
-                      <img src="/avatar.webp" alt="" />
+                      <img src="/logo-open.webp" alt="" />
                     </div>
                     <div id="infotext">
                       <small id="authorname">
