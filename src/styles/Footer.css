@@ -25,7 +25,7 @@
   font-weight: bold;
   margin-bottom: 0.5rem;
   color: #b8b7b7;
-  text-shadow: 0 0 5px #ff00ff, 0 0 10px #ff00ff;
+  text-shadow: 0 0 5px #ff00ff, 0 0 10px #ff0000;
 }
 
 .footer-logocontainer {
@@ -43,7 +43,7 @@
   font-size: 1rem;
   padding: 1rem 2rem;
   border-radius: 0.5rem;
-  border: 1px solid #ff00ff;
+  border: 1px solid #00ff00;
   gap: 1rem;
   background-color: rgba(0, 0, 0, 0.9);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -52,15 +52,16 @@
 .footer-card:hover {
   filter: contrast(1.2);
   transform: scale(1.05);
-  box-shadow: 0 0 10px #ff00ff, 0 0 10px #ff00ff;
+  box-shadow: 0 0 10px #ff0000, 0 0 10px #ff0000;
 }
 
 .footer-card img {
   width: 10rem;
-  background: linear-gradient(45deg, #ff007f, #00bfff, #7f00ff);
+  background: linear-gradient(45deg, #00ff00, #ff0000);
   padding: 0.25rem;
+  border-radius: 0.25rem;
   height: auto;
-  box-shadow: 0 0 10px #ff00ff, 0 0 20px #00bfff;
+  box-shadow: 0 0 10px #00ff00, 0 0 20px #00bfff;
 }
 
 .footer-nav {
@@ -75,11 +76,11 @@
 
 .footer-slogan {
   font-style: italic;
-  color: #ff00ff;
+  color: #fff;
   font-family: "VT323", monospace;
   font-size: 1.25rem;
   line-height: 1.5;
-  text-shadow: 0 0 5px #ff00ff;
+  text-shadow: 0 0 5px #00ff00;
 }
 
 .footer-nav a {
@@ -92,8 +93,8 @@
 }
 
 .footer-nav a:hover {
-  color: #ff00ff;
-  text-shadow: 0 0 10px #ff00ff;
+  color: #00ff00;
+  text-shadow: 0 0 10px #00ff00;
 }
 
 .footer-social {
@@ -106,20 +107,20 @@
 }
 
 .footer-social a {
-  color: #7f00ff;
+  color: #f0f0f0;
   margin: 0.25rem 0;
   font-size: 1rem;
   text-decoration: none;
-  border: 1px solid #7f00ff;
+  border: 1px solid #f0f0f0;
   padding: 0.35rem;
   border-radius: 0.25rem;
   transition: all 0.3s ease-in-out;
 }
 
 .footer-social a:hover {
-  color: #ff00ff;
+  color: #00ff00;
   background: rgba(255, 0, 255, 0.2);
-  box-shadow: 0 0 10px #ff00ff;
+  box-shadow: 0 0 10px #ff0000;
 }
 
 .footer-bottom {

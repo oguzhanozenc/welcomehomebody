@@ -46,23 +46,24 @@ const ProductList = ({ dispatch, loading, products, error, showRecent }) => {
           </div>
         </div>
         <div className="content">
-          <div className="filter-buttons">
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() =>
-                  navigate(`/products/category/${cat.toLowerCase()}`)
-                }
-                className="btn"
-              >
-                {cat}
+          {!showRecent && (
+            <div className="filter-buttons">
+              {categories.map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() =>
+                    navigate(`/products/category/${cat.toLowerCase()}`)
+                  }
+                  className="btn"
+                >
+                  {cat}
+                </button>
+              ))}
+              <button onClick={() => navigate("/products")} className="btn">
+                All Products
               </button>
-            ))}
-            <button onClick={() => navigate("/products")} className="btn">
-              All Products
-            </button>
-          </div>
-
+            </div>
+          )}
           <div className="products">
             {productsToDisplay.map((product) => {
               const productId = product.id.split("/").pop();

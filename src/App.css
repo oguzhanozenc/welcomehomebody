@@ -46,9 +46,9 @@ body {
   font-family: "VT323", monospace;
   display: block;
   padding: 0.5rem 1rem;
-  background-color: #ffb22c;
-  color: #000;
-  border: none;
+  background-color: #000;
+  color: #ffb22c;
+  border: 1px solid #00ff00;
   border-radius: 2rem;
   cursor: pointer;
   transition: background-color 0.3s ease;
@@ -57,12 +57,12 @@ body {
   letter-spacing: 1px;
   outline: none;
   text-align: center;
-  border: 2px solid #000;
+  transition: all 300ms ease;
 }
 
 .btn:hover {
-  box-shadow: 2.5px 5px #ff00ff;
-  color: #000;
+  box-shadow: 2.5px 5px #ff0000;
+  border-color: #ff0000;
 }
 
 .section-title {
