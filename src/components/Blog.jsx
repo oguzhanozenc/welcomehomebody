@@ -6,7 +6,7 @@ import slug from "slug";
 import "../styles/Blog.css";
 import { FaCircleUser } from "react-icons/fa6";
 
-const BlogPage = () => {
+const Blog = () => {
   const [posts, setPosts] = useState([]);
   const postsPerPage = 2;
   const navigate = useNavigate();
@@ -143,4 +143,4 @@ const BlogPage = () => {
   );
 };
 
-export default BlogPage;
+export default Blog;

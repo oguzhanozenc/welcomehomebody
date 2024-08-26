@@ -7,8 +7,8 @@ backend:
     update: "Update {{collection}} “{{slug}}”"
     delete: "Delete {{collection}} “{{slug}}”"
 
-media_folder: "public/img"
-public_folder: "/img"
+media_folder: "public/img/uploads"
+public_folder: "/img/uploads"
 
 collections:
   - name: "blog"
@@ -17,15 +17,47 @@ collections:
     create: true
     slug: "{{slug}}"
     fields:
-      - { label: "Title", name: "title", widget: "string" }
-      - { label: "Author", name: "author", widget: "string" }
-      - { label: "Publish Date", name: "date", widget: "datetime" }
-      - { label: "Featured Image", name: "thumbnail", widget: "image" }
-      - { label: "Featured Text", name: "featuredText", widget: "text" }
-      - { label: "Body", name: "body", widget: "markdown" }
+      - {
+          label: "Title",
+          name: "title",
+          widget: "string",
+          hint: "Enter the title of the blog post.",
+        }
+      - {
+          label: "Author",
+          name: "author",
+          widget: "string",
+          hint: "Enter the author's name.",
+        }
+      - {
+          label: "Publish Date",
+          name: "date",
+          widget: "datetime",
+          hint: "Select the publish date and time.",
+        }
+      - {
+          label: "Featured Image",
+          name: "thumbnail",
+          widget: "image",
+          hint: "Upload a featured image for the post.",
+        }
+      - {
+          label: "Featured Text",
+          name: "featuredText",
+          widget: "text",
+          hint: "Enter a short description or excerpt.",
+        }
+      - {
+          label: "Body",
+          name: "body",
+          widget: "markdown",
+          editor: "rich_text",
+          hint: "Write the main content of the post here. Use the toolbar to add images, format text, and more.",
+        }
       - {
           label: "Tags",
           name: "tags",
           widget: "list",
           field: { name: "tag", widget: "string" },
+          hint: "Add relevant tags to categorize the post.",
         }
