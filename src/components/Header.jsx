@@ -101,7 +101,7 @@ export default function Header() {
         {showPressStart && (
           <div className="press-start-screen fade-in">
             <button className="press-start-btn" onClick={handlePressStart}>
-              Press Start
+              Click to Start
             </button>
           </div>
         )}

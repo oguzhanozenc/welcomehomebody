@@ -12,7 +12,7 @@ import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import ScrollToSection from "./components/ScrollToSection";
 import NotFound from "./components/NotFound";
-import useScrollToHash from "./hooks/useScrollToHash"; // Import the custom hook
+import UseScrollToHash from "./hooks/UseScrollToHash";
 
 import "./App.css";
 
@@ -25,7 +25,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <useScrollToHash />
+      <UseScrollToHash />
       <ScrollToSection />
       <Navbar isOpen={isNavbarOpen} toggleNavbar={toggleNavbar} />
       <Routes>

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
-const useScrollToHash = () => {
+const UseScrollToHash = () => {
   const location = useLocation();
 
   useEffect(() => {
@@ -14,4 +14,4 @@ const useScrollToHash = () => {
   }, [location]);
 };
 
-export default useScrollToHash;
+export default UseScrollToHash;

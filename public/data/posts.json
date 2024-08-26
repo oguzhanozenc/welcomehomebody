@@ -1,9 +1,18 @@
 [
   {
+    "title": "trial post",
+    "author": "trial",
+    "date": "2024-08-26T19:08:00.000Z",
+    "thumbnail": "/img/uploads/post3.jpg",
+    "featuredText": "this is a trial post",
+    "content": "<p>this is a trial post</p>\n<p><img src=\"/img/uploads/post2.jpg\" alt=\"dggd\" title=\"gddg\"></p>\n",
+    "tags": []
+  },
+  {
     "title": "Level Up Your Wardrobe with Arcade-Inspired Retro Tees",
     "author": "Homebody Blog",
     "date": "2024-08-26T18:46:00.000Z",
-    "thumbnail": "//img/uploads/product3.jpg",
+    "thumbnail": "/img/uploads/product3.jpg",
     "featuredText": "Step back into the golden age of gaming with our exclusive collection of arcade-inspired retro t-shirts. Designed for true gamers and nostalgia lovers, these tees are a must-have for anyone looking to level up their style.",
     "content": "<p>Do you remember the thrill of stepping into an arcade, the sound of coins dropping into machines, and the excitement of beating high scores? At Homebody, we&#39;re bringing that nostalgic magic back with our exclusive line of arcade-inspired retro t-shirts.</p>\n<p><strong>A Tribute to the Golden Age of Gaming</strong></p>\n<p>Our collection is more than just clothing—it&#39;s a celebration of the games that defined a generation. From classic 8-bit designs to iconic characters, each tee is crafted with care to pay homage to the golden age of gaming. Whether you&#39;re a fan of space invaders, racing games, or legendary fighters, we&#39;ve got a design that speaks to your inner gamer.</p>\n<p><strong>High-Quality, Comfort, and Style</strong></p>\n<p>We know that true gamers need more than just cool designs—they need comfort and durability, too. That&#39;s why our t-shirts are made from high-quality cotton, ensuring they’re as comfortable as they are stylish. Each print is screen-printed with vibrant, fade-resistant colors that stand the test of time.</p>\n<p><strong>Perfect for Every Gamer</strong></p>\n<p>Whether you&#39;re hitting the arcade, hanging out with friends, or just relaxing at home, our retro tees are perfect for any occasion. Available in a variety of sizes, these shirts make a great gift for yourself or the gamer in your life.</p>\n<p><img src=\"/img/uploads/product1.jpg\" alt=\"\"></p>\n<p>Why Choose Homebody?</p>\n<p>At Homebody, we’re passionate about retro gaming, and it shows in everything we create. Our designs are inspired by the games we grew up playing, and we&#39;re dedicated to providing our customers with high-quality, nostalgic apparel. When you wear a Homebody t-shirt, you&#39;re not just wearing a piece of clothing—you&#39;re wearing a piece of gaming history.</p>\n<p>Get Yours Today!</p>\n<p>Ready to level up your wardrobe? Browse our full collection of arcade-inspired retro t-shirts today. And don&#39;t forget to follow us on social media for the latest updates and exclusive offers!</p>\n<p><a href=\"https://homebodyapp.netlify.app/products\">Shop Now</a></p>\n",
     "tags": [
@@ -18,7 +27,7 @@
     "title": "DIY Retro Arcade T-Shirt Customization Tips",
     "author": "Homebody Blog",
     "date": "2024-08-25T22:36:00.000Z",
-    "thumbnail": "//img/uploads/post3.jpg",
+    "thumbnail": "/img/uploads/post3.jpg",
     "featuredText": "Learn how to customize your own arcade-themed t-shirts with these simple DIY tips. Stand out with your unique designs!",
     "content": "<p>Customizing your own arcade-themed t-shirts can be a fun and rewarding project. Here are some tips to help you get started:</p>\n\n<ul>\n\n<li><strong>Choose the Right Fabric:</strong> Start with a high-quality t-shirt to ensure your design lasts.</li>\n\n<li><strong>Use Fabric Paint:</strong> Fabric paint allows you to create detailed designs that stay vibrant even after washing.</li>\n\n<li><strong>Incorporate Transfers:</strong> Iron-on transfers are a great way to apply complex designs or <li><strong>Experiment with Stencils:</strong> Stencils can help you create precise shapes and patterns inspired by arcade games.</li>\n\n<li><strong>Add Embellishments:</strong> Consider adding patches, buttons, or beads to give your t-shirt a unique touch.</li>\n\n</ul>\n\n<p>With these tips, you can create a one-of-a-kind arcade-themed t-shirt that showcases your personal style and love for retro gaming.</p>\n",
     "tags": [
@@ -32,7 +41,7 @@
     "title": "How Arcade Games Influence Modern T-Shirt Designs",
     "author": "Homebody Blog",
     "date": "2024-08-25T22:34:00.000Z",
-    "thumbnail": "//img/uploads/post2.jpg",
+    "thumbnail": "/img/uploads/post2.jpg",
     "featuredText": "Discover how classic arcade games inspire today's t-shirt designs, merging retro nostalgia with modern fashion trends.",
     "content": "<p>Arcade games have had a lasting impact on design, extending beyond the screens and into everyday fashion. Here's how they influence modern t-shirt designs:</p>\n\n<ul>\n\n<li><strong>Iconic Imagery:</strong> Many t-shirts feature classic arcade characters and symbols, tapping into nostalgia.</li>\n\n<li><strong>Pixel Art:</strong> The pixelated graphics of old games translate well into t-shirt designs, offering a retro look.</li>\n\n<li><strong>Color Schemes:</strong> Bright and bold colors from arcade games are used to make shirts stand out.</li>\n\n<li><strong>Game-Inspired Quotes:</strong> Catchy phrases and taglines from games are popular choices for t-shirt prints.</li>\n\n</ul>\n\n<p>These elements blend the charm of vintage games with contemporary fashion, creating unique and eye-catching apparel that resonates with fans of all ages.</p>\n",
     "tags": [
@@ -45,7 +54,7 @@
     "title": "Top 5 Arcade-Inspired T-Shirts of the Year",
     "author": "Homebody Blog",
     "date": "2024-08-25T22:32:00.000Z",
-    "thumbnail": "//img/uploads/post1.jpg",
+    "thumbnail": "/img/uploads/post1.jpg",
     "featuredText": "Explore the hottest arcade-themed t-shirts that are taking the fashion world by storm! Perfect for gamers and retro enthusiasts",
     "content": "<p>As the retro arcade culture continues to rise in popularity, so does the trend of arcade-inspired t-shirts. This year, several designs have captured the essence of classic games while offering modern twists. Here are our top five picks:</p>\n<li><strong>Space Invaders Tee:</strong> Featuring the iconic alien invaders in a pixelated style.</li>\n\n<li><strong>Pac-Man Ghosts Shirt:</strong> A playful design with the colorful ghosts from Pac-Man.</li>\n\n<li><strong>Donkey Kong Classic Tee:</strong> Showcasing the classic platformer in a minimalist design.</li>\n\n<li><strong>Galaga Stars T-Shirt:</strong> A stellar design with the ship and enemies from Galaga.</li>\n\n<li><strong>Street Fighter Tribute Shirt:</strong> Celebrating the beloved characters of Street Fighter.</li>\n\n<p>These t-shirts are not only stylish but also a nod to the games that shaped the arcade era. Whether you’re a gamer or a fan of retro fashion, these designs are sure to impress.</p>\n",
     "tags": [
