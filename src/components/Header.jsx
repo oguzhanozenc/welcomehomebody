@@ -8,7 +8,6 @@ export default function Header() {
   const [showWelcomeText, setShowWelcomeText] = useState(false);
   const [imagesLoaded, setImagesLoaded] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [backgroundVisible, setBackgroundVisible] = useState(false);
 
   useEffect(() => {
     const imageSources = [
@@ -29,7 +28,6 @@ export default function Header() {
         setTimeout(() => {
           setImagesLoaded(true);
           setLoading(false);
-          setBackgroundVisible(true);
           setTimeout(() => {
             setShowPressStart(true);
           }, 500);
@@ -85,7 +83,7 @@ export default function Header() {
     <header className="header" id="home">
       <div
         className={`header-container ${loading ? "loading" : ""} ${
-          backgroundVisible ? "background-visible" : ""
+          showMainScene ? "main-scene" : ""
         }`}
       >
         {loading && (
@@ -110,6 +108,7 @@ export default function Header() {
 
         {showMainScene && (
           <>
+            <div className="background-overlay"></div>
             <img
               src="./logo-close.webp"
               alt="Logo Close"

@@ -3,7 +3,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { RiArrowRightDoubleLine, RiArrowLeftDoubleLine } from "react-icons/ri";
 import { v4 as uuidv4 } from "uuid";
 import slug from "slug";
-import "../styles/BlogPage.css";
+import "../styles/Blog.css";
 import { FaCircleUser } from "react-icons/fa6";
 
 const BlogPage = () => {
@@ -51,6 +51,7 @@ const BlogPage = () => {
       <div id="blogsectiontitle">
         <h2 className="section-title">Recent Posts</h2>
       </div>
+
       <div className="blogpage-postscontainer">
         {currentPosts.map((post, index) => {
           const postUrl = `${window.location.origin}/blog/${slug(post.title, {
@@ -64,42 +65,54 @@ const BlogPage = () => {
                 to={`/blog/${slug(post.title, { lower: true })}`}
                 className="blogpage-link"
               >
-                <div className="blogpage-postunit">
-                  {post.thumbnail && (
-                    <img
-                      src={post.thumbnail}
-                      alt={post.title}
-                      style={{ maxWidth: "100%" }}
-                    />
-                  )}
-                  <div className="blogpage-postcontent">
-                    <h2>{post.title}</h2>
-                    <div className="blogpage-postinfo">
-                      <small id="blogpage-postdate">
-                        {new Date(post.date).toLocaleDateString()}
-                      </small>
+                {" "}
+                <div className="window">
+                  <div className="title-bar">
+                    <div className="buttons">
+                      <div className="button close"></div>
+                      <div className="button minimize"></div>
+                      <div className="button maximize"></div>
                     </div>
-                    <div className="featuredtext">
-                      {post.featuredText && (
-                        <p>
-                          {post.featuredText.length > 150
-                            ? `${post.featuredText.substring(0, 150)}...`
-                            : post.featuredText}
+                  </div>
+                  <div className="blogpage-postunit content">
+                    {post.thumbnail && (
+                      <img
+                        src={post.thumbnail}
+                        alt={post.title}
+                        style={{ maxWidth: "100%" }}
+                      />
+                    )}
+                    <div className="blogpage-postcontent">
+                      <h2>{post.title}</h2>
+                      <div className="blogpage-postinfo">
+                        <small id="blogpage-postdate">
+                          {new Date(post.date).toLocaleDateString()}
+                        </small>
+                      </div>
+                      <div className="featuredtext">
+                        {post.featuredText && (
+                          <p>
+                            {post.featuredText.length > 150
+                              ? `${post.featuredText.substring(0, 150)}...`
+                              : post.featuredText}
+                          </p>
+                        )}
+                      </div>
+                      <div className="readmorelink">
+                        <p className="readmorebtn">
+                          Read More
+                          <RiArrowRightDoubleLine />
                         </p>
-                      )}
-                    </div>
-                    <div className="readmorelink">
-                      <p className="readmorebtn">
-                        Read More
-                        <RiArrowRightDoubleLine />
-                      </p>
-                    </div>
-                    <div className="blogpage-bottomcontainer">
-                      <div id="blogpage-postauthor">
-                        <FaCircleUser />
-                        <span>
-                          {post?.author ? `${post.author}` : "Offbeat Security"}
-                        </span>
+                      </div>
+                      <div className="blogpage-bottomcontainer">
+                        <div id="blogpage-postauthor">
+                          <FaCircleUser />
+                          <span>
+                            {post?.author
+                              ? `${post.author}`
+                              : "Offbeat Security"}
+                          </span>
+                        </div>
                       </div>
                     </div>
                   </div>
