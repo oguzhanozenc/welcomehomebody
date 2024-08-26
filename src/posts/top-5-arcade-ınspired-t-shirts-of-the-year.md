@@ -2,7 +2,7 @@
 title: Top 5 Arcade-Inspired T-Shirts of the Year
 author: Homebody Blog
 date: 2024-08-25T22:32:00.000Z
-thumbnail: /img/post1.jpg
+thumbnail: /img/uploads/post1.jpg
 featuredText: Explore the hottest arcade-themed t-shirts that are taking the
   fashion world by storm! Perfect for gamers and retro enthusiasts
 tags:
