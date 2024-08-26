@@ -37,9 +37,9 @@ const Navbar = () => {
           <NavLink to="/" className="nav-link" onClick={toggleNav}>
             HOME
           </NavLink>
-          <a href="#about" className="nav-link" onClick={toggleNav}>
+          <Link to="/#about" className="nav-link" onClick={toggleNav}>
             ABOUT
-          </a>
+          </Link>
           <NavLink to="/products" className="nav-link" onClick={toggleNav}>
             PRODUCTS
           </NavLink>

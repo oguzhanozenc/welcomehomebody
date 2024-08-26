@@ -11,6 +11,10 @@
   color: #fff;
   width: 80%;
 }
+.productlist-loading {
+  margin: 0 auto;
+  text-align: center;
+}
 
 .product-list .content {
   padding: 2rem 1rem;

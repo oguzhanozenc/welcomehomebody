@@ -1,17 +1,38 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { fetchProducts } from "../actions/productActions";
 import "../styles/ProductList.css";
 
-const ProductList = ({ dispatch, loading, products, error }) => {
+const ProductList = ({ dispatch, loading, products, error, showRecent }) => {
+  const navigate = useNavigate();
+  const { category } = useParams();
+
   useEffect(() => {
     dispatch(fetchProducts());
   }, [dispatch]);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <div className="productlist-loading">Loading...</div>;
   if (error)
     return <div>Error! {error.message || "An unknown error occurred"}</div>;
+
+  // Get unique categories from products
+  const categories = [...new Set(products.map((product) => product.category))];
+
+  // Filter products based on the category from the URL
+  const filteredProducts = category
+    ? products.filter(
+        (product) => product.category.toLowerCase() === category.toLowerCase()
+      )
+    : products;
+
+  const productsToDisplay = showRecent
+    ? filteredProducts.slice(-4)
+    : filteredProducts;
+
+  const handleSeeAllProducts = () => {
+    navigate("/products");
+  };
 
   return (
     <div className="product-list" id="products">
@@ -25,10 +46,26 @@ const ProductList = ({ dispatch, loading, products, error }) => {
           </div>
         </div>
         <div className="content">
+          <div className="filter-buttons">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() =>
+                  navigate(`/products/category/${cat.toLowerCase()}`)
+                }
+                className="btn"
+              >
+                {cat}
+              </button>
+            ))}
+            <button onClick={() => navigate("/products")} className="btn">
+              All Products
+            </button>
+          </div>
+
           <div className="products">
-            {products.map((product) => {
+            {productsToDisplay.map((product) => {
               const productId = product.id.split("/").pop();
-              console.log("Product ID in ProductList:", productId);
               return (
                 <div className="product" key={productId}>
                   {product.images && product.images.length > 0 ? (
@@ -59,6 +96,14 @@ const ProductList = ({ dispatch, loading, products, error }) => {
               );
             })}
           </div>
+
+          {showRecent && (
+            <div className="see-all-products">
+              <button onClick={handleSeeAllProducts} className="btn">
+                See All Products
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>

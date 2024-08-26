@@ -11,8 +11,7 @@ const Home = () => {
       <Header />
       <main>
         <About />
-
-        <ProductList />
+        <ProductList showRecent={true} />
 
         <RecentPosts />
         <Contact />

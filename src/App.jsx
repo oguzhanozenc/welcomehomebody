@@ -11,39 +11,13 @@ import Navbar from "./components/Navbar";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import ScrollToSection from "./components/ScrollToSection";
+import NotFound from "./components/NotFound";
+import useScrollToHash from "./hooks/useScrollToHash"; // Import the custom hook
 
 import "./App.css";
 
 function App() {
   const [isNavbarOpen, setNavbarOpen] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollTop = window.scrollY;
-      const windowHeight = window.innerHeight;
-      const documentHeight = document.body.clientHeight;
-      const scrollPercentage = scrollTop / (documentHeight - windowHeight);
-
-      const backgroundColor =
-        scrollPercentage <= 0.15
-          ? "#000"
-          : scrollPercentage <= 0.25
-          ? "#ffde4d"
-          : scrollPercentage <= 0.5
-          ? "#ff4c4c"
-          : scrollPercentage <= 0.75
-          ? "#ffb22c"
-          : "#f3feb8";
-
-      document.body.style.backgroundColor = backgroundColor;
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
 
   const toggleNavbar = () => {
     setNavbarOpen((prev) => !prev);
@@ -51,6 +25,7 @@ function App() {
 
   return (
     <BrowserRouter>
+      <useScrollToHash />
       <ScrollToSection />
       <Navbar isOpen={isNavbarOpen} toggleNavbar={toggleNavbar} />
       <Routes>
@@ -62,11 +37,12 @@ function App() {
         <Route path="blog/:slug" element={<BlogPost />} />
         <Route path="contact" element={<Contact />} />
         <Route path="/products" element={<ProductList />} />
+        <Route path="/products/category/:category" element={<ProductList />} />
         <Route path="/products/:productId" element={<ProductDetails />} />
         <Route path="/checkout" element={<CheckoutPage />} />
         <Route path="/cart" element={<Cart />} />
-        <Route path="*" element={<Home />} />
-      </Routes>{" "}
+        <Route path="*" element={<NotFound />} />
+      </Routes>
       <Footer />
     </BrowserRouter>
   );

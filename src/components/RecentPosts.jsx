@@ -114,10 +114,9 @@ const RecentPosts = () => {
                 </div>
               </div>{" "}
               <div className="linktoblog">
-                <Link to="/" className=" btn " id="linktoblog">
-                  {" "}
-                  View all posts{" "}
-                </Link>{" "}
+                <Link to="/blog" className="btn">
+                  View all Posts
+                </Link>
               </div>
             </div>
           </div>

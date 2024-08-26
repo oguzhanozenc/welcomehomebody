@@ -19,16 +19,6 @@
   border-radius: 0.5rem;
 }
 
-#linktoblog {
-  border-radius: 0.25rem;
-  font-size: 0.9rem;
-  margin: 1rem auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
 .linktoblog {
   display: flex;
   flex-direction: column;
@@ -38,7 +28,6 @@
   border-radius: 0.5rem;
   padding: 1rem 0.5rem;
   width: 100%;
-
   padding: 1rem 0.5rem;
 }
 
@@ -190,10 +179,7 @@
   .linktoblog h3 {
     font-size: 1.25rem;
   }
-  #linktoblog {
-    font-size: 0.8rem;
-    padding: 0.5rem 1rem;
-  }
+
   .slick-slider {
     margin: 0;
   }
