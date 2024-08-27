@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { connect } from "react-redux";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { fetchProducts } from "../actions/productActions";
@@ -97,7 +97,6 @@ const ProductList = ({ dispatch, loading, products, error, showRecent }) => {
               );
             })}
           </div>
-
           {showRecent && (
             <div className="see-all-products">
               <button onClick={handleSeeAllProducts} className="btn">

@@ -3,7 +3,6 @@ import { NavLink, Link } from "react-router-dom";
 import "../styles/Navbar.css";
 import { GiHamburgerMenu, GiCancel } from "react-icons/gi";
 import { FaShoppingCart } from "react-icons/fa";
-import Cart from "./Cart";
 
 const Navbar = () => {
   const [isNavOpen, setNavOpen] = useState(false);
@@ -56,7 +55,6 @@ const Navbar = () => {
           </button>
         </div>
       </div>
-      <Cart isOpen={isCartOpen} toggleCart={toggleCart} />
     </nav>
   );
 };
