@@ -6,7 +6,7 @@ import Blog from "./components/Blog";
 import BlogPost from "./components/BlogPost";
 import ProductList from "./components/ProductList";
 import ProductDetails from "./components/ProductDetails";
-import CheckoutPage from "./components/CheckoutPage";
+
 import Navbar from "./components/Navbar";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
@@ -58,7 +58,6 @@ function App() {
         <Route path="/products" element={<ProductList />} />
         <Route path="/products/category/:category" element={<ProductList />} />
         <Route path="/products/:productId" element={<ProductDetails />} />
-        <Route path="/checkout" element={<CheckoutPage />} />
 
         <Route path="*" element={<NotFound />} />
       </Routes>

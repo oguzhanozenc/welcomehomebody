@@ -1,15 +1,15 @@
 @import url("https://fonts.googleapis.com/css2?family=Georgia:wght@400;700&display=swap");
 
 .blogpost--section {
-  padding: 10%;
+  padding: 10% 5%;
   font-family: "Roboto Mono", monospace;
   line-height: 1.8;
-  width: 90%;
+  width: 100%;
   margin: 0 auto;
 }
 
 .postpage {
-  max-width: 1200px;
+  max-width: 1000px;
   margin: 0 auto;
   z-index: 99;
 }
@@ -26,12 +26,13 @@
 
 #blogpost--title {
   font-family: "Roboto Mono", monospace;
-  font-size: 2.625rem;
+  font-size: 2.5rem;
   font-weight: 800;
   color: #242424;
-  text-align: left;
+  text-align: justify;
   letter-spacing: -0.011em;
-  padding: 0;
+  padding: 0.5rem 0;
+  line-height: 1.5;
 }
 
 .blogpost-author {
@@ -90,6 +91,9 @@
 
 .blogpost--thumbnail {
   padding: 2rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #featuredtextpart {
@@ -101,7 +105,7 @@
   line-height: 1.5;
 }
 
-.blogpost--content {
+.blogpost-contentcontainer {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -112,14 +116,21 @@
   font-size: 1.25rem;
 }
 
-.blogpost--content img {
-  max-width: 100%;
+.blogpost-contentcontainer img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 90%;
   height: auto;
-  margin: 2rem 0;
+  margin: 2rem auto;
 }
 
-.blogpost--content a {
+.blogpost-contentcontainer a {
   text-decoration: underline;
+}
+
+.blogpost-content {
+  text-align: left;
 }
 
 .blogpost-info {

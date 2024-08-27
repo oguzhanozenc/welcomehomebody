@@ -95,23 +95,7 @@
   transform: translateY(-3px);
 }
 
-.cart-toggle {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0.5rem;
-  color: #00bfff;
-  font-size: 1.5rem;
-  text-shadow: 0 0 5px #ff00ff, 0 0 10px #ff00ff;
-  transition: color 0.3s ease, transform 0.3s ease;
-}
-
-.cart-toggle:hover {
-  color: #00bfff;
-  transform: scale(1.1);
-}
-
-.card-icon {
+.cart-icon {
   width: 3rem;
   margin: 0 1rem;
   height: auto;
@@ -119,6 +103,11 @@
   background: linear-gradient(45deg, #ff0000, #00ff00);
   border-radius: 0.25rem;
   padding: 0.25rem;
+}
+
+.cart-btn {
+  border: none;
+  background: none;
 }
 
 @media (min-width: 769px) {

@@ -54,7 +54,7 @@ const BlogPost = () => {
           </button>
         </div>
         <div className="blogpost--container">
-          <div className="blogpost--content">
+          <div className="blogpost-contentcontainer">
             {post ? (
               <div>
                 <h1 id="blogpost--title">{post.title}</h1>
@@ -112,7 +112,7 @@ const BlogPost = () => {
 
             {post?.content && (
               <section
-                className="content"
+                className="blogpost-content"
                 dangerouslySetInnerHTML={{ __html: post.content }}
               />
             )}

@@ -8,6 +8,11 @@
   padding: 10 5%;
 }
 
+.productpage-loading {
+  font-family: "Press Start 2P", monospace;
+  font-size: 2rem;
+}
+
 .retro-window {
   width: 90%;
   max-width: 50rem;
@@ -19,6 +24,13 @@
   font-family: "Press Start 2P", cursive;
 }
 
+#product-window {
+  background-color: rgb(255, 255, 255, 0.8);
+}
+
+.bagitbtn-container {
+  margin: 1rem auto;
+}
 .content {
   padding: 2rem;
   text-align: center;
@@ -36,7 +48,7 @@
   width: 100%;
   max-width: 20rem;
   height: auto;
-  padding: 1rem;
+
   cursor: url("/pointer.png"), auto;
 }
 

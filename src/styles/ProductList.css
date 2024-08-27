@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
 
-.product-list {
+.product-list,
+.productlist-loading {
   margin: 10% auto;
   padding: 10 2.5%;
   display: flex;
@@ -11,9 +12,10 @@
   color: #fff;
   width: 80%;
 }
+
 .productlist-loading {
-  margin: 0 auto;
-  text-align: center;
+  font-family: "Press Start 2P", monospace;
+  font-size: 2rem;
 }
 
 .product-list .content {

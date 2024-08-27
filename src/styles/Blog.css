@@ -1,4 +1,4 @@
-.blogpage--section {
+.blog--section {
   padding: 10% 5%;
   font-family: "Roboto Mono", monospace;
   margin: 0 auto;
@@ -8,7 +8,14 @@
   align-items: center;
 }
 
-.blogpage-postscontainer {
+#recentposts-title {
+  font-family: "Press Start 2P", monospace;
+  color: #fff;
+  font-size: 2.5rem;
+  padding: 1rem;
+}
+
+.blog-postscontainer {
   display: grid;
   grid-template-columns: 1fr 1fr;
   line-height: 1.5;
@@ -16,16 +23,8 @@
   justify-content: space-between;
 }
 
-.blogpage-link {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  width: 100%;
-}
-
-.blogpage-postunit {
-  background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.2)), #fff;
+.blog-postunit {
+  background: #fff;
   box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
   text-align: justify;
   display: flex;
@@ -35,14 +34,19 @@
   height: 100%;
 }
 
-.blogpage-postunit img {
+.blogpost-link {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.blog-postunit img {
   height: 18rem;
   width: auto;
   object-fit: cover;
-  border-radius: 0.4rem 0.4rem 0 0;
 }
 
-.blogpage-bottomcontainer {
+.blog-bottomcontainer {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -52,32 +56,34 @@
   padding: 0.5rem 0;
 }
 
-#blogpage-postauthor {
+#blog-postauthor {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   font-size: 0.9rem;
+  padding: 0 0 1rem 0;
 }
 
-#blogpage-postauthor svg {
+#blog-postauthor svg {
   margin-right: 0.25rem;
 }
 
-.blogpage-postcontent {
-  padding: 1rem 2rem;
+.blog-postcontent {
+  padding: 1rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: stretch;
   flex: 1;
+  text-align: justify;
 }
 
 .featuredtext {
   line-height: 2rem;
 }
 
-#blogpage-postdate {
+#blog-postdate {
   display: flex;
   justify-content: flex-end;
   color: #666;
@@ -108,7 +114,7 @@
   color: #1d1d1d;
 }
 
-.blogpage-postinfo {
+.blog-postinfo {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
@@ -148,15 +154,15 @@
 }
 
 @media only screen and (max-width: 1200px) {
-  .blogpage--section {
+  .blog--section {
     padding: 15% 1rem 1rem 1rem;
   }
 
-  .blogpage-postscontainer {
+  .blog-postscontainer {
     grid-template-columns: 1fr;
     grid-gap: 3%;
   }
-  .blogpage-postcontent h2 {
+  .blog-postcontent h2 {
     font-size: 1.5rem;
   }
   #blogsectiontitle {
@@ -166,17 +172,17 @@
 }
 
 @media only screen and (max-width: 450px) {
-  .blogpage--section {
+  .blog--section {
     padding: 25% 0 0 0;
   }
 
-  .blogpage-postscontainer {
+  .blog-postscontainer {
     grid-gap: 0.75%;
   }
-  .blogpage-postcontent h2 {
+  .blog-postcontent h2 {
     font-size: 1.35rem;
   }
-  #blogpage-postdate {
+  #blog-postdate {
     font-size: 0.7rem;
   }
   #blogsectiontitle {

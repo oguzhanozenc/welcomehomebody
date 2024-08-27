@@ -1,20 +1,21 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { NavLink, Link } from "react-router-dom";
 import "../styles/Navbar.css";
 import { GiHamburgerMenu, GiCancel } from "react-icons/gi";
-import { FaShoppingCart } from "react-icons/fa";
 
 const Navbar = () => {
   const [isNavOpen, setNavOpen] = useState(false);
-  const [isCartOpen, setCartOpen] = useState(false);
+
   const navRef = useRef(null);
 
   const toggleNav = () => {
     setNavOpen((prev) => !prev);
   };
 
-  const toggleCart = () => {
-    setCartOpen((prev) => !prev);
+  const handleCartClick = () => {
+    window.location.href = `https://${
+      import.meta.env.VITE_SHOPIFY_DOMAIN
+    }/cart`;
   };
 
   return (
@@ -49,9 +50,9 @@ const Navbar = () => {
             CONTACT
           </NavLink>
         </div>
-        <div>
-          <button className="cart-toggle" onClick={toggleCart}>
-            <img src="/basket.png" className="card-icon" alt="" />
+        <div className="cart-icon-container">
+          <button className="cart-btn" onClick={handleCartClick}>
+            <img src="/basket.png" className="cart-icon" alt="Cart" />
           </button>
         </div>
       </div>
