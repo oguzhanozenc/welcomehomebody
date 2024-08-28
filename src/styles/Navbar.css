@@ -46,7 +46,7 @@
   cursor: pointer;
   border-radius: 5px;
   padding: 0.5rem;
-  color: #ff00ff;
+  color: #ff0000;
   display: block;
   font-size: 1.5rem;
   text-shadow: 0 0 5px #ff00ff, 0 0 10px #ff00ff;
@@ -54,7 +54,7 @@
 }
 
 .menu-toggle:hover {
-  color: #00bfff;
+  color: #00ff00;
   transform: scale(1.1);
 }
 
