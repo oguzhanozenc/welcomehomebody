@@ -1,4 +1,4 @@
-import { , useEffect } from "react";
+import { useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./components/Home";
 
@@ -10,7 +10,7 @@ import ProductDetails from "./components/ProductDetails";
 import Navbar from "./components/Navbar";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
-import ScrollToSection from "./components/ScrollToSection";
+
 import NotFound from "./components/NotFound";
 import UseScrollToHash from "./hooks/UseScrollToHash";
 
@@ -48,7 +48,7 @@ function App() {
   return (
     <BrowserRouter>
       <UseScrollToHash />
-      <ScrollToSection />
+
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
