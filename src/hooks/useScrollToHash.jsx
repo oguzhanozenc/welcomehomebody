@@ -12,6 +12,8 @@ const UseScrollToHash = () => {
       }
     }
   }, [location]);
+
+  return null;
 };
 
 export default UseScrollToHash;
