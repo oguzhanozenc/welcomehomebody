@@ -1,46 +1,207 @@
-import { useDispatch } from "react-redux";
+import { useState, useEffect, useCallback } from "react";
+import { gql } from "graphql-request";
+import client from "../client";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart, updateCartQuantity } from "../actions/cartActions";
 
 export const useShopifyCart = () => {
   const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.cart.items);
+  const [checkoutId, setCheckoutId] = useState(
+    () => sessionStorage.getItem("checkoutId") || null
+  );
 
-  const extractNumericVariantId = (variantId) => {
-    // If the variantId is in the Shopify Global ID format, extract the numeric ID
-    if (variantId.startsWith("gid://shopify/ProductVariant/")) {
-      return variantId.split("/").pop(); // This gets the numeric part of the ID
+  const getProductDetailsByVariantId = (variantId) => {
+    return cartItems.find((item) => item.variant.id === variantId)?.product;
+  };
+
+  useEffect(() => {
+    sessionStorage.setItem("cartItems", JSON.stringify(cartItems));
+  }, [cartItems]);
+
+  const createCheckout = async (lineItems) => {
+    try {
+      const mutation = gql`
+        mutation checkoutCreate($input: CheckoutCreateInput!) {
+          checkoutCreate(input: $input) {
+            checkout {
+              id
+              webUrl
+            }
+          }
+        }
+      `;
+
+      const variables = {
+        input: {
+          lineItems,
+        },
+      };
+
+      const response = await client.request(mutation, variables);
+      const newCheckoutId = response.checkoutCreate.checkout.id;
+
+      setCheckoutId(newCheckoutId);
+      sessionStorage.setItem("checkoutId", newCheckoutId);
+
+      return newCheckoutId;
+    } catch (error) {
+      console.error("Error creating checkout:", error);
+      throw new Error("Checkout creation failed.");
     }
-    return variantId; // Otherwise, return the ID as is
   };
 
   const addToCartInShopify = async (variantId, quantity = 1) => {
     try {
-      const numericVariantId = extractNumericVariantId(variantId);
+      let currentCheckoutId = checkoutId;
 
-      // Ensure the variant ID is in numeric format
-      if (!numericVariantId || isNaN(numericVariantId)) {
-        throw new Error("Invalid numeric variant ID");
+      // If there's no checkout ID, create a new checkout
+      if (!currentCheckoutId) {
+        currentCheckoutId = await createCheckout([{ variantId, quantity }]);
       }
 
-      // Replace with your actual Shopify store domain
-      const shopifyDomain = import.meta.env.VITE_SHOPIFY_DOMAIN;
+      const mutation = gql`
+        mutation ($checkoutId: ID!, $lineItems: [CheckoutLineItemInput!]!) {
+          checkoutLineItemsAdd(checkoutId: $checkoutId, lineItems: $lineItems) {
+            checkout {
+              id
+              webUrl
+              lineItems(first: 10) {
+                edges {
+                  node {
+                    id
+                    title
+                    quantity
+                    variant {
+                      id
+                      priceV2 {
+                        amount
+                        currencyCode
+                      }
+                      product {
+                        title
+                        images(first: 1) {
+                          edges {
+                            node {
+                              src
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      `;
 
-      // Construct the cart URL
-      const cartUrl = `https://${shopifyDomain}/cart/add?id=${numericVariantId}&quantity=${quantity}`;
+      const variables = {
+        checkoutId: currentCheckoutId,
+        lineItems: [
+          {
+            variantId,
+            quantity,
+          },
+        ],
+      };
 
-      // Redirect to Shopify cart page
-      window.location.href = cartUrl;
+      const response = await client.request(mutation, variables);
+      const checkout = response.checkoutLineItemsAdd.checkout;
+
+      const newItem = checkout.lineItems.edges.find(
+        (item) => item.node.variant.id === variantId
+      );
+
+      if (newItem) {
+        dispatch(
+          addToCart({
+            product: {
+              id: newItem.node.id,
+              title: newItem.node.variant.product.title,
+              images: [newItem.node.variant.product.images.edges[0].node.src],
+            },
+            variant: {
+              id: newItem.node.variant.id,
+              priceV2: newItem.node.variant.priceV2,
+            },
+            quantity: newItem.node.quantity,
+          })
+        );
+      }
+
+      console.log("Item added to Shopify cart:", checkout);
     } catch (error) {
-      console.error("Error adding to Shopify cart:", error.message);
+      console.error("Error adding to Shopify cart:", error);
+      throw new Error("Adding to cart failed.");
     }
   };
 
   const handleAddToCart = (variantId, quantity = 1) => {
-    if (!variantId) {
-      console.error("Variant ID is required to add to cart");
-      return;
-    }
+    try {
+      const existingItem = cartItems.find(
+        (item) => item.variant.id === variantId
+      );
 
-    addToCartInShopify(variantId, quantity);
+      if (existingItem) {
+        dispatch(
+          updateCartQuantity(variantId, existingItem.quantity + quantity)
+        );
+      } else {
+        const product = getProductDetailsByVariantId(variantId);
+
+        if (product) {
+          dispatch(
+            addToCart({
+              product,
+              variant: product.variants.find((v) => v.id === variantId),
+              quantity,
+            })
+          );
+        }
+      }
+
+      addToCartInShopify(variantId, quantity);
+    } catch (error) {
+      console.error("Error handling add to cart:", error);
+    }
   };
 
-  return { handleAddToCart };
+  const handleCheckout = async () => {
+    try {
+      let currentCheckoutId = checkoutId;
+
+      if (!currentCheckoutId) {
+        currentCheckoutId = await createCheckout(
+          cartItems.map((item) => ({
+            variantId: item.variant.id,
+            quantity: item.quantity,
+          }))
+        );
+      }
+
+      const query = gql`
+        query getCheckout($id: ID!) {
+          node(id: $id) {
+            ... on Checkout {
+              id
+              webUrl
+            }
+          }
+        }
+      `;
+
+      const variables = { id: currentCheckoutId };
+      const response = await client.request(query, variables);
+
+      const checkoutUrl = response.node.webUrl;
+      window.location.href = checkoutUrl;
+    } catch (error) {
+      console.error("Checkout failed:", error);
+      throw new Error("Checkout process failed.");
+    }
+  };
+
+  return { handleAddToCart, handleCheckout };
 };

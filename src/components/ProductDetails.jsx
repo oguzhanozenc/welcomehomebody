@@ -17,7 +17,7 @@ const ProductDetails = () => {
   const [selectedVariant, setSelectedVariant] = useState(null);
   const slider = useRef(null);
 
-  const { handleAddToCart } = useShopifyCart();
+  const { handleAddToCart, handleCheckout } = useShopifyCart();
 
   useEffect(() => {
     if (productId) {
@@ -46,8 +46,7 @@ const ProductDetails = () => {
     setCurrentSlide(index);
   };
 
-  if (loading)
-    return <div className="product-page productpage-loading">Loading...</div>;
+  if (loading) return <div className="product-page">Loading...</div>;
   if (error) return <div className="product-page">Error: {error}</div>;
   if (!product) return <div className="product-page">Product not found.</div>;
 
@@ -61,6 +60,7 @@ const ProductDetails = () => {
         selectedVariant={selectedVariant}
         setSelectedVariant={setSelectedVariant}
         handleAddToCart={() => handleAddToCart(selectedVariant?.id)}
+        handleCheckout={handleCheckout}
         slider={slider}
       />
     </div>

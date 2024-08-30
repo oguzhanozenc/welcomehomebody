@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { NavLink } from "react-router-dom";
 import "../styles/Header.css";
 
 export default function Header() {
@@ -140,9 +141,9 @@ export default function Header() {
 
       {showWelcomeText && (
         <div className="welcome-text fade-in">
-          <a href="#about" className="explore-btn">
+          <NavLink to="products" className="explore-btn">
             EXPLORE»
-          </a>
+          </NavLink>
         </div>
       )}
     </header>

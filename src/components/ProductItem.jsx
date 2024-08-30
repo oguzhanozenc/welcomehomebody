@@ -4,7 +4,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { GrPrevious, GrNext } from "react-icons/gr";
-
+import CheckoutButton from "./CheckoutButton";
 import "../styles/ProductItem.css";
 
 const ProductItem = ({
@@ -15,7 +15,7 @@ const ProductItem = ({
   selectedVariant,
   setSelectedVariant,
   handleAddToCart,
-
+  checkout,
   slider,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -43,7 +43,7 @@ const ProductItem = ({
 
   return (
     <div className="product-page">
-      <div className="window retro-window" id="product-window">
+      <div className="window retro-window">
         <div className="title-bar">
           <div className="title">{product.title}</div>
           <div className="buttons">
@@ -174,14 +174,14 @@ const ProductItem = ({
                   ))}
                 </select>
               )}
-              <div className="bagitbtn-container">
-                <button
-                  className="btn"
-                  onClick={() => handleAddToCart(selectedVariant?.id)}
-                >
-                  BAG IT
-                </button>
-              </div>
+              <button
+                className="btn"
+                onClick={() => handleAddToCart(selectedVariant?.id)}
+              >
+                BAG IT
+              </button>
+
+              {checkout && checkout.lineItems.length > 0 && <CheckoutButton />}
             </div>
           </div>
         </div>

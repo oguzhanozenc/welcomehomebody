@@ -1,12 +1,11 @@
-@import url("https://fonts.googleapis.com/css2?family=VT323&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Rethink+Sans:ital,wght@0,400..800;1,400..800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&familyto+Mono:ital,wght@0,100..700;1,100..700&display=swap");
 
 :root {
   --color-top: #000;
   --color-start: #f3feb8;
-  --color-middle: #ffde4d;
-  --color-end: #ffb22c;
+  --color-middle: #ffb22c;
+  --color-end: #ffde4d;
   --color-bottom: #ff4c4c;
 
   cursor: url("/cursor.png"), auto;
@@ -31,8 +30,9 @@ html {
 }
 
 body {
-  font-family: "Roboto Mono", monospace;
-  font-weight: 400;
+  font-family: "Rethink Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
   font-style: normal;
   background: var(--color-top);
   color: #fff;
@@ -43,17 +43,15 @@ body {
 }
 
 .btn {
-  font-family: "VT323", monospace;
+  font-family: "Rethink Sans", sans-serif;
   display: block;
   padding: 0.5rem 1rem;
-  background-color: #000;
-  color: #ffb22c;
-  border: 1px solid #00ff00;
+  color: #fff;
+  background-color: #ff4c4c;
   border-radius: 2rem;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  text-transform: uppercase;
-  font-size: 1.5rem;
+  font-size: 1rem;
   letter-spacing: 1px;
   outline: none;
   text-align: center;
@@ -61,8 +59,7 @@ body {
 }
 
 .btn:hover {
-  box-shadow: 2.5px 5px #ff0000;
-  border-color: #ff0000;
+  background-color: #cc2a2a;
 }
 
 .section-title {
@@ -89,7 +86,7 @@ body {
   align-items: center;
   padding: 0.5rem;
   font-size: 1.2rem;
-  font-family: "Roboto Mono", monospace;
+  font-family: "Rethink Sans", sans-serif;
 }
 
 .title-bar .title-bar-text {
@@ -115,7 +112,7 @@ body {
 }
 
 .button {
-  font-family: "VT323", monospace;
+  font-family: "Rethink Sans", sans-serif;
   width: 0.75rem;
   height: 0.75rem;
   border-radius: 50%;

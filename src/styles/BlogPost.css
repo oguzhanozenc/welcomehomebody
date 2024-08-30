@@ -2,7 +2,7 @@
 
 .blogpost--section {
   padding: 10% 5%;
-  font-family: "Roboto Mono", monospace;
+
   line-height: 1.8;
   width: 100%;
   margin: 0 auto;
@@ -25,7 +25,6 @@
 }
 
 #blogpost--title {
-  font-family: "Roboto Mono", monospace;
   font-size: 2.5rem;
   font-weight: 800;
   color: #242424;
@@ -65,7 +64,7 @@
 #followlink {
   color: #e446ff;
   font-weight: 500;
-  font-family: "Roboto Mono", monospace;
+
   font-size: 1rem;
   transition: all 300ms ease;
 }
@@ -76,7 +75,6 @@
 
 #infotext small {
   margin: 0 0 0 0.25rem;
-  font-family: "Roboto Mono", monospace;
 }
 
 #authorname {
@@ -97,7 +95,6 @@
 }
 
 #featuredtextpart {
-  font-family: "Roboto Mono", monospace;
   font-size: 1.375rem;
   color: #6b6b6b;
   margin: 0.5rem 0 1rem 0;
@@ -111,7 +108,7 @@
   justify-content: center;
   line-height: 1.8;
   text-align: justify;
-  font-family: "Roboto Mono", monospace;
+
   color: #242424;
   font-size: 1.25rem;
 }

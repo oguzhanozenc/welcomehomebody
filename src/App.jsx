@@ -1,20 +1,21 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
 import Home from "./components/Home";
+import Footer from "./components/Footer";
+import UseScrollToHash from "./hooks/UseScrollToHash";
+import "./App.css";
 
 import Blog from "./components/Blog";
 import BlogPost from "./components/BlogPost";
 import ProductList from "./components/ProductList";
 import ProductDetails from "./components/ProductDetails";
-
-import Navbar from "./components/Navbar";
+import CheckoutPage from "./components/CheckoutPage";
 import Contact from "./components/Contact";
-import Footer from "./components/Footer";
-
+import About from "./components/About";
+import ReviewCart from "./components/ReviewCart";
+import Account from "./components/Account";
 import NotFound from "./components/NotFound";
-import UseScrollToHash from "./hooks/UseScrollToHash";
-
-import "./App.css";
 
 function App() {
   useEffect(() => {
@@ -48,16 +49,23 @@ function App() {
   return (
     <BrowserRouter>
       <UseScrollToHash />
-
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="about" element={<About />} />
         <Route path="blog" element={<Blog />} />
         <Route path="blog/:slug" element={<BlogPost />} />
         <Route path="contact" element={<Contact />} />
         <Route path="/products" element={<ProductList />} />
         <Route path="/products/category/:category" element={<ProductList />} />
         <Route path="/products/:productId" element={<ProductDetails />} />
+        <Route
+          path="/products/search/:searchTerm"
+          element={<ProductList showRecent={false} />}
+        />
+        <Route path="/review-cart" element={<ReviewCart />} />
+        <Route path="/account" element={<Account />} />
+        <Route path="/checkout" element={<CheckoutPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />

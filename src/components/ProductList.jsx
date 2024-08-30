@@ -1,12 +1,12 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { fetchProducts } from "../actions/productActions";
 import "../styles/ProductList.css";
 
-const ProductList = ({ dispatch, loading, products, error, showRecent }) => {
+const ProductList = ({ dispatch, loading, products, error }) => {
   const navigate = useNavigate();
-  const { category } = useParams();
+  const { category, searchTerm } = useParams();
 
   useEffect(() => {
     dispatch(fetchProducts());
@@ -19,92 +19,76 @@ const ProductList = ({ dispatch, loading, products, error, showRecent }) => {
   // Get unique categories from products
   const categories = [...new Set(products.map((product) => product.category))];
 
-  // Filter products based on the category from the URL
-  const filteredProducts = category
-    ? products.filter(
-        (product) => product.category.toLowerCase() === category.toLowerCase()
-      )
-    : products;
+  // Filter products based on category and search term
+  let filteredProducts = products;
 
-  const productsToDisplay = showRecent
-    ? filteredProducts.slice(-4)
-    : filteredProducts;
+  if (category) {
+    filteredProducts = filteredProducts.filter(
+      (product) => product.category.toLowerCase() === category.toLowerCase()
+    );
+  }
 
-  const handleSeeAllProducts = () => {
-    navigate("/products");
-  };
+  if (searchTerm) {
+    filteredProducts = filteredProducts.filter((product) =>
+      product.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }
 
   return (
     <div className="product-list" id="products">
-      <div className="window">
-        <div className="title-bar">
-          <div className="title">Product List</div>
-          <div className="buttons">
-            <div className="button close"></div>
-            <div className="button minimize"></div>
-            <div className="button maximize"></div>
+      <div className="filter-buttons">
+        {categories.map((cat) => (
+          <button
+            key={cat}
+            onClick={() => navigate(`/products/category/${cat.toLowerCase()}`)}
+            className={`filter-btn ${
+              category === cat.toLowerCase() ? "active" : ""
+            }`}
+          >
+            {cat}
+          </button>
+        ))}
+        <button onClick={() => navigate("/products")} className="filter-btn">
+          All Products
+        </button>
+      </div>
+
+      <div className="products">
+        {filteredProducts.length === 0 ? (
+          <div className="no-products-found">
+            No products found. Please try a different search or category.
           </div>
-        </div>
-        <div className="content">
-          {!showRecent && (
-            <div className="filter-buttons">
-              {categories.map((cat) => (
-                <button
-                  key={cat}
-                  onClick={() =>
-                    navigate(`/products/category/${cat.toLowerCase()}`)
-                  }
-                  className="btn"
-                >
-                  {cat}
-                </button>
-              ))}
-              <button onClick={() => navigate("/products")} className="btn">
-                All Products
-              </button>
-            </div>
-          )}
-          <div className="products">
-            {productsToDisplay.map((product) => {
-              const productId = product.id.split("/").pop();
-              return (
-                <div className="product" key={productId}>
-                  {product.images && product.images.length > 0 ? (
-                    <img
-                      src={product.images[0]}
-                      alt={product.title || "Product Image"}
-                      className="product-image"
-                    />
-                  ) : (
-                    <div className="no-image-placeholder">
-                      No Image Available
-                    </div>
-                  )}
-                  <div className="product-details">
-                    <h3 className="product-name">{product.title}</h3>
-                    <p className="product-price">
-                      {typeof product.price === "object"
-                        ? `${product.price.amount} ${product.price.currencyCode}`
-                        : `${product.price} USD`}
-                    </p>
-                    <div className="product-btns">
-                      <NavLink to={`/products/${productId}`} className="btn">
-                        View
-                      </NavLink>
-                    </div>
+        ) : (
+          filteredProducts.map((product) => {
+            const productId = product.id.split("/").pop();
+            return (
+              <div className="product" key={productId}>
+                {product.images && product.images.length > 0 ? (
+                  <img
+                    src={product.images[0]}
+                    alt={product.title || "Product Image"}
+                    className="product-image"
+                  />
+                ) : (
+                  <div className="no-image-placeholder">No Image Available</div>
+                )}
+                <div className="product-details">
+                  <h3 className="product-name">{product.title}</h3>
+                  <p className="product-price">
+                    {typeof product.price === "object"
+                      ? `${product.price.amount} ${product.price.currencyCode}`
+                      : `${product.price} USD`}
+                  </p>
+                  <div className="product-btns">
+                    <NavLink to={`/products/${productId}`} className="btn">
+                      View
+                    </NavLink>
                   </div>
                 </div>
-              );
-            })}
-          </div>
-          {showRecent && (
-            <div className="see-all-products">
-              <button onClick={handleSeeAllProducts} className="btn">
-                See All Products
-              </button>
-            </div>
-          )}
-        </div>
+              </div>
+            );
+          })
+        )}
       </div>
     </div>
   );

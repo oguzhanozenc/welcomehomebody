@@ -24,9 +24,11 @@
   padding: 1rem 2rem;
   margin-right: 1rem;
   cursor: pointer;
-  font-family: "Press Start 2P", cursive;
+  font-family: "Press Start 2P", monospace;
+  text-transform: uppercase;
   border-radius: 0.5rem 0.5rem 0 0;
   transition: all 300ms ease;
+  letter-spacing: 0.01rem;
 }
 
 .tab-buttons button.active-tab {
@@ -45,8 +47,8 @@
 
 .about-retro-window-body {
   padding: 1rem;
-  line-height: 1.5;
-  font-family: "Roboto Mono", monospace;
+  line-height: 2;
+  font-size: 1.2rem;
   overflow-y: auto;
   max-height: 60vh;
   margin: 0 auto;
@@ -88,7 +90,7 @@
   padding: 0.5rem 2rem;
   border: 3px solid #ff0000;
   border-radius: 5px;
-  font-family: "Press Start 2P", cursive;
+  font-family: "Press Start 2P", monospace;
   letter-spacing: 0.2rem;
   text-transform: uppercase;
   box-shadow: 0 0 5px #ff0000, 0 0 10px #ff0000, 0 0 15px #ff0000;
