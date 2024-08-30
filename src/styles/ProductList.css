@@ -5,7 +5,6 @@
   padding: 1rem;
   width: 90%;
   max-width: 1200px;
-  font-family: "Roboto", sans-serif;
 }
 
 .productlist-loading {
@@ -50,7 +49,8 @@
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1rem;
   width: 100%;
-  justify-content: center;
+  justify-content: space-between;
+  align-items: stretch;
 }
 
 .product {
@@ -60,7 +60,7 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: all 300ms ease;
   width: 100%;
-  max-width: 280px;
+  max-width: 17.5rem;
   margin: 0 auto;
 }
 
@@ -88,6 +88,7 @@
   font-size: 1.25rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
+  color: black;
 }
 
 .product-price {
@@ -97,9 +98,16 @@
   margin-bottom: 1rem;
 }
 
-.product-btns {
+.product-bottom {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.productlist-description {
+  color: #888;
+  font-size: 0.75rem;
+  text-align: justify;
 }
 
 .no-products-found {

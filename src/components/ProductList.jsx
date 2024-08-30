@@ -74,12 +74,18 @@ const ProductList = ({ dispatch, loading, products, error }) => {
                 )}
                 <div className="product-details">
                   <h3 className="product-name">{product.title}</h3>
-                  <p className="product-price">
-                    {typeof product.price === "object"
-                      ? `${product.price.amount} ${product.price.currencyCode}`
-                      : `${product.price} USD`}
+                  <p className="productlist-description">
+                    {product.description.includes(".")
+                      ? product.description.split(". ")[0] + "."
+                      : product.description}
                   </p>
-                  <div className="product-btns">
+
+                  <div className="product-bottom">
+                    <p className="product-price">
+                      {typeof product.price === "object"
+                        ? `${product.price.amount} ${product.price.currencyCode}`
+                        : `${product.price} USD`}
+                    </p>
                     <NavLink to={`/products/${productId}`} className="btn">
                       View
                     </NavLink>
