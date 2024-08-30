@@ -3,21 +3,16 @@ import { NavLink, Link, useNavigate } from "react-router-dom";
 import "../styles/Navbar.css";
 import { GiHamburgerMenu, GiCancel } from "react-icons/gi";
 import { FaShoppingCart, FaUserCircle } from "react-icons/fa";
-import Cart from "./Cart";
 
 const Navbar = () => {
   const [isNavOpen, setNavOpen] = useState(false);
-  const [isCartOpen, setCartOpen] = useState(false);
+
   const [searchTerm, setSearchTerm] = useState("");
   const navRef = useRef(null);
   const navigate = useNavigate();
 
   const toggleNav = () => {
     setNavOpen((prev) => !prev);
-  };
-
-  const toggleCart = () => {
-    setCartOpen((prev) => !prev);
   };
 
   const handleSearchSubmit = (e) => {
@@ -57,9 +52,10 @@ const Navbar = () => {
           </form>
         </div>
         <div className="navbar-actions">
-          <button className="cart-btn" onClick={toggleCart}>
+          <Link to="review-cart" className="cart-btn">
             <FaShoppingCart size={24} />
-          </button>{" "}
+          </Link>
+
           <Link to="/account" className="account-btn">
             <FaUserCircle size={24} />
           </Link>
@@ -93,8 +89,6 @@ const Navbar = () => {
           Contact
         </NavLink>
       </div>
-
-      <Cart isOpen={isCartOpen} toggleCart={toggleCart} />
     </nav>
   );
 };

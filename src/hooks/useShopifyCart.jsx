@@ -15,6 +15,12 @@ export const useShopifyCart = () => {
     return cartItems.find((item) => item.variant.id === variantId)?.product;
   };
 
+  // Clear sessionStorage on new session or when items are added
+  useEffect(() => {
+    sessionStorage.removeItem("cartItems");
+    sessionStorage.removeItem("checkoutId");
+  }, []);
+
   useEffect(() => {
     sessionStorage.setItem("cartItems", JSON.stringify(cartItems));
   }, [cartItems]);
@@ -133,6 +139,8 @@ export const useShopifyCart = () => {
 
       console.log("Item added to Shopify cart:", checkout);
     } catch (error) {
+      console.error("Error adding to Shopify cart:", error);
+
       console.error("Error adding to Shopify cart:", error);
       throw new Error("Adding to cart failed.");
     }

@@ -1,12 +1,14 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useShopifyCart } from "../hooks/useShopifyCart";
+import { useNavigate } from "react-router-dom";
 import "../styles/CheckoutPage.css";
 
 const CheckoutPage = () => {
   const cartItems = useSelector((state) => state.cart.items);
   const { handleCheckout } = useShopifyCart();
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleProceedToCheckout = async () => {
     setLoading(true);
@@ -16,6 +18,10 @@ const CheckoutPage = () => {
       console.error("Checkout failed:", error);
       setLoading(false);
     }
+  };
+
+  const handleBackToCart = () => {
+    navigate("/review-cart");
   };
 
   return (
@@ -36,13 +42,18 @@ const CheckoutPage = () => {
           </li>
         ))}
       </ul>
-      <button
-        onClick={handleProceedToCheckout}
-        disabled={loading || cartItems.length === 0}
-        className="checkout-button"
-      >
-        {loading ? "Processing..." : "Proceed to Payment"}
-      </button>
+      <div className="checkout-actions">
+        <button onClick={handleBackToCart} className="btn">
+          Back to Cart
+        </button>
+        <button
+          onClick={handleProceedToCheckout}
+          disabled={loading || cartItems.length === 0}
+          className="checkout-button"
+        >
+          {loading ? "Processing..." : "Proceed to Payment"}
+        </button>
+      </div>
     </div>
   );
 };
