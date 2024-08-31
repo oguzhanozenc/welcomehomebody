@@ -9,6 +9,12 @@ const Home = () => {
   return (
     <>
       <Header />
+      <main>
+        <ProductList showRecent={true} />
+
+        <RecentPosts />
+        <Contact />
+      </main>
     </>
   );
 };

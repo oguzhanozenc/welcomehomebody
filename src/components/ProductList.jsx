@@ -4,7 +4,7 @@ import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { fetchProducts } from "../actions/productActions";
 import "../styles/ProductList.css";
 
-const ProductList = ({ dispatch, loading, products, error }) => {
+const ProductList = ({ dispatch, loading, products, error, showRecent }) => {
   const navigate = useNavigate();
   const { category, searchTerm } = useParams();
 
@@ -32,6 +32,11 @@ const ProductList = ({ dispatch, loading, products, error }) => {
     filteredProducts = filteredProducts.filter((product) =>
       product.title.toLowerCase().includes(searchTerm.toLowerCase())
     );
+  }
+
+  // Limit to 6 products if showRecent is true
+  if (showRecent) {
+    filteredProducts = filteredProducts.slice(0, 4);
   }
 
   return (
@@ -96,6 +101,17 @@ const ProductList = ({ dispatch, loading, products, error }) => {
           })
         )}
       </div>
+
+      {showRecent && (
+        <div className="see-all-products">
+          <button
+            className="btn see-all-btn"
+            onClick={() => navigate("/products")}
+          >
+            See All Products
+          </button>
+        </div>
+      )}
     </div>
   );
 };

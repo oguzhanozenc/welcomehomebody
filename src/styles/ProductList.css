@@ -118,6 +118,12 @@
   padding: 2rem;
 }
 
+.see-all-products {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
 @media (max-width: 768px) {
   .products {
     grid-template-columns: 1fr;

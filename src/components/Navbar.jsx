@@ -35,7 +35,7 @@ const Navbar = () => {
 
       <div className="top-bar">
         <Link to="/" className="logo-link">
-          <img src="/navbarlogo.png" alt="Logo" className="logo" />
+          <img src="/navbarlogo-white.png" alt="Logo" className="logo" />
         </Link>
         <div className="search-bar">
           <form onSubmit={handleSearchSubmit} className="search-form">
