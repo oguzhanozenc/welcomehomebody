@@ -1,3 +1,5 @@
+import React from "react";
+
 const CheckoutButton = () => {
   const handleCheckout = async () => {
     try {

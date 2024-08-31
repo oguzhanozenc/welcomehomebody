@@ -1,11 +1,10 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import Slider from "react-slick";
+import { GrPrevious, GrNext } from "react-icons/gr";
+import "../styles/ProductItem.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { GrPrevious, GrNext } from "react-icons/gr";
-import CheckoutButton from "./CheckoutButton";
-import "../styles/ProductItem.css";
 
 const ProductItem = ({
   product,
@@ -40,6 +39,14 @@ const ProductItem = ({
   };
 
   const hasMultipleImages = product?.images && product.images.length > 1;
+
+  const handleAddToCartClick = () => {
+    if (selectedVariant) {
+      handleAddToCart(selectedVariant.id);
+    } else {
+      console.error("No variant selected for adding to cart");
+    }
+  };
 
   return (
     <div className="product-page">
@@ -174,10 +181,7 @@ const ProductItem = ({
                   ))}
                 </select>
               )}
-              <button
-                className="btn"
-                onClick={() => handleAddToCart(selectedVariant?.id)}
-              >
+              <button className="btn" onClick={handleAddToCartClick}>
                 BAG IT
               </button>
 

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { gql } from "graphql-request";
 import client from "../client";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,7 +15,6 @@ export const useShopifyCart = () => {
     return cartItems.find((item) => item.variant.id === variantId)?.product;
   };
 
-  // Clear sessionStorage on new session or when items are added
   useEffect(() => {
     sessionStorage.removeItem("cartItems");
     sessionStorage.removeItem("checkoutId");
@@ -61,7 +60,6 @@ export const useShopifyCart = () => {
     try {
       let currentCheckoutId = checkoutId;
 
-      // If there's no checkout ID, create a new checkout
       if (!currentCheckoutId) {
         currentCheckoutId = await createCheckout([{ variantId, quantity }]);
       }
@@ -116,31 +114,29 @@ export const useShopifyCart = () => {
       const response = await client.request(mutation, variables);
       const checkout = response.checkoutLineItemsAdd.checkout;
 
+      console.log("Item added to Shopify cart:", checkout);
+
       const newItem = checkout.lineItems.edges.find(
         (item) => item.node.variant.id === variantId
       );
 
       if (newItem) {
-        dispatch(
-          addToCart({
-            product: {
-              id: newItem.node.id,
-              title: newItem.node.variant.product.title,
-              images: [newItem.node.variant.product.images.edges[0].node.src],
-            },
-            variant: {
-              id: newItem.node.variant.id,
-              priceV2: newItem.node.variant.priceV2,
-            },
-            quantity: newItem.node.quantity,
-          })
-        );
+        const updatedItem = {
+          product: {
+            id: newItem.node.id,
+            title: newItem.node.variant.product.title,
+            images: [newItem.node.variant.product.images.edges[0].node.src],
+          },
+          variant: {
+            id: newItem.node.variant.id,
+            priceV2: newItem.node.variant.priceV2,
+          },
+          quantity: newItem.node.quantity,
+        };
+
+        dispatch(addToCart(updatedItem));
       }
-
-      console.log("Item added to Shopify cart:", checkout);
     } catch (error) {
-      console.error("Error adding to Shopify cart:", error);
-
       console.error("Error adding to Shopify cart:", error);
       throw new Error("Adding to cart failed.");
     }
@@ -204,6 +200,10 @@ export const useShopifyCart = () => {
       const response = await client.request(query, variables);
 
       const checkoutUrl = response.node.webUrl;
+
+      console.log("Redirecting to Shopify checkout with URL:", checkoutUrl);
+      console.log("Cart items at checkout:", cartItems);
+
       window.location.href = checkoutUrl;
     } catch (error) {
       console.error("Checkout failed:", error);
