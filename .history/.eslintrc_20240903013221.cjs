@@ -1,5 +1,6 @@
-/** @type {import('eslint').Linter.Config} */
-module.exports = {
+import { defineConfig } from "eslint-define-config";
+
+export default defineConfig({
   root: true,
   env: { browser: true, es2020: true },
   extends: [
@@ -19,4 +20,4 @@ module.exports = {
       { allowConstantExport: true },
     ],
   },
-};
+});
