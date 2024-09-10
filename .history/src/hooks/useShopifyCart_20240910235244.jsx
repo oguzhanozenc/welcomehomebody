@@ -182,11 +182,12 @@ export const useShopifyCart = () => {
       }
     `;
 
+    // Send only the lineItems without the one being removed
     const variables = {
       checkoutId,
       lineItems: lineItems.map((item) => ({
         variantId: item.variantId,
-        quantity: item.quantity === 0 ? 0 : item.quantity, // Ensure 0 is passed for removed items
+        quantity: item.quantity,
       })),
     };
 
@@ -207,7 +208,7 @@ export const useShopifyCart = () => {
         quantity: edge.node.quantity,
       }));
 
-      console.log("Updated cart items after Shopify sync:", updatedCartItems);
+      // Update Redux with the new cart state
       dispatch(syncCartItems(updatedCartItems));
     } catch (error) {
       console.error("Error updating Shopify checkout:", error);
@@ -268,23 +269,30 @@ export const useShopifyCart = () => {
     try {
       console.log(`Attempting to remove item with variantId: ${variantId}`);
 
-      // Create updated cart without the removed item
+      // Remove the item from the local Redux store
+      dispatch(removeFromCart(variantId));
+
+      // Create the updated line items for Shopify
       const updatedCartItems = cartItems
-        .filter((item) => item.variant.id !== variantId)
+        .filter((item) => item.variant.id !== variantId) // Remove the item locally
         .map((item) => ({
           variantId: item.variant.id,
           quantity: item.quantity,
         }));
 
-      // Log updated cart items to ensure correct data
-      console.log("Updated cart items after removal:", updatedCartItems);
+      console.log("Updated cart items for Shopify:", updatedCartItems);
 
-      // Update Redux store first to reflect the local cart change
-      dispatch(removeFromCart(variantId));
+      // If no items remain, clear the Shopify checkout
+      if (updatedCartItems.length === 0) {
+        console.log("Cart is empty, clearing Shopify checkout.");
+        await updateShopifyCheckout([]); // Clear the checkout
+      } else {
+        console.log("Syncing updated cart items with Shopify.");
+        await updateShopifyCheckout(updatedCartItems); // Sync updated cart items with Shopify
+      }
 
-      // Sync updated cart items with Shopify
-      await updateShopifyCheckout(updatedCartItems);
-
+      // Sync the cart with Shopify after removing an item
+      await syncCartWithShopify();
       console.log("Cart successfully synced with Shopify after removal.");
     } catch (error) {
       console.error("Error removing item from cart:", error);

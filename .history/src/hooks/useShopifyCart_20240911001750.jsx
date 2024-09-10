@@ -230,7 +230,7 @@ export const useShopifyCart = () => {
           updateCartQuantity(variantId, existingItem.quantity + quantity)
         );
       } else {
-        const product = productState.productDetails; // Use the product from the state
+        const product = productState.productDetails; // Use product from state
 
         if (product) {
           console.log("Adding new product to cart:", product);
@@ -244,7 +244,7 @@ export const useShopifyCart = () => {
         } else {
           console.error("Product not found for variant ID:", variantId);
           alert("Product not found. Please try again.");
-          return;
+          return; // Ensure that we stop execution if the product is not found
         }
       }
 
@@ -253,13 +253,25 @@ export const useShopifyCart = () => {
         { variant: { id: variantId }, quantity },
       ];
 
-      console.log("Updating Shopify checkout with items:", updatedCartItems);
-      await updateShopifyCheckout(updatedCartItems);
+      console.log("Updated Cart Items for Shopify Checkout:", updatedCartItems);
 
-      console.log("Updating Shopify checkout successful, syncing cart...");
-      await syncCartWithShopify(); // Make sure cart is synced with Shopify
+      // Call Shopify API to update the cart
+      const response = await updateShopifyCheckout(updatedCartItems);
+
+      console.log("Shopify Checkout Response:", response);
+
+      if (response && response.errors) {
+        console.error("Shopify checkout update failed:", response.errors);
+        alert("Failed to sync with Shopify. Please try again.");
+        return; // Stop further execution if Shopify update fails
+      }
+
+      // Sync the cart with Shopify after successful update
+      await syncCartWithShopify();
     } catch (error) {
       console.error("Error handling add to cart:", error);
+
+      // Trigger the alert only when a real error is caught
       alert("Failed to add item to cart. Please try again.");
     }
   };

@@ -51,7 +51,7 @@
 }
 
 .logo {
-  height: 2.5rem;
+  height: 40px;
 }
 
 .search-bar {
@@ -63,31 +63,30 @@
 .search-form {
   display: flex;
   width: 100%;
-  max-width: 25rem;
+  max-width: 500px;
 }
 
 .search-input {
   flex: 1;
   padding: 0.5rem;
   border: 1px solid #ccc;
+  border-radius: 4px 0 0 4px;
   outline: none;
   color: black;
 }
 
 .search-btn {
   padding: 0.5rem 1rem;
-  background-color: #000080;
-  border: 1px solid #000080;
+  background-color: #007bff;
+  border: 1px solid #007bff;
+  border-radius: 0 4px 4px 0;
   color: #fff;
   cursor: pointer;
   outline: none;
-  font-family: "Press Start 2P", monospace;
-  text-transform: uppercase;
-  font-size: 0.7rem;
 }
 
 .search-btn:hover {
-  filter: brightness(1.2);
+  background-color: #0056b3;
 }
 
 .navbar-actions {
@@ -126,21 +125,21 @@
   }
 
   .nav-link {
+    margin: 0.5rem 0;
     text-decoration: none;
     color: #333;
     padding: 1rem 0.5rem;
     transition: all 300ms ease;
     font-size: 0.875rem;
-    margin: 0.5rem 1rem;
-    border-bottom: 3px solid transparent;
+    margin: 0 0.25rem;
   }
 }
 
 .nav-link:hover,
 .nav-link:active,
 .nav-link.active {
-  color: #000080;
-  border-bottom: 3px solid #ff4c4c;
+  color: #007bff;
+  border-bottom: 3px solid #007bff;
 }
 
 @media (min-width: 769px) {

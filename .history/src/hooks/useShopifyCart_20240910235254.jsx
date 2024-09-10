@@ -182,11 +182,12 @@ export const useShopifyCart = () => {
       }
     `;
 
+    // Send only the lineItems without the one being removed
     const variables = {
       checkoutId,
       lineItems: lineItems.map((item) => ({
         variantId: item.variantId,
-        quantity: item.quantity === 0 ? 0 : item.quantity, // Ensure 0 is passed for removed items
+        quantity: item.quantity,
       })),
     };
 
@@ -207,7 +208,7 @@ export const useShopifyCart = () => {
         quantity: edge.node.quantity,
       }));
 
-      console.log("Updated cart items after Shopify sync:", updatedCartItems);
+      // Update Redux with the new cart state
       dispatch(syncCartItems(updatedCartItems));
     } catch (error) {
       console.error("Error updating Shopify checkout:", error);

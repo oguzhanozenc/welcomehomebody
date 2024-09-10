@@ -44,15 +44,15 @@ body {
 
 .btn {
   font-family: "Press Start 2P", monospace;
-  text-transform: uppercase;
-  font-size: 0.75rem;
   display: block;
   padding: 0.5rem 1rem;
   color: #fff;
-  background-color: #161616;
+  background-color: #000;
   border-radius: 2rem;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  font-size: 0.75rem;
+  text-transform: uppercase;
   letter-spacing: 1px;
   outline: none;
   text-align: center;
@@ -61,8 +61,7 @@ body {
 }
 
 .btn:hover {
-  color: #ffb22c;
-  background-color: #000;
+  filter: contrast(1.5);
 }
 
 .section-title {

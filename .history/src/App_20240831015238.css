@@ -43,26 +43,23 @@ body {
 }
 
 .btn {
-  font-family: "Press Start 2P", monospace;
-  text-transform: uppercase;
-  font-size: 0.75rem;
+  font-family: "Rethink Sans", sans-serif;
   display: block;
   padding: 0.5rem 1rem;
   color: #fff;
-  background-color: #161616;
+  background-color: #ff4c4c;
   border-radius: 2rem;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  font-size: 1rem;
   letter-spacing: 1px;
   outline: none;
   text-align: center;
   transition: all 300ms ease;
-  border: none;
 }
 
 .btn:hover {
-  color: #ffb22c;
-  background-color: #000;
+  background-color: #cc2a2a;
 }
 
 .section-title {

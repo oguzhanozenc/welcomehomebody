@@ -185,8 +185,8 @@ export const useShopifyCart = () => {
     const variables = {
       checkoutId,
       lineItems: lineItems.map((item) => ({
-        variantId: item.variantId,
-        quantity: item.quantity === 0 ? 0 : item.quantity, // Ensure 0 is passed for removed items
+        variantId: item.variant.id,
+        quantity: item.quantity,
       })),
     };
 
@@ -207,7 +207,7 @@ export const useShopifyCart = () => {
         quantity: edge.node.quantity,
       }));
 
-      console.log("Updated cart items after Shopify sync:", updatedCartItems);
+      console.log("Updating Redux state with cart items:", updatedCartItems);
       dispatch(syncCartItems(updatedCartItems));
     } catch (error) {
       console.error("Error updating Shopify checkout:", error);
@@ -266,9 +266,8 @@ export const useShopifyCart = () => {
 
   const handleRemoveFromCart = async (variantId) => {
     try {
-      console.log(`Attempting to remove item with variantId: ${variantId}`);
+      dispatch(removeFromCart(variantId));
 
-      // Create updated cart without the removed item
       const updatedCartItems = cartItems
         .filter((item) => item.variant.id !== variantId)
         .map((item) => ({
@@ -276,16 +275,9 @@ export const useShopifyCart = () => {
           quantity: item.quantity,
         }));
 
-      // Log updated cart items to ensure correct data
-      console.log("Updated cart items after removal:", updatedCartItems);
-
-      // Update Redux store first to reflect the local cart change
-      dispatch(removeFromCart(variantId));
-
-      // Sync updated cart items with Shopify
+      console.log("Updating Shopify checkout with items:", updatedCartItems);
       await updateShopifyCheckout(updatedCartItems);
-
-      console.log("Cart successfully synced with Shopify after removal.");
+      await syncCartWithShopify(); // Sync the cart with Shopify after removing an item
     } catch (error) {
       console.error("Error removing item from cart:", error);
       alert("Failed to remove item from cart. Please try again.");

@@ -218,8 +218,8 @@ export const useShopifyCart = () => {
   const handleAddToCart = async (variantId, quantity = 1) => {
     try {
       console.log("Attempting to add to cart - Variant ID:", variantId);
-      console.log("Current Cart Items:", cartItems);
 
+      // Check if the item is already in the cart
       let existingItem = cartItems.find(
         (item) => item.variant.id === variantId
       );
@@ -230,7 +230,7 @@ export const useShopifyCart = () => {
           updateCartQuantity(variantId, existingItem.quantity + quantity)
         );
       } else {
-        const product = productState.productDetails; // Use the product from the state
+        const product = productState.productDetails; // Use product from state
 
         if (product) {
           console.log("Adding new product to cart:", product);
@@ -243,24 +243,33 @@ export const useShopifyCart = () => {
           );
         } else {
           console.error("Product not found for variant ID:", variantId);
-          alert("Product not found. Please try again.");
-          return;
+          return; // No alert here, since you already log the error
         }
       }
 
+      // Update the cart in Shopify
       const updatedCartItems = [
         ...cartItems.filter((item) => item.variant.id !== variantId),
         { variant: { id: variantId }, quantity },
       ];
 
-      console.log("Updating Shopify checkout with items:", updatedCartItems);
-      await updateShopifyCheckout(updatedCartItems);
+      const response = await updateShopifyCheckout(updatedCartItems);
 
-      console.log("Updating Shopify checkout successful, syncing cart...");
-      await syncCartWithShopify(); // Make sure cart is synced with Shopify
+      if (response && response.errors) {
+        console.error("Shopify checkout update failed", response.errors);
+        alert("Failed to sync with Shopify. Please try again.");
+        return;
+      }
+
+      // Sync the cart after update
+      await syncCartWithShopify();
     } catch (error) {
       console.error("Error handling add to cart:", error);
-      alert("Failed to add item to cart. Please try again.");
+
+      // Trigger the alert only when a real error is caught
+      if (error.message.includes("failed")) {
+        alert("Failed to add item to cart. Please try again.");
+      }
     }
   };
 

@@ -218,8 +218,6 @@ export const useShopifyCart = () => {
   const handleAddToCart = async (variantId, quantity = 1) => {
     try {
       console.log("Attempting to add to cart - Variant ID:", variantId);
-      console.log("Current Cart Items:", cartItems);
-
       let existingItem = cartItems.find(
         (item) => item.variant.id === variantId
       );
@@ -230,7 +228,7 @@ export const useShopifyCart = () => {
           updateCartQuantity(variantId, existingItem.quantity + quantity)
         );
       } else {
-        const product = productState.productDetails; // Use the product from the state
+        const product = productState.productDetails; // Use product from state
 
         if (product) {
           console.log("Adding new product to cart:", product);
@@ -243,8 +241,7 @@ export const useShopifyCart = () => {
           );
         } else {
           console.error("Product not found for variant ID:", variantId);
-          alert("Product not found. Please try again.");
-          return;
+          return; // No alert here, since you already log the error
         }
       }
 
@@ -253,22 +250,16 @@ export const useShopifyCart = () => {
         { variant: { id: variantId }, quantity },
       ];
 
-      console.log("Updating Shopify checkout with items:", updatedCartItems);
       await updateShopifyCheckout(updatedCartItems);
-
-      console.log("Updating Shopify checkout successful, syncing cart...");
-      await syncCartWithShopify(); // Make sure cart is synced with Shopify
+      await syncCartWithShopify(); // Sync after update
     } catch (error) {
       console.error("Error handling add to cart:", error);
-      alert("Failed to add item to cart. Please try again.");
+      alert("Failed to add item to cart. Please try again."); // Alert only if catch block is triggered
     }
   };
 
   const handleRemoveFromCart = async (variantId) => {
     try {
-      console.log(`Attempting to remove item with variantId: ${variantId}`);
-
-      // Create updated cart without the removed item
       const updatedCartItems = cartItems
         .filter((item) => item.variant.id !== variantId)
         .map((item) => ({
@@ -276,19 +267,14 @@ export const useShopifyCart = () => {
           quantity: item.quantity,
         }));
 
-      // Log updated cart items to ensure correct data
-      console.log("Updated cart items after removal:", updatedCartItems);
-
-      // Update Redux store first to reflect the local cart change
+      // Update Redux first to reflect the change
       dispatch(removeFromCart(variantId));
 
-      // Sync updated cart items with Shopify
+      // Sync with Shopify
       await updateShopifyCheckout(updatedCartItems);
-
-      console.log("Cart successfully synced with Shopify after removal.");
     } catch (error) {
       console.error("Error removing item from cart:", error);
-      alert("Failed to remove item from cart. Please try again.");
+      alert("Failed to remove item from cart. Please try again."); // Alert only when the error is caught
     }
   };
 

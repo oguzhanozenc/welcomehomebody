@@ -214,39 +214,42 @@ export const useShopifyCart = () => {
       throw new Error("Updating Shopify checkout failed.");
     }
   };
+const handleAddToCartClick = async () => {
+  try {
+    console.log("Selected Variant:", selectedVariant);
+    if (selectedVariant && selectedVariant.availableForSale) {
+      setButtonState("Bagging...");
+      await handleAddToCart(selectedVariant.id); // Wait for add to cart to complete
+      setButtonState("Bagged!"); // Only set to "Bagged!" after successful addition
+    } else {
+      console.error("Selected variant is unavailable.");
+      alert("Selected variant is unavailable.");
+      setButtonState("BAG IT"); // Reset to original state if add fails
+    }
+  } catch (error) {
+    console.error("Failed to add to cart:", error);
+    alert("Failed to add item to cart.");
+    setButtonState("BAG IT"); // Reset to original state on error
+  }
+};
 
-  const handleAddToCart = async (variantId, quantity = 1) => {
-    try {
-      console.log("Attempting to add to cart - Variant ID:", variantId);
-      console.log("Current Cart Items:", cartItems);
+const handleRemoveFromCartClick = async () => {
+  try {
+    if (selectedVariant) {
+      setButtonState("Removing...");
+      await handleRemoveFromCart(selectedVariant.id); // Wait for remove from cart to complete
+      setButtonState("BAG IT"); // Reset to original state after removal
+    } else {
+      console.error("Selected variant cannot be removed.");
+      alert("Selected variant cannot be removed.");
+    }
+  } catch (error) {
+    console.error("Failed to remove from cart:", error);
+    alert("Failed to remove item from cart.");
+    setButtonState("Bagged!"); // Keep in "Bagged!" state on error
+  }
+};
 
-      let existingItem = cartItems.find(
-        (item) => item.variant.id === variantId
-      );
-
-      if (existingItem) {
-        console.log("Updating quantity for existing item.");
-        dispatch(
-          updateCartQuantity(variantId, existingItem.quantity + quantity)
-        );
-      } else {
-        const product = productState.productDetails; // Use the product from the state
-
-        if (product) {
-          console.log("Adding new product to cart:", product);
-          dispatch(
-            addToCart({
-              product,
-              variant: product.variants.find((v) => v.id === variantId),
-              quantity,
-            })
-          );
-        } else {
-          console.error("Product not found for variant ID:", variantId);
-          alert("Product not found. Please try again.");
-          return;
-        }
-      }
 
       const updatedCartItems = [
         ...cartItems.filter((item) => item.variant.id !== variantId),
