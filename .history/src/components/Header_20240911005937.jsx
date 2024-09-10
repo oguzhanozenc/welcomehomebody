@@ -93,10 +93,10 @@ export default function Header() {
             <div className="loading-animation">
               <div className="loading-text">
                 <span>Loading</span>
+                <div>
+                  <Loading />
+                </div>
                 <span className="dots">...</span>
-              </div>{" "}
-              <div>
-                <Loading />
               </div>
               <div className="arcade-animation"></div>
             </div>

@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchProductDetails } from "../actions/productActions";
 import ProductItem from "./ProductItem";
 import { useShopifyCart } from "../hooks/useShopifyCart";
-import Loading from "./Loading";
 
 const ProductDetails = () => {
   const { productId } = useParams();
@@ -47,12 +46,7 @@ const ProductDetails = () => {
     setCurrentSlide(index);
   };
 
-  if (loading)
-    return (
-      <div className="product-page">
-        <Loading />
-      </div>
-    );
+  if (loading) return <div className="product-page">Loading...</div>;
   if (error) return <div className="product-page">Error: {error}</div>;
   if (!product) return <div className="product-page">Product not found.</div>;
 

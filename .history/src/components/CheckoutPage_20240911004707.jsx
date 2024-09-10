@@ -34,7 +34,7 @@ const CheckoutPage = () => {
       <h2>Checkout</h2>
       <ul className="checkout-items">
         {cartItems.map((item) => {
-          // get only the product ID
+          // Remove the gid://shopify/Product/ prefix to get only the product ID
           const productId = item.product.id.replace(
             "gid://shopify/Product/",
             ""

@@ -14,12 +14,7 @@ const ProductList = ({ dispatch, loading, products, error, showRecent }) => {
     dispatch(fetchProducts());
   }, [dispatch]);
 
-  if (loading)
-    return (
-      <div className="productlist-loading">
-        <Loading />
-      </div>
-    );
+  if (loading) return <div className="productlist-loading">Loading...</div>;
   if (error)
     return <div>Error! {error.message || "An unknown error occurred"}</div>;
 

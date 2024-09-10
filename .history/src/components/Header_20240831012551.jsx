@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import "../styles/Header.css";
-import Loading from "./Loading";
 
 export default function Header() {
   const [currentImage, setCurrentImage] = useState(0);
@@ -94,9 +93,6 @@ export default function Header() {
               <div className="loading-text">
                 <span>Loading</span>
                 <span className="dots">...</span>
-              </div>{" "}
-              <div>
-                <Loading />
               </div>
               <div className="arcade-animation"></div>
             </div>

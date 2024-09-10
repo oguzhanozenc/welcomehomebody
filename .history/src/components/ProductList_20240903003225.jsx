@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { fetchProducts } from "../actions/productActions";
 import "../styles/ProductList.css";
-import Loading from "./Loading";
 
 const ProductList = ({ dispatch, loading, products, error, showRecent }) => {
   const navigate = useNavigate();
@@ -14,12 +13,7 @@ const ProductList = ({ dispatch, loading, products, error, showRecent }) => {
     dispatch(fetchProducts());
   }, [dispatch]);
 
-  if (loading)
-    return (
-      <div className="productlist-loading">
-        <Loading />
-      </div>
-    );
+  if (loading) return <div className="productlist-loading">Loading...</div>;
   if (error)
     return <div>Error! {error.message || "An unknown error occurred"}</div>;
 
