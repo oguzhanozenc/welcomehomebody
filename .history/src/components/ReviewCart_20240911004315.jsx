@@ -72,7 +72,7 @@ const ReviewCart = () => {
                     />
                   </Link>
                   <div className="cart-item-details">
-                    <Link to={`/products/${productId}`}>
+                    <Link to={`/product/${productId}`}>
                       <h3>{item.product.title}</h3>
                     </Link>
                     <p>Price: ${item.variant.priceV2.amount}</p>

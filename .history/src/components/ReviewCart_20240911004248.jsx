@@ -64,7 +64,7 @@ const ReviewCart = () => {
 
               return (
                 <li key={item.variant.id} className="cart-item">
-                  <Link to={`/products/${productId}`}>
+                  <Link to={`/product/${productId}`}>
                     <img
                       src={item.product.images[0]}
                       alt={item.product.title}
@@ -72,7 +72,7 @@ const ReviewCart = () => {
                     />
                   </Link>
                   <div className="cart-item-details">
-                    <Link to={`/products/${productId}`}>
+                    <Link to={`/product/${productId}`}>
                       <h3>{item.product.title}</h3>
                     </Link>
                     <p>Price: ${item.variant.priceV2.amount}</p>
