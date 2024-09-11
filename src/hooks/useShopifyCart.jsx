@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { gql } from "graphql-request";
 import client from "../client";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,134 +8,168 @@ import {
   removeFromCart,
   syncCartItems,
 } from "../actions/cartActions";
+import { toast } from "react-toastify";
 
 export const useShopifyCart = () => {
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.items);
-  const productState = useSelector((state) => state.products); // Ensure product details are accessed from state
+  const productState = useSelector((state) => state.products);
   const [checkoutId, setCheckoutId] = useState(
     () => sessionStorage.getItem("checkoutId") || null
   );
   const [loading, setLoading] = useState(false);
 
-  const getProductDetailsByVariantId = (variantId) => {
-    console.log("Looking for Variant ID in Cart:", variantId);
-    console.log("Current Cart Items:", cartItems);
+  const createCheckout = async (lineItems) => {
+    const mutation = gql`
+      mutation checkoutCreate($input: CheckoutCreateInput!) {
+        checkoutCreate(input: $input) {
+          checkout {
+            id
+            webUrl
+          }
+          userErrors {
+            field
+            message
+          }
+        }
+      }
+    `;
 
-    const foundItem = cartItems.find((item) => item.variant.id === variantId);
+    const variables = {
+      input: {
+        lineItems: lineItems.map((item) => ({
+          variantId: item.variantId,
+          quantity: item.quantity,
+        })),
+      },
+    };
 
-    if (foundItem) {
-      console.log(`Product found for Variant ID: ${variantId}`, foundItem);
-      return foundItem.product;
-    } else {
-      console.error(`Product not found for Variant ID: ${variantId}`);
-      return null;
+    try {
+      const response = await client.request(mutation, variables);
+      const checkout = response.checkoutCreate.checkout;
+      const checkoutErrors = response.checkoutCreate.userErrors;
+
+      if (checkoutErrors.length > 0) {
+        throw new Error(checkoutErrors[0].message);
+      }
+
+      setCheckoutId(checkout.id);
+      sessionStorage.setItem("checkoutId", checkout.id);
+      return checkout.webUrl;
+    } catch (error) {
+      toast.error("Failed to create checkout. Please try again.");
+      console.error("Error creating Shopify checkout:", error);
+      throw new Error("Checkout creation failed.");
     }
   };
 
-  const syncCartWithShopify = useCallback(async () => {
-    if (!checkoutId) {
-      console.log("No checkout ID found, skipping sync.");
-      return;
-    }
-
+  const handleCheckout = async () => {
     try {
-      const query = gql`
-        query getCheckout($id: ID!) {
-          node(id: $id) {
-            ... on Checkout {
-              id
-              lineItems(first: 10) {
-                edges {
-                  node {
-                    id
-                    title
-                    quantity
-                    variant {
-                      id
-                      priceV2 {
-                        amount
-                        currencyCode
-                      }
-                      product {
-                        id
-                        title
-                        images(first: 1) {
-                          edges {
-                            node {
-                              src
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
+      if (!checkoutId) {
+        const checkoutUrl = await createCheckout(
+          cartItems.map((item) => ({
+            variantId: item.variant.id,
+            quantity: item.quantity,
+          }))
+        );
+        if (checkoutUrl) {
+          window.location.href = checkoutUrl;
+        }
+      } else {
+        const query = gql`
+          query getCheckout($id: ID!) {
+            node(id: $id) {
+              ... on Checkout {
+                id
+                webUrl
               }
             }
           }
+        `;
+
+        const variables = { id: checkoutId };
+
+        const response = await client.request(query, variables);
+        const checkoutUrl = response.node.webUrl;
+
+        if (checkoutUrl) {
+          window.location.href = checkoutUrl;
+        } else {
+          throw new Error("No checkout URL found.");
         }
-      `;
-
-      const variables = { id: checkoutId };
-      const response = await client.request(query, variables);
-      console.log("Raw response from Shopify:", response);
-
-      const lineItems = response?.node?.lineItems?.edges;
-
-      if (lineItems && lineItems.length > 0) {
-        const shopifyCartItems = lineItems.map((edge) => ({
-          product: {
-            id: edge.node.variant.product.id,
-            title: edge.node.variant.product.title,
-            images: [edge.node.variant.product.images.edges[0].node.src],
-          },
-          variant: {
-            id: edge.node.variant.id,
-            priceV2: edge.node.variant.priceV2,
-          },
-          quantity: edge.node.quantity,
-        }));
-
-        console.log("Parsed cart items from Shopify:", shopifyCartItems);
-
-        // Dispatch the action to update Redux state
-        dispatch(syncCartItems(shopifyCartItems));
-      } else {
-        console.log("No items in Shopify cart, clearing Redux cart.");
-        dispatch(syncCartItems([])); // Clear the cart if Shopify cart is empty
       }
     } catch (error) {
-      console.error("Failed to sync cart with Shopify:", error);
+      toast.error("Failed to proceed to checkout.");
+      console.error("Checkout failed:", error);
     }
-  }, [checkoutId, dispatch]);
+  };
 
-  const createCheckout = async (lineItems) => {
+  const handleAddToCart = async (variantId, quantity = 1) => {
+    setLoading(true);
     try {
-      if (!lineItems.length) return null;
+      if (!variantId) {
+        toast.error("Invalid product variant. Please try again.");
+        return; // Prevent adding invalid variant to the cart
+      }
 
-      const mutation = gql`
-        mutation checkoutCreate($input: CheckoutCreateInput!) {
-          checkoutCreate(input: $input) {
-            checkout {
-              id
-              webUrl
-            }
-          }
+      let existingItem = cartItems.find(
+        (item) => item.variant.id === variantId
+      );
+
+      if (existingItem) {
+        dispatch(
+          updateCartQuantity(variantId, existingItem.quantity + quantity)
+        );
+      } else {
+        const product = productState.productDetails;
+        if (product) {
+          dispatch(
+            addToCart({
+              product,
+              variant: product.variants.find((v) => v.id === variantId),
+              quantity,
+            })
+          );
+        } else {
+          toast.error("Product not found. Please try again.");
+          return;
         }
-      `;
+      }
 
-      const variables = { input: { lineItems } };
-      const response = await client.request(mutation, variables);
-      const newCheckoutId = response.checkoutCreate.checkout.id;
+      const updatedCartItems = [
+        ...cartItems.filter((item) => item.variant.id !== variantId),
+        { variant: { id: variantId }, quantity },
+      ];
 
-      setCheckoutId(newCheckoutId);
-      sessionStorage.setItem("checkoutId", newCheckoutId);
+      await updateShopifyCheckout(updatedCartItems);
 
-      return newCheckoutId;
+      toast.success("Item added to cart.");
     } catch (error) {
-      console.error("Error creating checkout:", error);
-      throw new Error("Checkout creation failed.");
+      toast.error("Failed to add item to cart. Please try again later.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleRemoveFromCart = async (variantId) => {
+    setLoading(true);
+    try {
+      const updatedCartItems = cartItems
+        .filter((item) => item.variant.id !== variantId)
+        .map((item) => ({
+          variantId: item.variant.id,
+          quantity: item.quantity,
+        }));
+
+      dispatch(removeFromCart(variantId));
+
+      await updateShopifyCheckout(updatedCartItems);
+
+      toast.success("Item removed from cart.");
+    } catch (error) {
+      toast.error("Failed to remove item from cart. Please try again later.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -184,10 +218,15 @@ export const useShopifyCart = () => {
 
     const variables = {
       checkoutId,
-      lineItems: lineItems.map((item) => ({
-        variantId: item.variantId,
-        quantity: item.quantity === 0 ? 0 : item.quantity, // Ensure 0 is passed for removed items
-      })),
+      lineItems: lineItems.map((item) => {
+        if (!item.variantId) {
+          throw new Error("Invalid variantId"); // Extra check for invalid variant
+        }
+        return {
+          variantId: item.variantId,
+          quantity: item.quantity === 0 ? 0 : item.quantity,
+        };
+      }),
     };
 
     try {
@@ -207,7 +246,6 @@ export const useShopifyCart = () => {
         quantity: edge.node.quantity,
       }));
 
-      console.log("Updated cart items after Shopify sync:", updatedCartItems);
       dispatch(syncCartItems(updatedCartItems));
     } catch (error) {
       console.error("Error updating Shopify checkout:", error);
@@ -215,115 +253,10 @@ export const useShopifyCart = () => {
     }
   };
 
-  const handleAddToCart = async (variantId, quantity = 1) => {
-    try {
-      console.log("Attempting to add to cart - Variant ID:", variantId);
-      console.log("Current Cart Items:", cartItems);
-
-      let existingItem = cartItems.find(
-        (item) => item.variant.id === variantId
-      );
-
-      if (existingItem) {
-        console.log("Updating quantity for existing item.");
-        dispatch(
-          updateCartQuantity(variantId, existingItem.quantity + quantity)
-        );
-      } else {
-        const product = productState.productDetails; // Use the product from the state
-
-        if (product) {
-          console.log("Adding new product to cart:", product);
-          dispatch(
-            addToCart({
-              product,
-              variant: product.variants.find((v) => v.id === variantId),
-              quantity,
-            })
-          );
-        } else {
-          console.error("Product not found for variant ID:", variantId);
-          alert("Product not found. Please try again.");
-          return;
-        }
-      }
-
-      const updatedCartItems = [
-        ...cartItems.filter((item) => item.variant.id !== variantId),
-        { variant: { id: variantId }, quantity },
-      ];
-
-      console.log("Updating Shopify checkout with items:", updatedCartItems);
-      await updateShopifyCheckout(updatedCartItems);
-
-      console.log("Updating Shopify checkout successful, syncing cart...");
-      await syncCartWithShopify(); // Make sure cart is synced with Shopify
-    } catch (error) {
-      console.error("Error handling add to cart:", error);
-      alert("Failed to add item to cart. Please try again.");
-    }
+  return {
+    handleAddToCart,
+    handleRemoveFromCart,
+    handleCheckout,
+    loading,
   };
-
-  const handleRemoveFromCart = async (variantId) => {
-    try {
-      console.log(`Attempting to remove item with variantId: ${variantId}`);
-
-      // Create updated cart without the removed item
-      const updatedCartItems = cartItems
-        .filter((item) => item.variant.id !== variantId)
-        .map((item) => ({
-          variantId: item.variant.id,
-          quantity: item.quantity,
-        }));
-
-      // Log updated cart items to ensure correct data
-      console.log("Updated cart items after removal:", updatedCartItems);
-
-      // Update Redux store first to reflect the local cart change
-      dispatch(removeFromCart(variantId));
-
-      // Sync updated cart items with Shopify
-      await updateShopifyCheckout(updatedCartItems);
-
-      console.log("Cart successfully synced with Shopify after removal.");
-    } catch (error) {
-      console.error("Error removing item from cart:", error);
-      alert("Failed to remove item from cart. Please try again.");
-    }
-  };
-
-  const handleCheckout = async () => {
-    try {
-      let currentCheckoutId = checkoutId;
-
-      if (!currentCheckoutId) {
-        currentCheckoutId = await createCheckout(
-          cartItems.map((item) => ({
-            variantId: item.variant.id,
-            quantity: item.quantity,
-          }))
-        );
-      }
-
-      const query = gql`
-        query getCheckout($id: ID!) {
-          node(id: $id) {
-            ... on Checkout {
-              id
-              webUrl
-            }
-          }
-        }
-      `;
-
-      const variables = { id: currentCheckoutId };
-      const response = await client.request(query, variables);
-      window.location.href = response.node.webUrl; // Redirect to the checkout URL
-    } catch (error) {
-      console.error("Checkout failed:", error);
-      alert("Checkout process failed. Please try again.");
-    }
-  };
-
-  return { handleAddToCart, handleRemoveFromCart, handleCheckout, loading };
 };

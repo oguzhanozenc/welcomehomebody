@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import Slider from "react-slick";
 import { GrPrevious, GrNext } from "react-icons/gr";
 import "../styles/ProductItem.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { RiArrowGoBackFill } from "react-icons/ri";
 
 const ProductItem = ({
   product,
@@ -20,6 +22,7 @@ const ProductItem = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalImage, setModalImage] = useState("");
   const [buttonState, setButtonState] = useState("BAG IT");
+  const navigate = useNavigate();
 
   const handleImageClick = () => {
     if (product?.images && product.images[currentSlide]) {
@@ -65,6 +68,11 @@ const ProductItem = ({
 
   return (
     <div className="product-page">
+      <div>
+        <button onClick={() => navigate(-1)} className="btn return-link">
+          <RiArrowGoBackFill /> GO BACK
+        </button>
+      </div>
       <div className="window retro-window">
         <div className="title-bar">
           <div className="title">{product.title}</div>

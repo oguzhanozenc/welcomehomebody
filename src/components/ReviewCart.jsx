@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import { useShopifyCart } from "../hooks/useShopifyCart";
 import "../styles/ReviewCart.css";
@@ -11,9 +11,8 @@ const ReviewCart = () => {
     console.log("Cart items in ReviewCart component:", cartItems); // Ensure correct data flow
   }, [cartItems]);
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { handleRemoveFromCart, handleAddToCart, loading } = useShopifyCart();
+  const navigate = useNavigate();
 
   const handleRemoveItem = async (variantId) => {
     try {
@@ -41,7 +40,8 @@ const ReviewCart = () => {
   const calculateTotal = () => {
     return cartItems
       .reduce(
-        (total, item) => total + item.quantity * item.variant.priceV2.amount,
+        (total, item) =>
+          total + item.quantity * item.variant?.priceV2?.amount || 0,
         0
       )
       .toFixed(2);
@@ -56,60 +56,85 @@ const ReviewCart = () => {
         <>
           <ul className="cart-items">
             {cartItems.map((item) => {
-              // get only the product ID
-              const productId = item.product.id.replace(
-                "gid://shopify/Product/",
-                ""
-              );
+              // Full product ID for Shopify API interactions
+              const originalProductId = item?.product?.id;
+
+              // Restructured product ID for URLs
+              const restructuredProductId = originalProductId
+                ? originalProductId.replace("gid://shopify/Product/", "")
+                : null;
+
+              const productImage =
+                item?.product?.images?.[0] || "/placeholder-image.jpg";
+              const productTitle = item?.product?.title || "Unknown Product";
 
               return (
-                <li key={item.variant.id} className="cart-item">
-                  <Link to={`/products/${productId}`}>
+                <li key={item.variant?.id} className="cart-item">
+                  {/* Show image and link to product if productId is available */}
+                  {restructuredProductId ? (
+                    <Link to={`/products/${restructuredProductId}`}>
+                      <img
+                        src={productImage}
+                        alt={productTitle}
+                        className="cart-item-image"
+                      />
+                    </Link>
+                  ) : (
                     <img
-                      src={item.product.images[0]}
-                      alt={item.product.title}
+                      src={productImage}
+                      alt={productTitle}
                       className="cart-item-image"
                     />
-                  </Link>
+                  )}
                   <div className="cart-item-details">
-                    <Link to={`/products/${productId}`}>
-                      <h3>{item.product.title}</h3>
-                    </Link>
-                    <p>Price: ${item.variant.priceV2.amount}</p>
-                    <div className="cart-item-actions">
-                      <button
-                        className="quantity-button"
-                        onClick={() =>
-                          handleUpdateQuantity(
-                            item.variant.id,
-                            item.quantity - 1
-                          )
-                        }
-                        disabled={loading}
-                      >
-                        -
-                      </button>
-                      <span className="quantity">{item.quantity}</span>
-                      <button
-                        className="quantity-button"
-                        onClick={() =>
-                          handleUpdateQuantity(
-                            item.variant.id,
-                            item.quantity + 1
-                          )
-                        }
-                        disabled={loading}
-                      >
-                        +
-                      </button>
-                      <button
-                        onClick={() => handleRemoveItem(item.variant.id)}
-                        className="remove-button"
-                        disabled={loading}
-                      >
-                        Remove
-                      </button>
-                    </div>
+                    {item.product ? (
+                      <>
+                        {restructuredProductId ? (
+                          <Link to={`/products/${restructuredProductId}`}>
+                            <h3>{productTitle}</h3>
+                          </Link>
+                        ) : (
+                          <h3>{productTitle}</h3>
+                        )}
+                        <p>Price: ${item.variant?.priceV2?.amount || 0}</p>
+                        <div className="cart-item-actions">
+                          <button
+                            className="quantity-button"
+                            onClick={() =>
+                              handleUpdateQuantity(
+                                item.variant.id,
+                                item.quantity - 1
+                              )
+                            }
+                            disabled={loading}
+                          >
+                            -
+                          </button>
+                          <span className="quantity">{item.quantity}</span>
+                          <button
+                            className="quantity-button"
+                            onClick={() =>
+                              handleUpdateQuantity(
+                                item.variant.id,
+                                item.quantity + 1
+                              )
+                            }
+                            disabled={loading}
+                          >
+                            +
+                          </button>
+                          <button
+                            onClick={() => handleRemoveItem(item.variant.id)}
+                            className="remove-button"
+                            disabled={loading}
+                          >
+                            Remove
+                          </button>
+                        </div>
+                      </>
+                    ) : (
+                      <p>Product details unavailable</p>
+                    )}
                   </div>
                 </li>
               );

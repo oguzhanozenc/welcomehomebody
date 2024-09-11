@@ -8,6 +8,20 @@
   padding: 10 5%;
 }
 
+.return-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem auto;
+  background-color: #333;
+  border: 1px solid #ededed;
+}
+
+.return-link svg {
+  font-size: 1rem;
+  margin: 0 0.25rem 0 0;
+}
+
 .productpage-loading {
   font-family: "Press Start 2P", monospace;
   font-size: 2rem;

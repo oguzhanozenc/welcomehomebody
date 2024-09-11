@@ -2,7 +2,7 @@ import "../styles/Loading.css";
 
 const Loading = () => {
   return (
-    <div class="loading-window">
+    <div className="loading-window">
       <div className="container">
         <div className="box"></div>
         <div className="box"></div>
