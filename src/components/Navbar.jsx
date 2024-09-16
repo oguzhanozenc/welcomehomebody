@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import "../styles/Navbar.css";
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -88,18 +88,22 @@ const Navbar = () => {
               <span className="cart-count">{cartItemCount}</span>
             )}
           </Link>
-
           {isAuthenticated ? (
-            <button onClick={handleLogout} className="account-btn logout-btn">
-              Logout
-            </button>
+            <>
+              {" "}
+              <Link to="/account" className="account-btn">
+                <FaUserCircle size={24} />
+              </Link>
+              <button onClick={handleLogout} className="btn logout-btn">
+                Logout
+              </button>
+            </>
           ) : (
             <Link to="/login" className="account-btn">
               <FaUserCircle size={24} />
             </Link>
           )}
 
-          {/* Mobile Menu Toggle */}
           <button
             className="menu-toggle"
             aria-expanded={isNavOpen}

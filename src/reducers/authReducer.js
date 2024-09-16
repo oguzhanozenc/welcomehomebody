@@ -1,5 +1,3 @@
-// src/reducers/authReducer.js
-
 import {
   CUSTOMER_LOGIN_SUCCESS,
   CUSTOMER_LOGOUT,

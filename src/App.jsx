@@ -94,10 +94,7 @@ function App() {
         <Route path="/cart" element={<ReviewCart />} />
         <Route path="/checkout" element={<CheckoutPage />} />
         <Route path="*" element={<NotFound />} />
-        <Route
-          path="/account"
-          element={<PrivateRoute element={<Account />} />}
-        />
+        <Route path="/account" element={<PrivateRoute element={Account} />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
       </Routes>

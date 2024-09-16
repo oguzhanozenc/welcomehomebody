@@ -18,7 +18,7 @@ const CheckoutPage = () => {
     if (isAuthenticated && cartItems.length > 0) {
       handleProceedToCheckout();
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, cartItems.length]);
 
   const handleProceedToCheckout = () => {
     setProcessing(true);
@@ -52,6 +52,7 @@ const CheckoutPage = () => {
   return (
     <div className="checkout-container">
       <h2>Checkout</h2>
+
       {cartItems.length === 0 ? (
         <p>Your cart is empty.</p>
       ) : (
@@ -64,7 +65,7 @@ const CheckoutPage = () => {
               const productImage =
                 item?.product?.images?.[0] || "/placeholder-image.jpg";
               const productTitle = item?.product?.title || "Unknown Product";
-              const variantTitle = item?.variant?.title || "N/A"; // Assuming variant title includes size
+              const variantTitle = item?.variant?.title || "N/A";
 
               return (
                 <li key={item.variant?.id} className="checkout-item">
@@ -88,16 +89,9 @@ const CheckoutPage = () => {
                     <p>
                       {item?.product?.description || "No description available"}
                     </p>
-                    {/* Display Variant Title if available */}
-                    {variantTitle !== "N/A" ? (
-                      <p>
-                        <strong>Variant:</strong> {variantTitle}
-                      </p>
-                    ) : (
-                      <p>
-                        <strong>Size:</strong> {variantTitle}
-                      </p>
-                    )}
+                    <p>
+                      <strong>Variant:</strong> {variantTitle}
+                    </p>
                     <p>
                       <strong>Price:</strong> $
                       {item?.variant?.priceV2?.amount || "N/A"}
@@ -113,22 +107,7 @@ const CheckoutPage = () => {
           <div className="checkout-summary">
             <h3>Total: ${calculateTotal()}</h3>
           </div>
-          <div className="checkout-actions">
-            <button onClick={handleBackToCart} className="btn back-to-cart-btn">
-              Back to Cart
-            </button>
-            <button
-              onClick={handleProceedToCheckout}
-              disabled={processing || cartItems.length === 0}
-              className="btn checkout-btn"
-            >
-              {processing
-                ? "Processing..."
-                : isAuthenticated
-                ? "Proceed to Payment"
-                : "Continue as Guest"}
-            </button>
-          </div>
+
           {!isAuthenticated && (
             <div className="authentication-prompt">
               <p>
@@ -146,27 +125,37 @@ const CheckoutPage = () => {
                 <Link
                   to="/login"
                   state={{ from: location }}
-                  className="btn auth-btn"
+                  className="auth-btn"
                 >
                   Login
                 </Link>
                 <Link
                   to="/signup"
                   state={{ from: location }}
-                  className="btn auth-btn"
+                  className="auth-btn"
                 >
                   Sign Up
                 </Link>
-                <button
-                  onClick={handleProceedToCheckout}
-                  disabled={processing}
-                  className="btn checkout-btn"
-                >
-                  {processing ? "Processing..." : "Continue as Guest"}
-                </button>
               </div>
             </div>
           )}
+
+          <div className="checkout-actions">
+            <button onClick={handleBackToCart} className="btn back-to-cart-btn">
+              Back to Cart
+            </button>
+            <button
+              onClick={handleProceedToCheckout}
+              disabled={processing || cartItems.length === 0}
+              className="btn checkout-btn"
+            >
+              {processing
+                ? "Processing..."
+                : isAuthenticated
+                ? "Proceed to Payment"
+                : "Continue without login"}
+            </button>
+          </div>
         </>
       )}
     </div>

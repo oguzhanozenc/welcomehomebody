@@ -93,52 +93,56 @@ const Account = () => {
   }
 
   return (
-    <div className="account-container">
-      <h2>My Account</h2>
-      <button onClick={handleLogout} className="btn logout-btn">
-        Logout
-      </button>
-      <div className="account-details">
-        <h3>Personal Information</h3>
-        <p>
-          Name: {customerData.firstName} {customerData.lastName}
-        </p>
-        <p>Email: {customerData.email}</p>
-        {customerData.phone && <p>Phone: {customerData.phone}</p>}
+    <section className="account-section">
+      <div className="account-container">
+        <div className="account-top-container">
+          <h2>My Account</h2>
+          <button onClick={handleLogout} className="btn logout-btn">
+            Logout
+          </button>
+        </div>
+        <div className="account-details">
+          <h3>Personal Information</h3>
+          <p>
+            Name: {customerData.firstName} {customerData.lastName}
+          </p>
+          <p>Email: {customerData.email}</p>
+          {customerData.phone && <p>Phone: {customerData.phone}</p>}
+        </div>
+        <div className="account-orders">
+          <h3>Order History</h3>
+          {customerData.orders.edges.length === 0 ? (
+            <p>You have no orders.</p>
+          ) : (
+            <ul className="orders-list">
+              {customerData.orders.edges.map((orderEdge) => {
+                const order = orderEdge.node;
+                return (
+                  <li key={order.id} className="order-item">
+                    <p>
+                      <strong>Order #{order.orderNumber}</strong> -{" "}
+                      {order.totalPriceV2.amount}{" "}
+                      {order.totalPriceV2.currencyCode}
+                    </p>
+                    <p>
+                      Placed on:{" "}
+                      {new Date(order.processedAt).toLocaleDateString()}
+                    </p>
+                    <ul className="order-line-items">
+                      {order.lineItems.edges.map((itemEdge) => (
+                        <li key={itemEdge.node.title}>
+                          {itemEdge.node.quantity} x {itemEdge.node.title}
+                        </li>
+                      ))}
+                    </ul>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+        </div>
       </div>
-      <div className="account-orders">
-        <h3>Order History</h3>
-        {customerData.orders.edges.length === 0 ? (
-          <p>You have no orders.</p>
-        ) : (
-          <ul className="orders-list">
-            {customerData.orders.edges.map((orderEdge) => {
-              const order = orderEdge.node;
-              return (
-                <li key={order.id} className="order-item">
-                  <p>
-                    <strong>Order #{order.orderNumber}</strong> -{" "}
-                    {order.totalPriceV2.amount}{" "}
-                    {order.totalPriceV2.currencyCode}
-                  </p>
-                  <p>
-                    Placed on:{" "}
-                    {new Date(order.processedAt).toLocaleDateString()}
-                  </p>
-                  <ul className="order-line-items">
-                    {order.lineItems.edges.map((itemEdge) => (
-                      <li key={itemEdge.node.title}>
-                        {itemEdge.node.quantity} x {itemEdge.node.title}
-                      </li>
-                    ))}
-                  </ul>
-                </li>
-              );
-            })}
-          </ul>
-        )}
-      </div>
-    </div>
+    </section>
   );
 };
 

@@ -1,12 +1,70 @@
+.account-section {
+  margin: 2.5% auto;
+  padding: 2.5% 10%;
+  font-family: "Arial", sans-serif;
+}
+
 .account-container {
-  max-width: 800px;
-  margin: 2rem auto;
-  padding: 1rem;
+  background-color: #f9f9f9;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: stretch;
+  margin: 0 auto;
+  color: black;
+  padding: 2rem;
+  border-radius: 0.25rem;
+}
+
+.account-top-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  margin: 1rem 0;
+}
+
+.account-container h2,
+.account-container h3 {
+  color: #333;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
 }
 
 .account-details,
 .account-orders {
   margin-bottom: 2rem;
+  padding: 1rem;
+  background-color: #fff;
+  border-radius: 0.25rem;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.auth-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .account-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .account-details,
+  .account-orders {
+    flex: 1;
+  }
+}
+
+.logout-btn {
+  background-color: #dc3545;
+}
+
+.logout-btn:hover {
+  background-color: #c82333;
 }
 
 .orders-list {
@@ -15,23 +73,32 @@
 }
 
 .order-item {
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid #ddd;
   padding: 1rem 0;
+}
+
+.order-item:last-child {
+  border-bottom: none;
 }
 
 .order-line-items {
   list-style: none;
-  padding-left: 1rem;
+  padding: 0;
+  margin-top: 0.5rem;
+  font-size: 0.9em;
 }
 
-.logout-btn {
-  background-color: #ff4c4c;
-  color: #fff;
-  border: none;
-  padding: 0.5rem;
-  cursor: pointer;
+.order-line-items li {
+  color: #555;
 }
 
-.logout-btn:hover {
-  background-color: #ff0000;
+@media (max-width: 767px) {
+  .account-container {
+    padding: 0.5rem;
+  }
+
+  h2,
+  h3 {
+    font-size: 1.5em;
+  }
 }
