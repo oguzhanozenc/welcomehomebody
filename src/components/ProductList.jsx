@@ -1,14 +1,16 @@
-// ProductList.jsx
-import React, { useEffect } from "react";
-import { connect } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { fetchProducts } from "../actions/productActions";
 import "../styles/ProductList.css";
 import Loading from "./Loading";
 
-const ProductList = ({ dispatch, loading, products, error, showRecent }) => {
+const ProductList = ({ showRecent }) => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { category, searchTerm } = useParams();
+
+  const { loading, products, error } = useSelector((state) => state.products);
 
   useEffect(() => {
     dispatch(fetchProducts());
@@ -41,7 +43,7 @@ const ProductList = ({ dispatch, loading, products, error, showRecent }) => {
     );
   }
 
-  // Limit to 6 products if showRecent is true
+  // Limit to 4 products if showRecent is true
   if (showRecent) {
     filteredProducts = filteredProducts.slice(0, 4);
   }
@@ -97,9 +99,11 @@ const ProductList = ({ dispatch, loading, products, error, showRecent }) => {
 
                   <div className="product-bottom">
                     <p className="product-price">
-                      {typeof product.price === "object"
+                      {product.price &&
+                      product.price.amount &&
+                      product.price.currencyCode
                         ? `${product.price.amount} ${product.price.currencyCode}`
-                        : `${product.price} USD`}
+                        : "Price not available"}
                     </p>
                     <NavLink to={`/products/${productId}`} className="btn">
                       View
@@ -126,10 +130,4 @@ const ProductList = ({ dispatch, loading, products, error, showRecent }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  loading: state.products.loading,
-  products: state.products.products,
-  error: state.products.error,
-});
-
-export default connect(mapStateToProps)(ProductList);
+export default ProductList;

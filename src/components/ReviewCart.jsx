@@ -1,36 +1,41 @@
-import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
-import { useShopifyCart } from "../hooks/useShopifyCart";
+import {
+  updateCartQuantityAndUpdateShopify,
+  removeFromCartAndUpdateShopify,
+} from "../actions/cartActions";
 import "../styles/ReviewCart.css";
+import { toast } from "react-toastify";
 
 const ReviewCart = () => {
   const cartItems = useSelector((state) => state.cart.items);
-
-  useEffect(() => {
-    console.log("Cart items in ReviewCart component:", cartItems); // Ensure correct data flow
-  }, [cartItems]);
-
-  const { handleRemoveFromCart, handleAddToCart, loading } = useShopifyCart();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleRemoveItem = async (variantId) => {
-    try {
-      await handleRemoveFromCart(variantId);
-    } catch (error) {
-      console.error("Failed to remove item:", error);
-      alert("Failed to remove item from the cart. Please try again.");
-    }
+  const handleRemoveItem = (variantId) => {
+    dispatch(removeFromCartAndUpdateShopify(variantId))
+      .then(() => {
+        toast.success("Item removed from cart.");
+      })
+      .catch((error) => {
+        console.error("Failed to remove item:", error);
+        toast.error("Failed to remove item from the cart. Please try again.");
+      });
   };
 
-  const handleUpdateQuantity = async (variantId, quantity) => {
-    if (quantity < 1) return;
-    try {
-      await handleAddToCart(variantId, quantity);
-    } catch (error) {
-      console.error("Failed to update quantity:", error);
-      alert("Failed to update item quantity. Please try again.");
+  const handleUpdateQuantity = (variantId, newQuantity) => {
+    if (newQuantity < 1) {
+      handleRemoveItem(variantId);
+      return;
     }
+    dispatch(updateCartQuantityAndUpdateShopify(variantId, newQuantity))
+      .then(() => {
+        toast.success("Cart updated.");
+      })
+      .catch((error) => {
+        console.error("Failed to update quantity:", error);
+        toast.error("Failed to update item quantity. Please try again.");
+      });
   };
 
   const handleProceedToCheckout = () => {
@@ -41,7 +46,8 @@ const ReviewCart = () => {
     return cartItems
       .reduce(
         (total, item) =>
-          total + item.quantity * item.variant?.priceV2?.amount || 0,
+          total +
+          item.quantity * parseFloat(item.variant?.priceV2?.amount || 0),
         0
       )
       .toFixed(2);
@@ -56,21 +62,17 @@ const ReviewCart = () => {
         <>
           <ul className="cart-items">
             {cartItems.map((item) => {
-              // Full product ID for Shopify API interactions
               const originalProductId = item?.product?.id;
-
-              // Restructured product ID for URLs
               const restructuredProductId = originalProductId
                 ? originalProductId.replace("gid://shopify/Product/", "")
                 : null;
-
               const productImage =
                 item?.product?.images?.[0] || "/placeholder-image.jpg";
               const productTitle = item?.product?.title || "Unknown Product";
+              const variantTitle = item?.variant?.title || "N/A";
 
               return (
                 <li key={item.variant?.id} className="cart-item">
-                  {/* Show image and link to product if productId is available */}
                   {restructuredProductId ? (
                     <Link to={`/products/${restructuredProductId}`}>
                       <img
@@ -96,7 +98,14 @@ const ReviewCart = () => {
                         ) : (
                           <h3>{productTitle}</h3>
                         )}
-                        <p>Price: ${item.variant?.priceV2?.amount || 0}</p>
+                        {/* Display Variant Title if available */}
+                        <p>
+                          <strong>Variant:</strong> {variantTitle}
+                        </p>
+                        <p>
+                          <strong>Price:</strong> $
+                          {item.variant?.priceV2?.amount || 0}
+                        </p>
                         <div className="cart-item-actions">
                           <button
                             className="quantity-button"
@@ -106,7 +115,6 @@ const ReviewCart = () => {
                                 item.quantity - 1
                               )
                             }
-                            disabled={loading}
                           >
                             -
                           </button>
@@ -119,14 +127,12 @@ const ReviewCart = () => {
                                 item.quantity + 1
                               )
                             }
-                            disabled={loading}
                           >
                             +
                           </button>
                           <button
                             onClick={() => handleRemoveItem(item.variant.id)}
                             className="remove-button"
-                            disabled={loading}
                           >
                             Remove
                           </button>
@@ -145,9 +151,9 @@ const ReviewCart = () => {
             <button
               className="checkout-button"
               onClick={handleProceedToCheckout}
-              disabled={loading || cartItems.length === 0}
+              disabled={cartItems.length === 0}
             >
-              {loading ? "Loading..." : "Proceed to Checkout"}
+              Proceed to Checkout
             </button>
           </div>
         </>

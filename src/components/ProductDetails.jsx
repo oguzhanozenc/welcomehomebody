@@ -3,22 +3,20 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProductDetails } from "../actions/productActions";
 import ProductItem from "./ProductItem";
-import { useShopifyCart } from "../hooks/useShopifyCart";
 import Loading from "./Loading";
 
 const ProductDetails = () => {
   const { productId } = useParams();
   const dispatch = useDispatch();
-  const productState = useSelector((state) => state.products);
-  const product = productState.productDetails;
-  const loading = productState.loading;
-  const error = productState.error;
+  const {
+    productDetails: product,
+    loading,
+    error,
+  } = useSelector((state) => state.products);
 
   const [currentSlide, setCurrentSlide] = useState(0);
   const [selectedVariant, setSelectedVariant] = useState(null);
   const slider = useRef(null);
-
-  const { handleAddToCart, handleRemoveFromCart } = useShopifyCart();
 
   useEffect(() => {
     if (productId) {
@@ -65,8 +63,6 @@ const ProductDetails = () => {
         handleSlideClick={handleSlideClick}
         selectedVariant={selectedVariant}
         setSelectedVariant={setSelectedVariant}
-        handleAddToCart={handleAddToCart}
-        handleRemoveFromCart={handleRemoveFromCart}
         slider={slider}
       />
     </div>

@@ -1,99 +1,174 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { useShopifyCart } from "../hooks/useShopifyCart";
-import { useNavigate, Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { handleCheckout } from "../actions/cartActions";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import "../styles/CheckoutPage.css";
+import { toast } from "react-toastify";
 
 const CheckoutPage = () => {
   const cartItems = useSelector((state) => state.cart.items);
-  const { handleCheckout, handleRemoveFromCart, loading } = useShopifyCart();
+  const { isAuthenticated } = useSelector((state) => state.auth);
   const [processing, setProcessing] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+  const dispatch = useDispatch();
 
+  // Redirect to Shopify checkout if user logs in successfully
   useEffect(() => {
-    console.log("Cart items in CheckoutPage component:", cartItems);
-  }, [cartItems]);
-
-  const handleProceedToCheckout = async () => {
-    setProcessing(true);
-    try {
-      await handleCheckout(); // Calls the handleCheckout function from the hook
-    } catch (error) {
-      console.error("Checkout failed:", error);
-      setProcessing(false);
+    if (isAuthenticated && cartItems.length > 0) {
+      handleProceedToCheckout();
     }
+  }, [isAuthenticated]);
+
+  const handleProceedToCheckout = () => {
+    setProcessing(true);
+    dispatch(handleCheckout())
+      .then(() => {
+        setProcessing(false);
+        // Optionally, navigate to a confirmation page or Shopify checkout happens automatically
+      })
+      .catch((error) => {
+        console.error("Checkout failed:", error);
+        setProcessing(false);
+        toast.error("Failed to proceed to checkout.");
+      });
   };
 
   const handleBackToCart = () => {
-    navigate("/review-cart");
+    navigate("/cart");
+  };
+
+  const calculateTotal = () => {
+    return cartItems
+      .reduce(
+        (total, item) =>
+          total +
+          item.quantity * parseFloat(item.variant?.priceV2?.amount || 0),
+        0
+      )
+      .toFixed(2);
   };
 
   return (
     <div className="checkout-container">
       <h2>Checkout</h2>
-      <ul className="checkout-items">
-        {cartItems.map((item) => {
-          // Ensure the product and its ID are available before attempting to use them
-          const productId = item?.product?.id
-            ? item.product.id.replace("gid://shopify/Product/", "")
-            : null;
+      {cartItems.length === 0 ? (
+        <p>Your cart is empty.</p>
+      ) : (
+        <>
+          <ul className="checkout-items">
+            {cartItems.map((item) => {
+              const productId = item?.product?.id
+                ? item.product.id.replace("gid://shopify/Product/", "")
+                : null;
+              const productImage =
+                item?.product?.images?.[0] || "/placeholder-image.jpg";
+              const productTitle = item?.product?.title || "Unknown Product";
+              const variantTitle = item?.variant?.title || "N/A"; // Assuming variant title includes size
 
-          const productImage =
-            item?.product?.images?.[0] || "/placeholder-image.jpg";
-          const productTitle = item?.product?.title || "Unknown Product";
-
-          return (
-            <li key={item.variant?.id} className="checkout-item">
-              <div className="checkout-item-image">
-                {productId ? (
-                  <Link to={`/products/${productId}`}>
-                    <img src={productImage} alt={productTitle} />
-                  </Link>
-                ) : (
-                  <img src={productImage} alt={productTitle} />
-                )}
-              </div>
-              <div className="checkout-item-details">
-                {productId ? (
-                  <Link to={`/products/${productId}`}>
-                    <h3>{productTitle}</h3>
-                  </Link>
-                ) : (
-                  <h3>{productTitle}</h3>
-                )}
-                <p>
-                  {item?.product?.description || "No description available"}
-                </p>
-                <p>Price: ${item?.variant?.priceV2?.amount || "N/A"}</p>
-                <p>Quantity: {item.quantity}</p>
-                <button
-                  onClick={() => handleRemoveFromCart(item.variant.id)}
-                  disabled={loading || processing}
-                  className="remove-button"
+              return (
+                <li key={item.variant?.id} className="checkout-item">
+                  <div className="checkout-item-image">
+                    {productId ? (
+                      <Link to={`/products/${productId}`}>
+                        <img src={productImage} alt={productTitle} />
+                      </Link>
+                    ) : (
+                      <img src={productImage} alt={productTitle} />
+                    )}
+                  </div>
+                  <div className="checkout-item-details">
+                    {productId ? (
+                      <Link to={`/products/${productId}`}>
+                        <h3>{productTitle}</h3>
+                      </Link>
+                    ) : (
+                      <h3>{productTitle}</h3>
+                    )}
+                    <p>
+                      {item?.product?.description || "No description available"}
+                    </p>
+                    {/* Display Variant Title if available */}
+                    {variantTitle !== "N/A" ? (
+                      <p>
+                        <strong>Variant:</strong> {variantTitle}
+                      </p>
+                    ) : (
+                      <p>
+                        <strong>Size:</strong> {variantTitle}
+                      </p>
+                    )}
+                    <p>
+                      <strong>Price:</strong> $
+                      {item?.variant?.priceV2?.amount || "N/A"}
+                    </p>
+                    <p>
+                      <strong>Quantity:</strong> {item.quantity}
+                    </p>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+          <div className="checkout-summary">
+            <h3>Total: ${calculateTotal()}</h3>
+          </div>
+          <div className="checkout-actions">
+            <button onClick={handleBackToCart} className="btn back-to-cart-btn">
+              Back to Cart
+            </button>
+            <button
+              onClick={handleProceedToCheckout}
+              disabled={processing || cartItems.length === 0}
+              className="btn checkout-btn"
+            >
+              {processing
+                ? "Processing..."
+                : isAuthenticated
+                ? "Proceed to Payment"
+                : "Continue as Guest"}
+            </button>
+          </div>
+          {!isAuthenticated && (
+            <div className="authentication-prompt">
+              <p>
+                You can proceed as a guest or{" "}
+                <Link
+                  to="/login"
+                  state={{ from: location }}
+                  className="auth-link"
                 >
-                  Remove
+                  login
+                </Link>{" "}
+                to access your account benefits.
+              </p>
+              <div className="auth-buttons">
+                <Link
+                  to="/login"
+                  state={{ from: location }}
+                  className="btn auth-btn"
+                >
+                  Login
+                </Link>
+                <Link
+                  to="/signup"
+                  state={{ from: location }}
+                  className="btn auth-btn"
+                >
+                  Sign Up
+                </Link>
+                <button
+                  onClick={handleProceedToCheckout}
+                  disabled={processing}
+                  className="btn checkout-btn"
+                >
+                  {processing ? "Processing..." : "Continue as Guest"}
                 </button>
               </div>
-            </li>
-          );
-        })}
-      </ul>
-      <div className="checkout-actions">
-        <button onClick={handleBackToCart} className="checkout-button">
-          Back to Cart
-        </button>
-        <button
-          onClick={handleProceedToCheckout}
-          disabled={loading || processing || cartItems.length === 0}
-          className="checkout-button"
-        >
-          {processing
-            ? "Processing..."
-            : loading
-            ? "Syncing..."
-            : "Proceed to Payment"}
-        </button>
-      </div>
+            </div>
+          )}
+        </>
+      )}
     </div>
   );
 };

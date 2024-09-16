@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
@@ -14,10 +14,22 @@ import CheckoutPage from "./components/CheckoutPage";
 import Contact from "./components/Contact";
 import About from "./components/About";
 import ReviewCart from "./components/ReviewCart";
-import Account from "./components/Account";
+
 import NotFound from "./components/NotFound";
 
+import PrivateRoute from "./components/PrivateRoute";
+import Account from "./components/Account";
+import Login from "./components/Login";
+import SignUp from "./components/SignUp";
+
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useDispatch } from "react-redux";
+import { syncCartItems } from "./actions/cartActions";
+
 function App() {
+  const dispatch = useDispatch();
+
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.scrollY;
@@ -46,6 +58,22 @@ function App() {
     };
   }, []);
 
+  // Listen for storage events to sync cart across tabs
+  useEffect(() => {
+    const handleStorageChange = (event) => {
+      if (event.key === "cartItems") {
+        const updatedCart = JSON.parse(event.newValue) || [];
+        dispatch(syncCartItems(updatedCart));
+      }
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, [dispatch]);
+
   return (
     <BrowserRouter>
       <UseScrollToHash />
@@ -63,12 +91,18 @@ function App() {
           path="/products/search/:searchTerm"
           element={<ProductList showRecent={false} />}
         />
-        <Route path="/review-cart" element={<ReviewCart />} />
-        <Route path="/account" element={<Account />} />
+        <Route path="/cart" element={<ReviewCart />} />
         <Route path="/checkout" element={<CheckoutPage />} />
         <Route path="*" element={<NotFound />} />
+        <Route
+          path="/account"
+          element={<PrivateRoute element={<Account />} />}
+        />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
       </Routes>
       <Footer />
+      <ToastContainer />
     </BrowserRouter>
   );
 }

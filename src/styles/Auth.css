@@ -1,0 +1,38 @@
+.auth-container {
+  max-width: 400px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  color: black;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-form input {
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  font-size: 1rem;
+  color: black;
+}
+
+.auth-btn {
+  padding: 0.5rem;
+  background-color: #000080;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.auth-btn:hover {
+  background-color: #0000cd;
+}
+
+.error-message {
+  color: red;
+  margin-bottom: 1rem;
+}

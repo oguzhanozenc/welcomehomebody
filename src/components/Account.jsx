@@ -1,98 +1,142 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { gql } from "graphql-request";
 import client from "../client";
+import { logoutCustomer } from "../actions/authActions";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "../styles/Account.css";
 
 const Account = () => {
-  const [accountUrl, setAccountUrl] = useState(null);
-  const [isRedirecting, setIsRedirecting] = useState(false);
-  const [error, setError] = useState(false);
-  const [buttonText, setButtonText] = useState("Enter Your Account");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { token, isAuthenticated } = useSelector((state) => state.auth);
+
+  const [customerData, setCustomerData] = useState(null);
 
   useEffect(() => {
-    const fetchAccountUrl = async () => {
-      try {
-        const query = gql`
-          query {
-            shop {
-              primaryDomain {
-                url
+    if (!isAuthenticated || !token) {
+      navigate("/login");
+      return;
+    }
+
+    const query = gql`
+      query getCustomer($customerAccessToken: String!) {
+        customer(customerAccessToken: $customerAccessToken) {
+          id
+          firstName
+          lastName
+          email
+          phone
+          addresses(first: 5) {
+            edges {
+              node {
+                id
+                address1
+                address2
+                city
+                province
+                country
+                zip
               }
             }
           }
-        `;
-        const response = await client.request(query);
-        const shopDomain = response.shop.primaryDomain.url;
-
-        if (shopDomain) {
-          const url = `${shopDomain}/account`;
-          setAccountUrl(url);
-        } else {
-          throw new Error("Shopify account URL not found.");
+          orders(first: 10, sortKey: PROCESSED_AT, reverse: true) {
+            edges {
+              node {
+                id
+                orderNumber
+                totalPriceV2 {
+                  amount
+                  currencyCode
+                }
+                processedAt
+                lineItems(first: 5) {
+                  edges {
+                    node {
+                      title
+                      quantity
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
-      } catch (error) {
-        toast.error("Oops! Something went wrong. Please try again.");
-        setError(true);
       }
+    `;
+
+    const variables = {
+      customerAccessToken: token,
     };
 
-    fetchAccountUrl();
-  }, []);
+    client
+      .request(query, variables)
+      .then((response) => {
+        setCustomerData(response.customer);
+      })
+      .catch((error) => {
+        console.error("Failed to fetch customer data:", error);
+        toast.error("Session expired. Please log in again.");
+        dispatch(logoutCustomer());
+        navigate("/login");
+      });
+  }, [isAuthenticated, token, dispatch, navigate]);
 
-  const handleRedirect = () => {
-    if (accountUrl) {
-      setIsRedirecting(true);
-      // Playful text changes
-      setButtonText("Loading Inventory...");
-      setTimeout(() => {
-        setButtonText("Warping to Shopify...");
-      }, 750);
-      setTimeout(() => {
-        window.location.href = accountUrl;
-      }, 1000);
-    }
+  const handleLogout = () => {
+    dispatch(logoutCustomer());
+    navigate("/");
   };
 
-  const handleRetry = () => {
-    setError(false);
-    window.location.reload();
-  };
+  if (!customerData) {
+    return <p>Loading account information...</p>;
+  }
 
   return (
-    <div className="account-page">
-      <div className="window account-window">
-        <div className="account-title-bar">
-          <div className="account-title">🎮 Account Access 🎮</div>
-          <div className="buttons">
-            <div className="button close"></div>
-            <div className="button minimize"></div>
-            <div className="button maximize"></div>
-          </div>
-        </div>
-        <div className="content">
-          {!error ? (
-            <div>
-              <button
-                onClick={handleRedirect}
-                className={`redirect-button arcade-button ${
-                  isRedirecting ? "redirecting" : ""
-                }`}
-                disabled={isRedirecting}
-              >
-                {isRedirecting ? buttonText : "Enter Your Account"}
-              </button>
-              {isRedirecting && <div className="spinner"></div>}
-            </div>
-          ) : (
-            <div>
-              <p className="arcade-text">❌ Connection Failed!</p>
-              <button onClick={handleRetry} className="retry-button">
-                Try Again!
-              </button>
-            </div>
-          )}
-        </div>
+    <div className="account-container">
+      <h2>My Account</h2>
+      <button onClick={handleLogout} className="btn logout-btn">
+        Logout
+      </button>
+      <div className="account-details">
+        <h3>Personal Information</h3>
+        <p>
+          Name: {customerData.firstName} {customerData.lastName}
+        </p>
+        <p>Email: {customerData.email}</p>
+        {customerData.phone && <p>Phone: {customerData.phone}</p>}
+      </div>
+      <div className="account-orders">
+        <h3>Order History</h3>
+        {customerData.orders.edges.length === 0 ? (
+          <p>You have no orders.</p>
+        ) : (
+          <ul className="orders-list">
+            {customerData.orders.edges.map((orderEdge) => {
+              const order = orderEdge.node;
+              return (
+                <li key={order.id} className="order-item">
+                  <p>
+                    <strong>Order #{order.orderNumber}</strong> -{" "}
+                    {order.totalPriceV2.amount}{" "}
+                    {order.totalPriceV2.currencyCode}
+                  </p>
+                  <p>
+                    Placed on:{" "}
+                    {new Date(order.processedAt).toLocaleDateString()}
+                  </p>
+                  <ul className="order-line-items">
+                    {order.lineItems.edges.map((itemEdge) => (
+                      <li key={itemEdge.node.title}>
+                        {itemEdge.node.quantity} x {itemEdge.node.title}
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              );
+            })}
+          </ul>
+        )}
       </div>
     </div>
   );

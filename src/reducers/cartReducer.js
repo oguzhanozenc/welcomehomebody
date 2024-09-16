@@ -1,4 +1,5 @@
-import { produce } from "immer";
+// src/reducers/cartReducer.js
+
 import {
   ADD_TO_CART,
   REMOVE_FROM_CART,
@@ -6,48 +7,66 @@ import {
   SYNC_CART_ITEMS,
 } from "../actions/actionTypes";
 
+// Initialize state from localStorage
+const persistedCart = JSON.parse(localStorage.getItem("cartItems")) || [];
+
 const initialState = {
-  items: [],
+  items: persistedCart,
 };
 
-const cartReducer = (state = initialState, action) =>
-  produce(state, (draft) => {
-    console.log("Reducer received action:", action); // Debugging log
-
-    switch (action.type) {
-      case ADD_TO_CART:
-        const existingItemIndex = draft.items.findIndex(
-          (item) => item.variant.id === action.payload.variant.id
+const cartReducer = (state = initialState, action) => {
+  let updatedItems;
+  switch (action.type) {
+    case ADD_TO_CART:
+      // Check if the item already exists in the cart
+      const existingItemIndex = state.items.findIndex(
+        (item) => item.variant.id === action.payload.variant.id
+      );
+      if (existingItemIndex !== -1) {
+        // Update the quantity if it exists
+        updatedItems = state.items.map((item, index) =>
+          index === existingItemIndex
+            ? { ...item, quantity: item.quantity + action.payload.quantity }
+            : item
         );
+      } else {
+        // Add new item to the cart
+        updatedItems = [...state.items, action.payload];
+      }
+      return {
+        ...state,
+        items: updatedItems,
+      };
 
-        if (existingItemIndex !== -1) {
-          draft.items[existingItemIndex].quantity += action.payload.quantity;
-        } else {
-          draft.items.push({
-            ...action.payload,
-            quantity: action.payload.quantity || 1,
-          });
-        }
-        break;
+    case REMOVE_FROM_CART:
+      updatedItems = state.items.filter(
+        (item) => item.variant.id !== action.payload
+      );
+      return {
+        ...state,
+        items: updatedItems,
+      };
 
-      case REMOVE_FROM_CART:
-        draft.items = draft.items.filter(
-          (item) => item.variant.id !== action.payload
-        );
-        break;
+    case UPDATE_CART_QUANTITY:
+      updatedItems = state.items.map((item) =>
+        item.variant.id === action.payload.variantId
+          ? { ...item, quantity: action.payload.quantity }
+          : item
+      );
+      return {
+        ...state,
+        items: updatedItems,
+      };
 
-      case SYNC_CART_ITEMS:
-        console.log(
-          "SYNC_CART_ITEMS - payload received in reducer:",
-          action.payload
-        ); // Debugging log
-        draft.items = action.payload;
-        break;
+    case SYNC_CART_ITEMS:
+      return {
+        ...state,
+        items: action.payload,
+      };
 
-      default:
-        return state;
-    }
-    console.log("Updated cart state:", draft.items); // Log updated state
-  });
+    default:
+      return state;
+  }
+};
 
 export default cartReducer;

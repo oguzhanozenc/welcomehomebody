@@ -1,7 +1,8 @@
 import { createStore, applyMiddleware } from "redux";
-import { thunk } from "redux-thunk";
 import rootReducer from "../reducers/rootReducer.js";
+import { thunk } from "redux-thunk";
+import { cartMiddleware } from "../middleware/cartMiddleware.js";
 
-const store = createStore(rootReducer, applyMiddleware(thunk));
+const store = createStore(rootReducer, applyMiddleware(thunk, cartMiddleware));
 
 export default store;

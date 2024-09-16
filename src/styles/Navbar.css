@@ -1,3 +1,4 @@
+/* Navbar.css */
 @import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
 
 .navbar {
@@ -5,8 +6,8 @@
   flex-direction: column;
   background-color: black;
   color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   z-index: 1000;
+  position: relative;
 }
 
 .top-info-bar {
@@ -21,10 +22,6 @@
   color: #f0f0f0;
 }
 
-.navbar svg {
-  color: white;
-}
-
 .contact-info {
   flex: 1;
   text-align: left;
@@ -35,7 +32,7 @@
   text-align: right;
 }
 
-.top-bar {
+.main-nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -44,7 +41,6 @@
 }
 
 .logo-link {
-  flex: 1;
   display: flex;
   align-items: center;
   text-decoration: none;
@@ -54,8 +50,8 @@
   height: 2.5rem;
 }
 
-.search-bar {
-  flex: 3;
+.search-bar-desktop {
+  flex: 1;
   display: flex;
   justify-content: center;
 }
@@ -90,50 +86,77 @@
   filter: brightness(1.2);
 }
 
+.logout-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: white;
+  font-size: 1rem;
+  margin-left: 1rem;
+}
+
+.logout-btn:hover {
+  text-decoration: underline;
+}
+
 .navbar-actions {
-  flex: 1;
   display: flex;
-  justify-content: flex-end;
   align-items: center;
 }
 
+.search-toggle {
+  background: none;
+  border: none;
+  margin-right: 1rem;
+  cursor: pointer;
+  color: white;
+}
+
 .cart-btn,
-.account-btn {
+.account-btn,
+.menu-toggle {
   background: none;
   border: none;
   margin-left: 1rem;
   cursor: pointer;
-  color: #333;
+  color: white;
+  position: relative;
 }
 
-.nav-toggle {
-  display: none;
+.cart-count {
+  position: absolute;
+  top: -8px;
+  right: -10px;
+  background-color: red;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 50%;
 }
 
 .nav-links {
   display: none;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   background-color: #fff;
   width: 100%;
-  padding: 1rem 0;
   font-family: "Press Start 2P", monospace;
   text-transform: uppercase;
+}
 
-  .nav-links.open {
-    display: flex;
-  }
+.nav-links.open {
+  display: flex;
+}
 
-  .nav-link {
-    text-decoration: none;
-    color: #333;
-    padding: 1rem 0.5rem;
-    transition: all 300ms ease;
-    font-size: 0.875rem;
-    margin: 0.5rem 1rem;
-    border-bottom: 3px solid transparent;
-  }
+.nav-link {
+  text-decoration: none;
+  color: #333;
+  padding: 1rem 0.5rem;
+  transition: all 300ms ease;
+  font-size: 0.875rem;
+  margin: 0.5rem 1rem;
+  border-bottom: 3px solid transparent;
 }
 
 .nav-link:hover,
@@ -143,13 +166,29 @@
   border-bottom: 3px solid #ff4c4c;
 }
 
+/* Mobile Search Bar */
+.search-bar-mobile {
+  display: flex;
+  justify-content: center;
+  background-color: #fff;
+  padding: 0.5rem 1rem;
+}
+
 @media (min-width: 769px) {
   .navbar {
     flex-direction: column;
   }
 
-  .top-bar {
+  .main-nav {
     flex-direction: row;
+  }
+
+  .search-bar-desktop {
+    display: flex;
+  }
+
+  .search-toggle {
+    display: none;
   }
 
   .nav-links {
@@ -163,16 +202,22 @@
     margin: 0 1rem;
   }
 
-  .nav-toggle {
+  .menu-toggle {
+    display: none;
+  }
+
+  .search-bar-mobile {
     display: none;
   }
 }
 
 @media (max-width: 768px) {
-  .nav-toggle {
-    display: flex;
-    justify-content: flex-end;
-    padding: 0.5rem 1rem;
+  .search-bar-desktop {
+    display: none;
+  }
+
+  .navbar-actions {
+    flex: none;
   }
 
   .nav-links {
@@ -180,17 +225,7 @@
     align-items: center;
   }
 
-  .top-bar {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .logo-link,
-  .navbar-actions {
-    justify-content: center;
-  }
-
-  .search-bar {
-    margin: 1rem 0;
+  .main-nav {
+    flex-direction: row;
   }
 }

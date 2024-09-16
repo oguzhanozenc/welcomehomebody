@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Slider from "react-slick";
 import { GrPrevious, GrNext } from "react-icons/gr";
 import "../styles/ProductItem.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { RiArrowGoBackFill } from "react-icons/ri";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCartAndUpdateShopify } from "../actions/cartActions";
+import { toast } from "react-toastify";
 
 const ProductItem = ({
   product,
@@ -15,14 +18,26 @@ const ProductItem = ({
   handleSlideClick,
   selectedVariant,
   setSelectedVariant,
-  handleAddToCart,
-  handleRemoveFromCart,
   slider,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalImage, setModalImage] = useState("");
   const [buttonState, setButtonState] = useState("BAG IT");
+  const [isInCart, setIsInCart] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.cart.items);
+
+  // Check if the selected variant is already in the cart
+  useEffect(() => {
+    if (selectedVariant) {
+      const inCart = cartItems.some(
+        (item) => item.variant.id === selectedVariant.id
+      );
+      setIsInCart(inCart);
+      setButtonState(inCart ? "In Cart" : "BAG IT");
+    }
+  }, [cartItems, selectedVariant]);
 
   const handleImageClick = () => {
     if (product?.images && product.images[currentSlide]) {
@@ -36,31 +51,28 @@ const ProductItem = ({
     setModalImage("");
   };
 
-  const handleClickOutside = (e) => {
-    if (e.target.classList.contains("modal-overlay")) {
-      closeModal();
-    }
-  };
-
-  const hasMultipleImages = product?.images && product.images.length > 1;
-
-  const handleAddToCartClick = async () => {
-    console.log("Selected Variant:", selectedVariant);
+  const handleAddToCartClick = () => {
     if (selectedVariant && selectedVariant.availableForSale) {
       setButtonState("Bagging...");
-      await handleAddToCart(selectedVariant.id);
-      setButtonState("Bagged!");
+      dispatch(
+        addToCartAndUpdateShopify({
+          product,
+          variant: selectedVariant,
+          quantity: 1,
+        })
+      )
+        .then(() => {
+          setButtonState("In Cart");
+          setIsInCart(true);
+          toast.success("Item added to cart.");
+        })
+        .catch(() => {
+          setButtonState("BAG IT");
+          toast.error("Failed to add item to cart. Please try again.");
+        });
     } else {
       console.error("Selected variant is unavailable.");
-    }
-  };
-
-  const handleRemoveFromCartClick = async () => {
-    if (selectedVariant) {
-      await handleRemoveFromCart(selectedVariant.id);
-      setButtonState("BAG IT");
-    } else {
-      console.error("Selected variant cannot be removed.");
+      toast.error("Selected variant is unavailable.");
     }
   };
 
@@ -86,7 +98,7 @@ const ProductItem = ({
           <div className="product-details">
             {product.images && product.images.length > 0 && (
               <>
-                {hasMultipleImages ? (
+                {product.images.length > 1 ? (
                   <div className="slider-container">
                     <button
                       className="slider-button prev"
@@ -151,29 +163,14 @@ const ProductItem = ({
                     />
                   </div>
                 )}
-                {hasMultipleImages && (
-                  <div className="thumbnail-preview">
-                    {product.images.map((img, index) => (
-                      <img
-                        key={index}
-                        src={img}
-                        alt={`Thumbnail ${index + 1}`}
-                        className={`product-thumbnail ${
-                          index === currentSlide ? "active" : ""
-                        }`}
-                        onClick={() => handleSlideClick(index)}
-                      />
-                    ))}
-                  </div>
-                )}
               </>
             )}
             <div className="product-info">
               <p className="product-description">{product.description}</p>
               <p className="product-price">
-                {typeof product.price === "object"
-                  ? `${product.price.amount} ${product.price.currencyCode}`
-                  : `${product.price} USD`}
+                {selectedVariant && selectedVariant.priceV2
+                  ? `${selectedVariant.priceV2.amount} ${selectedVariant.priceV2.currencyCode}`
+                  : "Price not available"}
               </p>
               {product.variants && product.variants.length > 1 && (
                 <select
@@ -183,7 +180,11 @@ const ProductItem = ({
                       (variant) => variant.id === variantId
                     );
                     setSelectedVariant(selected);
-                    setButtonState("BAG IT");
+                    const inCart = cartItems.some(
+                      (item) => item.variant.id === selected.id
+                    );
+                    setIsInCart(inCart);
+                    setButtonState(inCart ? "In Cart" : "BAG IT");
                   }}
                   value={selectedVariant?.id}
                 >
@@ -198,24 +199,22 @@ const ProductItem = ({
               <button
                 className="btn"
                 onClick={handleAddToCartClick}
-                disabled={isSoldOut || buttonState === "Bagging..."}
+                disabled={isSoldOut || buttonState === "Bagging..." || isInCart}
               >
                 {isSoldOut ? "SOLD OUT" : buttonState}
               </button>
-              <button
-                className="btn"
-                onClick={handleRemoveFromCartClick} // Adding a remove button
-                disabled={!selectedVariant || buttonState === "Bagging..."}
-              >
-                Remove
-              </button>
+              {isInCart && (
+                <Link to="/review-cart" className="btn view-cart-button">
+                  View Cart
+                </Link>
+              )}
             </div>
           </div>
         </div>
       </div>
 
       {isModalOpen && (
-        <div className="modal-overlay" onClick={handleClickOutside}>
+        <div className="modal-overlay" onClick={closeModal}>
           <div className="modal-content">
             <img src={modalImage} alt="Enlarged view" className="modal-image" />
           </div>
