@@ -204,7 +204,7 @@ const ProductItem = ({
                 {isSoldOut ? "SOLD OUT" : buttonState}
               </button>
               {isInCart && (
-                <Link to="/review-cart" className="btn view-cart-button">
+                <Link to="/cart" className="btn view-cart-button">
                   View Cart
                 </Link>
               )}
