@@ -49,7 +49,7 @@ const BlogPost = () => {
     <article className="postpage">
       <section className="blogpost--section">
         <div className="returnlinkcontainer">
-          <button id="returnlink" onClick={() => navigate(-1)}>
+          <button id="returnlink" className="btn" onClick={() => navigate(-1)}>
             Return
           </button>
         </div>

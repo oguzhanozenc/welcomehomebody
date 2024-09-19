@@ -10,8 +10,10 @@ const Navbar = () => {
   const [isNavOpen, setNavOpen] = useState(false);
   const [isSearchOpen, setSearchOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const navigate = useNavigate();
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const [isLogoutConfirmOpen, setLogoutConfirmOpen] = useState(false);
 
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.items);
   const cartItemCount = cartItems.reduce(
@@ -29,6 +31,10 @@ const Navbar = () => {
     setSearchOpen((prev) => !prev);
   };
 
+  const toggleDropdown = () => {
+    setDropdownOpen((prev) => !prev);
+  };
+
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     if (searchTerm) {
@@ -39,7 +45,12 @@ const Navbar = () => {
   };
 
   const handleLogout = () => {
+    setLogoutConfirmOpen(true);
+  };
+
+  const confirmLogout = () => {
     dispatch(logoutCustomer());
+    setLogoutConfirmOpen(false);
     navigate("/");
   };
 
@@ -88,16 +99,28 @@ const Navbar = () => {
               <span className="cart-count">{cartItemCount}</span>
             )}
           </Link>
+
           {isAuthenticated ? (
-            <>
-              {" "}
-              <Link to="/account" className="account-btn">
-                <FaUserCircle size={24} />
-              </Link>
-              <button onClick={handleLogout} className="btn logout-btn">
-                Logout
-              </button>
-            </>
+            <div
+              className="account-menu"
+              onMouseEnter={toggleDropdown}
+              onMouseLeave={toggleDropdown}
+            >
+              <FaUserCircle size={24} className="account-icon" />
+              {isDropdownOpen && (
+                <div className="dropdown-menu">
+                  <Link to="/account" className="dropdown-item">
+                    Account
+                  </Link>
+                  <button
+                    className="dropdown-item logout-btn"
+                    onClick={handleLogout}
+                  >
+                    Logout
+                  </button>
+                </div>
+              )}
+            </div>
           ) : (
             <Link to="/login" className="account-btn">
               <FaUserCircle size={24} />
@@ -113,6 +136,22 @@ const Navbar = () => {
           </button>
         </div>
       </div>
+
+      {/* Logout Confirmation Modal */}
+      {isLogoutConfirmOpen && (
+        <div className="logout-confirm-modal">
+          <p>Are you sure you want to log out?</p>
+          <button onClick={confirmLogout} className="confirm-btn">
+            Yes
+          </button>
+          <button
+            onClick={() => setLogoutConfirmOpen(false)}
+            className="cancel-btn"
+          >
+            No
+          </button>
+        </div>
+      )}
 
       {/* Mobile Search Bar */}
       {isSearchOpen && (

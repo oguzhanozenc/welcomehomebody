@@ -68,7 +68,7 @@ const Blog = () => {
               key={postKey}
             >
               {" "}
-              <div className="window">
+              <div className="window post-window">
                 <div className="title-bar">
                   <div className="buttons">
                     <div className="button close"></div>
@@ -126,14 +126,14 @@ const Blog = () => {
         <button
           onClick={() => setCurrentPage(currentPage - 1)}
           disabled={currentPage === 1}
-          className={currentPage === 1 ? "disabled" : ""}
+          className={`btn ${currentPage === 1 ? "disabled" : ""}`}
         >
           <RiArrowLeftDoubleLine /> Prev
         </button>
         <button
           onClick={() => setCurrentPage(currentPage + 1)}
           disabled={isLastPage}
-          className={isLastPage ? "disabled" : ""}
+          className={`btn ${isLastPage ? "disabled" : ""}`}
         >
           Next <RiArrowRightDoubleLine />
         </button>
