@@ -113,7 +113,7 @@ const Navbar = () => {
                     Account
                   </Link>
                   <button
-                    className="dropdown-item logout-btn"
+                    className="dropdown-item nav-logout-btn"
                     onClick={handleLogout}
                   >
                     Logout
