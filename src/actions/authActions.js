@@ -51,6 +51,9 @@ export const loginCustomer = (email, password) => async (dispatch) => {
     localStorage.setItem("customerAccessToken", token);
     localStorage.setItem("customerAccessTokenExpiresAt", expiresAt);
 
+    // Clear existing checkoutId
+    sessionStorage.removeItem("checkoutId");
+
     dispatch({ type: CUSTOMER_LOGIN_SUCCESS, payload: { token, expiresAt } });
   } catch (error) {
     console.error("Customer login failed:", error);
@@ -63,6 +66,9 @@ export const logoutCustomer = () => {
   // Remove tokens from localStorage
   localStorage.removeItem("customerAccessToken");
   localStorage.removeItem("customerAccessTokenExpiresAt");
+
+  // Remove checkoutId from sessionStorage
+  sessionStorage.removeItem("checkoutId");
 
   return {
     type: CUSTOMER_LOGOUT,

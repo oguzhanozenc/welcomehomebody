@@ -6,7 +6,7 @@ import {
 } from "./actionTypes";
 import { gql } from "graphql-request";
 import client from "../client";
-import { logoutCustomer } from "./authActions"; // Import the logout action
+import { logoutCustomer } from "./authActions";
 
 // Action Creators
 export const addToCart = (item) => ({
@@ -34,48 +34,11 @@ const isTokenValid = (expiresAt) => {
   return new Date(expiresAt) > new Date();
 };
 
-// Asynchronous Actions with Shopify Synchronization
-export const addToCartAndUpdateShopify =
-  (item) => async (dispatch, getState) => {
-    try {
-      dispatch(addToCart(item));
-      await updateShopifyCheckout(dispatch, getState);
-    } catch (error) {
-      console.error("Failed to add to cart and update Shopify:", error);
-      throw error;
-    }
-  };
-
-export const removeFromCartAndUpdateShopify =
-  (variantId) => async (dispatch, getState) => {
-    try {
-      dispatch(removeFromCart(variantId));
-      await updateShopifyCheckout(dispatch, getState);
-    } catch (error) {
-      console.error("Failed to remove from cart and update Shopify:", error);
-      throw error;
-    }
-  };
-
-export const updateCartQuantityAndUpdateShopify =
-  (variantId, quantity) => async (dispatch, getState) => {
-    try {
-      dispatch(updateCartQuantity(variantId, quantity));
-      await updateShopifyCheckout(dispatch, getState);
-    } catch (error) {
-      console.error(
-        "Failed to update cart quantity and update Shopify:",
-        error
-      );
-      throw error;
-    }
-  };
-
 // Shopify Checkout ID
 let checkoutId = sessionStorage.getItem("checkoutId") || null;
 
 // Create Shopify Checkout
-const createCheckout = async (lineItems, auth) => {
+const createCheckout = async (lineItems) => {
   const mutation = gql`
     mutation checkoutCreate($input: CheckoutCreateInput!) {
       checkoutCreate(input: $input) {
@@ -91,18 +54,12 @@ const createCheckout = async (lineItems, auth) => {
     }
   `;
 
-  const validCustomerAccessToken =
-    auth.token && isTokenValid(auth.expiresAt) ? auth.token : null;
-
   const variables = {
     input: {
       lineItems: lineItems.map((item) => ({
         variantId: item.variant.id,
         quantity: item.quantity,
       })),
-      ...(validCustomerAccessToken && {
-        customerAccessToken: validCustomerAccessToken,
-      }),
     },
   };
 
@@ -117,7 +74,7 @@ const createCheckout = async (lineItems, auth) => {
 
     checkoutId = checkout.id;
     sessionStorage.setItem("checkoutId", checkout.id);
-    return checkout.webUrl;
+    return checkout;
   } catch (error) {
     console.error("Error creating Shopify checkout:", error);
     throw new Error("Checkout creation failed.");
@@ -132,7 +89,14 @@ const updateShopifyCheckout = async (dispatch, getState) => {
     auth.token && isTokenValid(auth.expiresAt) ? auth.token : null;
 
   if (!checkoutId) {
-    await createCheckout(cartItems, auth);
+    const checkout = await createCheckout(cartItems);
+    // Associate customer if authenticated
+    if (validCustomerAccessToken) {
+      await associateCustomerWithCheckout(
+        checkout.id,
+        validCustomerAccessToken
+      );
+    }
     return;
   }
 
@@ -210,9 +174,58 @@ const updateShopifyCheckout = async (dispatch, getState) => {
     }));
 
     dispatch(syncCartItems(updatedCartItems));
+
+    // Associate customer with checkout if authenticated
+    if (validCustomerAccessToken) {
+      await associateCustomerWithCheckout(checkoutId, validCustomerAccessToken);
+    }
   } catch (error) {
     console.error("Error updating Shopify checkout:", error);
     throw error; // Throw the error to be caught by the calling function
+  }
+};
+
+const associateCustomerWithCheckout = async (
+  checkoutId,
+  customerAccessToken
+) => {
+  const mutation = gql`
+    mutation checkoutCustomerAssociateV2(
+      $checkoutId: ID!
+      $customerAccessToken: String!
+    ) {
+      checkoutCustomerAssociateV2(
+        checkoutId: $checkoutId
+        customerAccessToken: $customerAccessToken
+      ) {
+        checkout {
+          id
+        }
+        customer {
+          id
+        }
+        userErrors {
+          field
+          message
+        }
+      }
+    }
+  `;
+
+  const variables = {
+    checkoutId,
+    customerAccessToken,
+  };
+
+  try {
+    const response = await client.request(mutation, variables);
+    const errors = response.checkoutCustomerAssociateV2.userErrors;
+    if (errors && errors.length > 0) {
+      throw new Error(errors[0].message);
+    }
+  } catch (error) {
+    console.error("Error associating customer with checkout:", error);
+    throw error;
   }
 };
 
@@ -225,46 +238,6 @@ export const handleCheckout = () => async (dispatch, getState) => {
     if (!checkoutId) {
       await updateShopifyCheckout(dispatch, getState);
       checkoutId = sessionStorage.getItem("checkoutId");
-    }
-
-    // If customer is authenticated and token is valid, associate the checkout with the customer
-    if (auth.token && isTokenValid(auth.expiresAt)) {
-      const mutation = gql`
-        mutation checkoutCustomerAssociateV2(
-          $checkoutId: ID!
-          $customerAccessToken: String!
-        ) {
-          checkoutCustomerAssociateV2(
-            checkoutId: $checkoutId
-            customerAccessToken: $customerAccessToken
-          ) {
-            checkout {
-              id
-              webUrl
-            }
-            customer {
-              id
-            }
-            userErrors {
-              field
-              message
-            }
-          }
-        }
-      `;
-
-      const variables = {
-        checkoutId,
-        customerAccessToken: auth.token,
-      };
-
-      try {
-        await client.request(mutation, variables);
-      } catch (error) {
-        console.error("Error associating checkout with customer:", error);
-        // If token is invalid, log out the user
-        dispatch(logoutCustomer());
-      }
     }
 
     // Fetch the checkout URL
@@ -294,3 +267,40 @@ export const handleCheckout = () => async (dispatch, getState) => {
     throw error;
   }
 };
+
+// Asynchronous Actions with Shopify Synchronization
+export const addToCartAndUpdateShopify =
+  (item) => async (dispatch, getState) => {
+    try {
+      dispatch(addToCart(item));
+      await updateShopifyCheckout(dispatch, getState);
+    } catch (error) {
+      console.error("Failed to add to cart and update Shopify:", error);
+      throw error;
+    }
+  };
+
+export const removeFromCartAndUpdateShopify =
+  (variantId) => async (dispatch, getState) => {
+    try {
+      dispatch(removeFromCart(variantId));
+      await updateShopifyCheckout(dispatch, getState);
+    } catch (error) {
+      console.error("Failed to remove from cart and update Shopify:", error);
+      throw error;
+    }
+  };
+
+export const updateCartQuantityAndUpdateShopify =
+  (variantId, quantity) => async (dispatch, getState) => {
+    try {
+      dispatch(updateCartQuantity(variantId, quantity));
+      await updateShopifyCheckout(dispatch, getState);
+    } catch (error) {
+      console.error(
+        "Failed to update cart quantity and update Shopify:",
+        error
+      );
+      throw error;
+    }
+  };
