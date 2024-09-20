@@ -1,3 +1,4 @@
+// cartActions.js
 import {
   ADD_TO_CART,
   REMOVE_FROM_CART,
@@ -34,9 +35,6 @@ const isTokenValid = (expiresAt) => {
   return new Date(expiresAt) > new Date();
 };
 
-// Shopify Checkout ID
-let checkoutId = sessionStorage.getItem("checkoutId") || null;
-
 // Create Shopify Checkout
 const createCheckout = async (lineItems) => {
   const mutation = gql`
@@ -72,7 +70,7 @@ const createCheckout = async (lineItems) => {
       throw new Error(checkoutErrors[0].message);
     }
 
-    checkoutId = checkout.id;
+    // Store checkoutId in sessionStorage
     sessionStorage.setItem("checkoutId", checkout.id);
     return checkout;
   } catch (error) {
@@ -88,43 +86,49 @@ const updateShopifyCheckout = async (dispatch, getState) => {
   const validCustomerAccessToken =
     auth.token && isTokenValid(auth.expiresAt) ? auth.token : null;
 
+  // Always get checkoutId from sessionStorage
+  let checkoutId = sessionStorage.getItem("checkoutId") || null;
+
   if (!checkoutId) {
     const checkout = await createCheckout(cartItems);
+    checkoutId = checkout.id;
+    sessionStorage.setItem("checkoutId", checkoutId);
+
     // Associate customer if authenticated
     if (validCustomerAccessToken) {
-      await associateCustomerWithCheckout(
-        checkout.id,
-        validCustomerAccessToken
-      );
+      await associateCustomerWithCheckout(checkoutId, validCustomerAccessToken);
     }
-    return;
-  }
-
-  const mutation = gql`
-    mutation ($checkoutId: ID!, $lineItems: [CheckoutLineItemInput!]!) {
-      checkoutLineItemsReplace(checkoutId: $checkoutId, lineItems: $lineItems) {
-        checkout {
-          id
-          webUrl
-          lineItems(first: 10) {
-            edges {
-              node {
-                id
-                title
-                quantity
-                variant {
+  } else {
+    // Update existing checkout with new line items
+    const mutation = gql`
+      mutation ($checkoutId: ID!, $lineItems: [CheckoutLineItemInput!]!) {
+        checkoutLineItemsReplace(
+          checkoutId: $checkoutId
+          lineItems: $lineItems
+        ) {
+          checkout {
+            id
+            webUrl
+            lineItems(first: 10) {
+              edges {
+                node {
                   id
-                  priceV2 {
-                    amount
-                    currencyCode
-                  }
-                  product {
+                  title
+                  quantity
+                  variant {
                     id
-                    title
-                    images(first: 1) {
-                      edges {
-                        node {
-                          src
+                    priceV2 {
+                      amount
+                      currencyCode
+                    }
+                    product {
+                      id
+                      title
+                      images(first: 1) {
+                        edges {
+                          node {
+                            src
+                          }
                         }
                       }
                     }
@@ -133,55 +137,58 @@ const updateShopifyCheckout = async (dispatch, getState) => {
               }
             }
           }
-        }
-        userErrors {
-          field
-          message
+          userErrors {
+            field
+            message
+          }
         }
       }
+    `;
+
+    const variables = {
+      checkoutId,
+      lineItems: cartItems.map((item) => ({
+        variantId: item.variant.id,
+        quantity: item.quantity,
+      })),
+    };
+
+    try {
+      const response = await client.request(mutation, variables);
+      const checkout = response.checkoutLineItemsReplace.checkout;
+      const checkoutErrors = response.checkoutLineItemsReplace.userErrors;
+
+      if (checkoutErrors && checkoutErrors.length > 0) {
+        throw new Error(checkoutErrors[0].message);
+      }
+
+      // Update the cart items in Redux store
+      const updatedCartItems = checkout.lineItems.edges.map((edge) => ({
+        product: {
+          id: edge.node.variant.product.id,
+          title: edge.node.variant.product.title,
+          images: [edge.node.variant.product.images.edges[0]?.node.src],
+        },
+        variant: {
+          id: edge.node.variant.id,
+          priceV2: edge.node.variant.priceV2,
+        },
+        quantity: edge.node.quantity,
+      }));
+
+      dispatch(syncCartItems(updatedCartItems));
+
+      // Associate customer with checkout if authenticated
+      if (validCustomerAccessToken) {
+        await associateCustomerWithCheckout(
+          checkoutId,
+          validCustomerAccessToken
+        );
+      }
+    } catch (error) {
+      console.error("Error updating Shopify checkout:", error);
+      throw error; // Throw the error to be caught by the calling function
     }
-  `;
-
-  const variables = {
-    checkoutId,
-    lineItems: cartItems.map((item) => ({
-      variantId: item.variant.id,
-      quantity: item.quantity,
-    })),
-  };
-
-  try {
-    const response = await client.request(mutation, variables);
-    const checkout = response.checkoutLineItemsReplace.checkout;
-    const checkoutErrors = response.checkoutLineItemsReplace.userErrors;
-
-    if (checkoutErrors && checkoutErrors.length > 0) {
-      throw new Error(checkoutErrors[0].message);
-    }
-
-    // Update the cart items in Redux store
-    const updatedCartItems = checkout.lineItems.edges.map((edge) => ({
-      product: {
-        id: edge.node.variant.product.id,
-        title: edge.node.variant.product.title,
-        images: [edge.node.variant.product.images.edges[0]?.node.src],
-      },
-      variant: {
-        id: edge.node.variant.id,
-        priceV2: edge.node.variant.priceV2,
-      },
-      quantity: edge.node.quantity,
-    }));
-
-    dispatch(syncCartItems(updatedCartItems));
-
-    // Associate customer with checkout if authenticated
-    if (validCustomerAccessToken) {
-      await associateCustomerWithCheckout(checkoutId, validCustomerAccessToken);
-    }
-  } catch (error) {
-    console.error("Error updating Shopify checkout:", error);
-    throw error; // Throw the error to be caught by the calling function
   }
 };
 
@@ -232,12 +239,23 @@ const associateCustomerWithCheckout = async (
 // Handle Checkout
 export const handleCheckout = () => async (dispatch, getState) => {
   try {
-    const { auth } = getState();
+    const { cart } = getState();
+
+    // Ensure there are items in the cart
+    if (cart.items.length === 0) {
+      throw new Error("Cannot proceed to checkout with an empty cart.");
+    }
+
+    // Retrieve checkoutId from sessionStorage
     let checkoutId = sessionStorage.getItem("checkoutId") || null;
 
     if (!checkoutId) {
       await updateShopifyCheckout(dispatch, getState);
       checkoutId = sessionStorage.getItem("checkoutId");
+    }
+
+    if (!checkoutId) {
+      throw new Error("No checkout ID found.");
     }
 
     // Fetch the checkout URL
