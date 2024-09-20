@@ -138,16 +138,6 @@
   margin: 0 auto;
 }
 
-.title-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #ff0000;
-  padding: 0.5rem;
-  border-radius: 5px 5px 0 0;
-  color: white;
-}
-
 .buttons {
   display: flex;
   gap: 0.5rem;

@@ -53,10 +53,9 @@ const RecentPosts = () => {
       <div className="window">
         <div className="title-bar">
           <div className="title">Recent Posts</div>
-          <div className="buttons">
-            <div className="button close"></div>
-            <div className="button minimize"></div>
-            <div className="button maximize"></div>
+          <div className="window-controls">
+            <button>-</button>
+            <button>x</button>
           </div>
         </div>
         <div className="recentposts-content">

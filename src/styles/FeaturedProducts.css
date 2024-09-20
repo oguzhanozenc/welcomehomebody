@@ -1,0 +1,176 @@
+.windows-xp-desktop {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: auto;
+  padding: 1rem;
+  color: #333;
+}
+
+.product-windows-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  flex-wrap: wrap;
+  flex-grow: 1;
+}
+
+.xp-window {
+  width: 300px;
+  border: 2px solid #000;
+  background-color: #f0f0f0;
+  box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+
+  overflow: auto;
+  margin-bottom: 1rem;
+}
+
+.window-header {
+  background-color: #0050ef;
+  padding: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+}
+
+.window-title {
+  font-size: 1rem;
+}
+
+.featuredproducts-price {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 0;
+  font-family: "Press Start 2P", monospace;
+  font-size: 1rem;
+  color: #000;
+}
+
+.window-controls button {
+  background: #ff0000;
+  border: none;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 0.2rem;
+  margin-left: 0.2rem;
+}
+
+.window-controls button:hover {
+  background: #cc0000;
+}
+
+.window-content {
+  padding: 1rem;
+}
+
+.window-image {
+  width: 100%;
+  height: auto;
+  margin-bottom: 1rem;
+}
+
+.viewlinkcontainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0.5rem auto;
+}
+
+.view-link {
+  margin: 0;
+  padding: 0.5rem 1rem;
+  background-color: #0050ef;
+  color: white;
+  text-decoration: none;
+  font-family: "Press Start 2P", monospace;
+  padding: 0.5rem 1rem;
+  background-color: #0050ef;
+  color: #fff;
+  border: 2px solid #000;
+  box-shadow: 4px 4px 0 #000;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border-radius: 1rem;
+}
+
+.view-link:hover {
+  background-color: #003bb5;
+}
+
+.reopen-icon-container {
+  text-align: center;
+  cursor: pointer;
+  padding: 1rem;
+  position: relative;
+}
+
+.reopen-icon {
+  width: 64px;
+  height: 64px;
+  cursor: pointer;
+  margin-bottom: 0.5rem;
+  border: 2px solid #000;
+}
+
+.reopen-icon:hover {
+  transform: scale(1.1);
+}
+
+.view-all-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem auto;
+}
+
+#view-all-link {
+  background-color: #ff0000;
+}
+
+#view-all-link:hover {
+  background-color: #cc0000;
+  color: white;
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+  .product-windows-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .xp-window {
+    width: 90%;
+  }
+
+  .view-all-link {
+    font-size: 12px;
+    padding: 0.5rem 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .window-title {
+    font-size: 0.9rem;
+  }
+
+  .xp-window {
+    width: 100%;
+  }
+
+  .window-image {
+    height: 150px;
+  }
+
+  .view-link {
+    padding: 0.4rem 0.8rem;
+  }
+}

@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "./Header";
 import About from "./About";
-import ProductList from "./ProductList";
+import FeaturedProducts from "./FeaturedProducts";
 import RecentPosts from "./RecentPosts";
 import Contact from "./Contact";
 
@@ -10,8 +10,7 @@ const Home = () => {
     <>
       <Header />
       <main>
-        <ProductList showRecent={true} />
-
+        <FeaturedProducts />
         <RecentPosts />
         <Contact />
       </main>

@@ -75,14 +75,14 @@ body {
   box-shadow: 0 0 10px rgba(255, 0, 255, 0.6), -10px 12px rgba(0, 0, 128, 0.3);
   background: rgb(0, 0, 0, 0.7);
   color: #222;
-  border: 2px solid #000080;
-  border-radius: 0.5rem;
+  border: 2px solid #003bb5;
+  border: 2px solid #000;
   width: 80%;
   overflow: hidden;
 }
 
 .title-bar {
-  background-color: #000080;
+  background-color: #003bb5;
   color: #fff;
   display: flex;
   justify-content: space-between;

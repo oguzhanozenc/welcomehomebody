@@ -1,16 +1,9 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
 
 .product-list {
-  margin: 2rem auto;
-  padding: 1rem;
+  margin: 5% auto;
+  padding: 2rem;
   width: 90%;
-  max-width: 1200px;
-}
-
-.productlist-loading {
-  font-size: 1.5rem;
-  color: #888;
-  text-align: center;
 }
 
 .filter-buttons {
@@ -18,91 +11,75 @@
   flex-wrap: wrap;
   justify-content: center;
   margin-bottom: 1rem;
+  padding: 0.5rem;
+  border: 2px solid #000;
+  box-shadow: 4px 4px 0 #000;
 }
 
 .filter-btn {
   font-family: "Press Start 2P", monospace;
   text-transform: uppercase;
   font-size: 0.75rem;
-  display: block;
   padding: 0.5rem 1rem;
   color: #fff;
-  background-color: #161616;
-  border-radius: 2rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  letter-spacing: 1px;
-  outline: none;
-  text-align: center;
-  transition: all 300ms ease;
-  border: 1px solid #fff;
+  background-color: #0050ef;
+  border: 2px solid #000;
+  box-shadow: 4px 4px 0 #000;
   margin: 0 0.25rem;
+  transition: background-color 0.3s ease;
 }
 
 .filter-btn.active {
-  color: #fff;
-  background-color: #000080;
+  background-color: #ff0000;
 }
 
 .filter-btn:hover {
-  color: #fff;
-  background-color: #000080;
+  background-color: #003bb5;
 }
 
-.products {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1rem;
-  width: 100%;
+.productlist-windows-container {
+  display: flex;
   justify-content: space-between;
   align-items: stretch;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
-.product {
-  background-color: #fff;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: all 300ms ease;
-  width: 100%;
-  max-width: 17.5rem;
-  margin: 0 auto;
+.window-controls .expand-icon {
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: white;
 }
 
-.product:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+.window-controls .expand-icon:hover {
+  color: #ff0000;
 }
 
-.product-image {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  transition: transform 0.3s ease;
-}
-
-.product:hover .product-image {
-  transform: scale(1.05);
-}
-
-.product-details {
+.window-content {
   padding: 1rem;
 }
 
-.product-name {
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-  color: black;
-  font-family: "Press Start 2P", monospace;
-  text-transform: uppercase;
-  font-size: 0.75rem;
-  line-height: 1.875;
+.product-image.window-image {
+  width: 100%;
+  height: auto;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #000;
 }
 
-.product-price {
+.featuredproducts-price {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 0;
+  font-family: "Press Start 2P", monospace;
   font-size: 1rem;
-  font-weight: 600;
-  color: #d83344;
+  color: #000;
+}
+
+.productlist-description {
+  color: #333;
+  font-size: 0.75rem;
+  text-align: justify;
   margin-bottom: 1rem;
 }
 
@@ -112,40 +89,45 @@
   align-items: center;
 }
 
-.productlist-description {
-  color: #888;
-  font-size: 0.75rem;
-  text-align: justify;
+.btn.view-link {
+  font-family: "Press Start 2P", monospace;
+  padding: 0.5rem 1rem;
+  background-color: #0050ef;
+  color: #fff;
+  border: 2px solid #000;
+  box-shadow: 4px 4px 0 #000;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-.no-products-found {
-  grid-column: span 3;
-  font-size: 1.5rem;
-  color: #888;
-  text-align: center;
-  padding: 2rem;
-}
-
-.see-all-products {
-  display: flex;
-  justify-content: center;
-  margin-top: 1rem;
+.btn.view-link:hover {
+  background-color: #003bb5;
 }
 
 @media (max-width: 768px) {
-  .products {
-    grid-template-columns: 1fr;
+  .product-windows-container {
+    flex-direction: column;
+    align-items: center;
   }
-  .product-list {
-    width: 100%;
-    margin: 1rem auto;
-    padding: 0.5rem;
+
+  .xp-window {
+    width: 90%;
   }
-  .product-image {
-    height: 150px;
-  }
+
   .filter-btn {
     font-size: 0.6rem;
-    margin: 0.25rem;
+  }
+
+  .product-bottom {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .featuredproducts-price {
+    margin-bottom: 0.5rem;
+  }
+
+  .btn.view-link {
+    margin-top: 0.5rem;
   }
 }
