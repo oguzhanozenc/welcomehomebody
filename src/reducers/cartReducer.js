@@ -31,6 +31,8 @@ const cartReducer = (state = initialState, action) => {
         // Add new item to the cart
         updatedItems = [...state.items, action.payload];
       }
+      // Save to localStorage
+      localStorage.setItem("cartItems", JSON.stringify(updatedItems));
       return {
         ...state,
         items: updatedItems,
@@ -40,6 +42,8 @@ const cartReducer = (state = initialState, action) => {
       updatedItems = state.items.filter(
         (item) => item.variant.id !== action.payload
       );
+      // Save to localStorage
+      localStorage.setItem("cartItems", JSON.stringify(updatedItems));
       return {
         ...state,
         items: updatedItems,
@@ -51,12 +55,16 @@ const cartReducer = (state = initialState, action) => {
           ? { ...item, quantity: action.payload.quantity }
           : item
       );
+      // Save to localStorage
+      localStorage.setItem("cartItems", JSON.stringify(updatedItems));
       return {
         ...state,
         items: updatedItems,
       };
 
     case SYNC_CART_ITEMS:
+      // Save to localStorage
+      localStorage.setItem("cartItems", JSON.stringify(action.payload));
       return {
         ...state,
         items: action.payload,

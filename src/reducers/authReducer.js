@@ -13,6 +13,10 @@ const initialState = {
   error: null,
 };
 
+const isTokenValid = (expiresAt) => {
+  return new Date(expiresAt) > new Date();
+};
+
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case CUSTOMER_LOGIN_SUCCESS:
@@ -46,6 +50,16 @@ const authReducer = (state = initialState, action) => {
         error: null,
       };
     default:
+      // Check token validity
+      if (state.token && !isTokenValid(state.expiresAt)) {
+        return {
+          ...state,
+          isAuthenticated: false,
+          token: null,
+          expiresAt: null,
+          error: null,
+        };
+      }
       return state;
   }
 };

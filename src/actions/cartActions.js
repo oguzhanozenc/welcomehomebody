@@ -6,6 +6,7 @@ import {
 } from "./actionTypes";
 import { gql } from "graphql-request";
 import client from "../client";
+import { logoutCustomer } from "./authActions"; // Import the logout action
 
 // Action Creators
 export const addToCart = (item) => ({
@@ -27,6 +28,11 @@ export const syncCartItems = (items) => ({
   type: SYNC_CART_ITEMS,
   payload: items,
 });
+
+// Helper function to check if token is valid
+const isTokenValid = (expiresAt) => {
+  return new Date(expiresAt) > new Date();
+};
 
 // Asynchronous Actions with Shopify Synchronization
 export const addToCartAndUpdateShopify =
@@ -69,7 +75,7 @@ export const updateCartQuantityAndUpdateShopify =
 let checkoutId = sessionStorage.getItem("checkoutId") || null;
 
 // Create Shopify Checkout
-const createCheckout = async (lineItems, customerAccessToken = null) => {
+const createCheckout = async (lineItems, auth) => {
   const mutation = gql`
     mutation checkoutCreate($input: CheckoutCreateInput!) {
       checkoutCreate(input: $input) {
@@ -85,13 +91,18 @@ const createCheckout = async (lineItems, customerAccessToken = null) => {
     }
   `;
 
+  const validCustomerAccessToken =
+    auth.token && isTokenValid(auth.expiresAt) ? auth.token : null;
+
   const variables = {
     input: {
       lineItems: lineItems.map((item) => ({
         variantId: item.variant.id,
         quantity: item.quantity,
       })),
-      ...(customerAccessToken && { customerAccessToken }),
+      ...(validCustomerAccessToken && {
+        customerAccessToken: validCustomerAccessToken,
+      }),
     },
   };
 
@@ -117,10 +128,11 @@ const createCheckout = async (lineItems, customerAccessToken = null) => {
 const updateShopifyCheckout = async (dispatch, getState) => {
   const cartItems = getState().cart.items;
   const { auth } = getState();
-  const customerAccessToken = auth.isAuthenticated ? auth.token : null;
+  const validCustomerAccessToken =
+    auth.token && isTokenValid(auth.expiresAt) ? auth.token : null;
 
   if (!checkoutId) {
-    await createCheckout(cartItems, customerAccessToken);
+    await createCheckout(cartItems, auth);
     return;
   }
 
@@ -215,8 +227,8 @@ export const handleCheckout = () => async (dispatch, getState) => {
       checkoutId = sessionStorage.getItem("checkoutId");
     }
 
-    // If customer is authenticated, associate the checkout with the customer
-    if (auth.isAuthenticated && auth.token) {
+    // If customer is authenticated and token is valid, associate the checkout with the customer
+    if (auth.token && isTokenValid(auth.expiresAt)) {
       const mutation = gql`
         mutation checkoutCustomerAssociateV2(
           $checkoutId: ID!
@@ -246,7 +258,13 @@ export const handleCheckout = () => async (dispatch, getState) => {
         customerAccessToken: auth.token,
       };
 
-      await client.request(mutation, variables);
+      try {
+        await client.request(mutation, variables);
+      } catch (error) {
+        console.error("Error associating checkout with customer:", error);
+        // If token is invalid, log out the user
+        dispatch(logoutCustomer());
+      }
     }
 
     // Fetch the checkout URL

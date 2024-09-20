@@ -7,15 +7,22 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "../styles/Account.css";
 
+const isTokenValid = (expiresAt) => {
+  return new Date(expiresAt) > new Date();
+};
+
 const Account = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { token, isAuthenticated } = useSelector((state) => state.auth);
+  const { token, isAuthenticated, expiresAt } = useSelector(
+    (state) => state.auth
+  );
 
   const [customerData, setCustomerData] = useState(null);
 
   useEffect(() => {
-    if (!isAuthenticated || !token) {
+    if (!isAuthenticated || !token || !isTokenValid(expiresAt)) {
+      dispatch(logoutCustomer());
       navigate("/login");
       return;
     }
@@ -81,7 +88,7 @@ const Account = () => {
         dispatch(logoutCustomer());
         navigate("/login");
       });
-  }, [isAuthenticated, token, dispatch, navigate]);
+  }, [isAuthenticated, token, expiresAt, dispatch, navigate]);
 
   const handleLogout = () => {
     dispatch(logoutCustomer());
