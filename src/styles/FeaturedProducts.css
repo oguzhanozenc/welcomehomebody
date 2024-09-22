@@ -5,7 +5,8 @@
   flex-direction: column;
   position: relative;
   overflow: auto;
-  padding: 1rem;
+  padding: 10% 1rem;
+  margin: 10% auto;
   color: #333;
 }
 
@@ -81,11 +82,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 0.5rem auto;
 }
 
 .view-link {
-  margin: 0;
+  font-size: 0.75rem;
+  margin: 0 0.5rem;
   padding: 0.5rem 1rem;
   background-color: #0050ef;
   color: white;
@@ -99,6 +100,7 @@
   cursor: pointer;
   transition: background-color 0.3s ease;
   border-radius: 1rem;
+  text-transform: uppercase;
 }
 
 .view-link:hover {

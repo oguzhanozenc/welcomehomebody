@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "../styles/Contact.css";
 import { RiArrowGoBackLine } from "react-icons/ri";
+import SectionTitle from "./SectionTitle";
 
 export default function Contact() {
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -22,6 +23,7 @@ export default function Contact() {
 
   return (
     <section className="contact-section">
+      <SectionTitle title="Contact" />
       <div className="contact-container">
         {formSubmitted ? (
           <div className="confirmation-message">

@@ -7,7 +7,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { BsArrowLeftCircleFill, BsArrowRightCircleFill } from "react-icons/bs";
 import { v4 as uuidv4 } from "uuid";
-
+import SectionTitle from "./SectionTitle";
 import "../styles/RecentPosts.css";
 
 const RecentPosts = () => {
@@ -49,10 +49,10 @@ const RecentPosts = () => {
 
   return (
     <section className="recentposts--section">
-      {" "}
+      <SectionTitle title="Recent Posts" />
       <div className="window">
         <div className="title-bar">
-          <div className="title">Recent Posts</div>
+          <div className="title"></div>
           <div className="window-controls">
             <button>-</button>
             <button>x</button>

@@ -1,85 +1,72 @@
 import { useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
 import "../styles/Header.css";
 import Loading from "./Loading";
 
-export default function Header() {
+// Custom hook to handle the image sequence logic
+function useImageSequence(showMainScene, setShowWelcomeText) {
   const [currentImage, setCurrentImage] = useState(0);
+
+  useEffect(() => {
+    if (showMainScene) {
+      const sequence = [0, 1, 2, 3, 4];
+      const imageDurations = [600, 900, 1000, 1000, 1000];
+      let currentIndex = 0;
+
+      const interval = setInterval(() => {
+        setCurrentImage(sequence[currentIndex]);
+        if (currentIndex === 2) {
+          setShowWelcomeText(true); // Show welcome text after the third image
+        }
+        currentIndex = (currentIndex + 1) % sequence.length;
+      }, imageDurations[currentIndex]);
+
+      return () => clearInterval(interval);
+    }
+  }, [showMainScene]);
+
+  return currentImage;
+}
+
+export default function Header() {
   const [showPressStart, setShowPressStart] = useState(false);
   const [showMainScene, setShowMainScene] = useState(false);
   const [showWelcomeText, setShowWelcomeText] = useState(false);
-  const [imagesLoaded, setImagesLoaded] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const imageSources = [
-      "./logo-close.webp",
-      "./logo-semiclose.webp",
-      "./logo-open.webp",
-      "./logo-mascot.webp",
-      "./logo-mascot-2.webp",
-      "./city.webp",
-    ];
+  const imageSources = [
+    "./logo-close.webp",
+    "./logo-semiclose.webp",
+    "./logo-open.webp",
+    "./logo-mascot.webp",
+    "./logo-mascot-2.webp",
+    "./city.webp",
+  ];
 
+  useEffect(() => {
     let loadedImages = 0;
     const totalImages = imageSources.length;
 
-    const checkAllImagesLoaded = () => {
+    const handleImageLoad = () => {
       loadedImages += 1;
       if (loadedImages === totalImages) {
-        setTimeout(() => {
-          setImagesLoaded(true);
-          setLoading(false);
-          setTimeout(() => {
-            setShowPressStart(true);
-          }, 500);
-        }, 2000);
+        setLoading(false);
+        setTimeout(() => setShowPressStart(true), 500);
       }
     };
 
     imageSources.forEach((src) => {
       const img = new Image();
       img.src = src;
-      img.onload = checkAllImagesLoaded;
+      img.onload = handleImageLoad;
     });
   }, []);
 
   const handlePressStart = () => {
     setShowPressStart(false);
-    setTimeout(() => {
-      setShowMainScene(true);
-    }, 500);
+    setTimeout(() => setShowMainScene(true), 500);
   };
 
-  useEffect(() => {
-    let interval;
-    if (showMainScene) {
-      const initialSequence = [0, 1, 2, 3, 4];
-      const loopSequence = [3, 4];
-      const imageDurations = [1000, 1500, 2500, 2000, 2000, 2000];
-
-      let currentIndex = 0;
-      let initialCompleted = false;
-
-      interval = setInterval(() => {
-        if (!initialCompleted) {
-          setCurrentImage(initialSequence[currentIndex]);
-          if (currentIndex === initialSequence.length - 1) {
-            initialCompleted = true;
-            currentIndex = 0;
-            setShowWelcomeText(true);
-          } else {
-            currentIndex++;
-          }
-        } else {
-          setCurrentImage(loopSequence[currentIndex]);
-          currentIndex = (currentIndex + 1) % loopSequence.length;
-        }
-      }, imageDurations[currentIndex]);
-    }
-
-    return () => clearInterval(interval);
-  }, [showMainScene]);
+  const currentImage = useImageSequence(showMainScene, setShowWelcomeText);
 
   return (
     <header className="header" id="home">
@@ -92,10 +79,6 @@ export default function Header() {
           <div className="loading-screen fade-out">
             <div className="loading-animation">
               <div className="loading-text">
-                <span>Loading</span>
-                <span className="dots">...</span>
-              </div>{" "}
-              <div>
                 <Loading />
               </div>
               <div className="arcade-animation"></div>
@@ -106,7 +89,7 @@ export default function Header() {
         {showPressStart && (
           <div className="press-start-screen fade-in">
             <button className="press-start-btn" onClick={handlePressStart}>
-              Click to Start
+              Press Start
             </button>
           </div>
         )}
@@ -114,42 +97,26 @@ export default function Header() {
         {showMainScene && (
           <>
             <div className="background-overlay"></div>
-            <img
-              src="./logo-close.webp"
-              alt="Logo Close"
-              className={`image ${currentImage === 0 ? "visible" : "hidden"}`}
-            />
-            <img
-              src="./logo-semiclose.webp"
-              alt="Logo Semi Close"
-              className={`image ${currentImage === 1 ? "visible" : "hidden"}`}
-            />
-            <img
-              src="./logo-open.webp"
-              alt="Logo Open"
-              className={`image ${currentImage === 2 ? "visible" : "hidden"}`}
-            />
-            <img
-              src="./logo-mascot.webp"
-              alt="Logo Mascot"
-              className={`image ${currentImage === 3 ? "visible" : "hidden"}`}
-            />
-            <img
-              src="./logo-mascot-2.webp"
-              alt="Logo Mascot 2"
-              className={`image ${currentImage === 4 ? "visible" : "hidden"}`}
-            />
+            {imageSources.map((src, index) => (
+              <img
+                key={index}
+                src={src}
+                alt={`Logo Image ${index}`}
+                className={`image ${
+                  currentImage === index ? "visible" : "hidden"
+                }`}
+              />
+            ))}
+            {showWelcomeText && (
+              <div className="welcome-text fade-in">
+                <a href="/#featuredproducts" className="explore-btn">
+                  EXPLORE»
+                </a>
+              </div>
+            )}
           </>
         )}
       </div>
-
-      {showWelcomeText && (
-        <div className="welcome-text fade-in">
-          <NavLink to="products" className="explore-btn">
-            EXPLORE»
-          </NavLink>
-        </div>
-      )}
     </header>
   );
 }

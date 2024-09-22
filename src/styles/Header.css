@@ -4,31 +4,9 @@
   height: 100vh;
   overflow: hidden;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-}
-
-@keyframes arcadePixelatedAppear {
-  0% {
-    opacity: 0;
-    transform: scale(1.2);
-    filter: contrast(0) brightness(0) blur(5px);
-  }
-  30% {
-    opacity: 0.3;
-    transform: scale(1.15);
-    filter: contrast(1.5) brightness(1.5) blur(3px);
-  }
-  60% {
-    opacity: 0.7;
-    transform: scale(1.05);
-    filter: contrast(1.2) brightness(1.2) blur(1px);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-    filter: contrast(1) brightness(1) blur(0);
-  }
 }
 
 .background-overlay {
@@ -45,8 +23,30 @@
   image-rendering: pixelated;
 }
 
+@keyframes arcadePixelatedAppear {
+  0% {
+    opacity: 0;
+    transform: scale(1.2);
+    filter: contrast(0) brightness(0) blur(5px);
+  }
+  30% {
+    opacity: 0.2;
+    transform: scale(1.15);
+    filter: contrast(1.5) brightness(1.5) blur(3px);
+  }
+  60% {
+    opacity: 0.3;
+    transform: scale(1.05);
+    filter: contrast(1.2) brightness(1.2) blur(1px);
+  }
+  100% {
+    opacity: 0.4;
+    transform: scale(1);
+    filter: contrast(1) brightness(1) blur(0);
+  }
+}
+
 .main-scene .background-overlay {
-  opacity: 0.5;
   mask-image: linear-gradient(to top, rgba(0, 0, 0, 0) 1%, black 40%);
 }
 
@@ -54,37 +54,33 @@
   position: relative;
   width: 100%;
   height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .header img {
-  position: absolute;
-  top: 20%;
-  left: 50%;
-  transform: translateX(-50%) translateZ(-2000px) scale(0.1);
   width: 25rem;
   height: auto;
   object-fit: cover;
   opacity: 0;
-  transition: opacity 1.5s ease-in-out, transform 2.5s ease-in-out;
+  transition: opacity 1s ease-in-out, transform 1.5s ease-in-out;
   user-select: none;
 }
 
 .header img.visible {
   opacity: 1;
-  transform: translateX(-50%) translateZ(0) scale(1);
+  transform: scale(1);
 }
 
 .header img.hidden {
   opacity: 0;
-  transform: translateX(-50%) translateZ(-2000px) scale(0.1);
+  transform: scale(0.1);
 }
 
 .fade-in {
-  animation: fadeIn 1.5s ease-in forwards;
-}
-
-.fade-out {
-  animation: fadeOut 1.5s ease-out forwards;
+  animation: fadeIn 1s ease-in forwards;
 }
 
 @keyframes fadeIn {
@@ -98,17 +94,6 @@
   }
 }
 
-@keyframes fadeOut {
-  0% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  100% {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-}
-
 .loading-screen {
   display: flex;
   flex-direction: column;
@@ -118,67 +103,6 @@
   font-family: "Press Start 2P", cursive;
   color: #fff;
   background-color: #000;
-}
-
-.loading-animation {
-  text-align: center;
-}
-
-.loading-text {
-  font-family: "Press Start 2P", monospace, "Courier New", sans-serif;
-  font-size: 2rem;
-  text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00;
-  margin-bottom: 1rem;
-  animation: loadingTextPulse 2s infinite;
-}
-
-.loading-text .dots {
-  animation: loadingDots 1.5s infinite;
-}
-
-@keyframes loadingTextPulse {
-  0%,
-  100% {
-    transform: scale(1);
-    text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00;
-  }
-  50% {
-    transform: scale(1.05);
-    text-shadow: 0 0 15px #00ff00, 0 0 30px #00ff00;
-  }
-}
-
-@keyframes loadingDots {
-  0% {
-    content: "";
-  }
-  33% {
-    content: ".";
-  }
-  66% {
-    content: "..";
-  }
-  100% {
-    content: "...";
-  }
-}
-
-.arcade-animation {
-  width: 100px;
-  height: 100px;
-  margin: 20px auto;
-  /* background: url("/arcade-sprite.png") no-repeat center center; */
-  background-size: contain;
-  animation: arcadeSpriteAnimation 1s steps(10) infinite;
-}
-
-@keyframes arcadeSpriteAnimation {
-  0% {
-    background-position: 0 0;
-  }
-  100% {
-    background-position: -1000px 0;
-  }
 }
 
 .press-start-screen {
@@ -221,13 +145,13 @@
 }
 
 .welcome-text {
-  position: absolute;
-  bottom: 10%;
+  position: relative;
   text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
+  margin-top: 1rem;
 }
 
 .explore-btn {
@@ -252,6 +176,5 @@
   transform: scale(1.1);
   background-color: #222;
   border-color: #00ff00;
-  content: "Press Start";
   color: #ff0000;
 }

@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../actions/productActions";
 import "../styles/FeaturedProducts.css";
+import SectionTitle from "./SectionTitle";
 
 const FeaturedProducts = () => {
   const dispatch = useDispatch();
@@ -39,7 +40,8 @@ const FeaturedProducts = () => {
     return <div>Error! {error.message || "An unknown error occurred"}</div>;
 
   return (
-    <div className="windows-xp-desktop">
+    <div className="windows-xp-desktop" id="featuredproducts">
+      <SectionTitle title="Featured Products" />
       <div className="product-windows-container">
         {openWindows.map((productId) => {
           const product = products.find((p) => p.id.includes(productId));

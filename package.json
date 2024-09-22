@@ -25,6 +25,7 @@
     "react-router-dom": "^6.25.0",
     "react-slick": "^0.30.2",
     "react-toastify": "^10.0.5",
+    "react-typed": "^2.0.12",
     "redux": "^5.0.1",
     "redux-thunk": "^3.1.0",
     "reselect": "^5.1.1",
