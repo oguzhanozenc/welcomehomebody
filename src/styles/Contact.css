@@ -71,3 +71,8 @@
 .hidden {
   display: none;
 }
+
+.arcade-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}

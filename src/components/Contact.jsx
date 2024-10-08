@@ -6,20 +6,6 @@ import SectionTitle from "./SectionTitle";
 export default function Contact() {
   const [formSubmitted, setFormSubmitted] = useState(false);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const form = event.target;
-    const formData = new FormData(form);
-
-    fetch("/", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams(formData).toString(),
-    })
-      .then(() => setFormSubmitted(true))
-      .catch((error) => alert(error));
-  };
-
   return (
     <section className="contact-section">
       <SectionTitle title="Contact" />
@@ -40,7 +26,7 @@ export default function Contact() {
             method="POST"
             netlify-honeypot="bot-field"
             data-netlify="true"
-            onSubmit={handleSubmit}
+            onSubmit={() => setFormSubmitted(true)}
             className="contact-form"
           >
             {/* Hidden form field for Netlify */}
@@ -64,7 +50,7 @@ export default function Contact() {
             </label>
 
             <label className="form-label">
-              Company:
+              Company (Optional):
               <input type="text" name="company" />
             </label>
 
