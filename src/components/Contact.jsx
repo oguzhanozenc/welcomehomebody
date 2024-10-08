@@ -12,11 +12,21 @@ export default function Contact() {
     setLoading(true);
 
     const form = event.target;
+    const formData = new FormData(form);
 
-    setTimeout(() => {
-      setFormSubmitted(true);
-      setLoading(false);
-    }, 2000);
+    fetch("/", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams(formData).toString(),
+    })
+      .then(() => {
+        setFormSubmitted(true);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Form submission error: ", error);
+        setLoading(false);
+      });
   };
 
   return (
@@ -37,7 +47,6 @@ export default function Contact() {
           <form
             name="contact"
             method="POST"
-            netlify-honeypot="bot-field"
             data-netlify="true"
             onSubmit={handleSubmit}
             className="contact-form"
@@ -52,17 +61,17 @@ export default function Contact() {
 
             <label className="form-label">
               Name:
-              <input type="text" name="name" required />
+              <input type="text" name="name" required autoComplete="name" />
             </label>
 
             <label className="form-label">
               Email:
-              <input type="email" name="email" required />
+              <input type="email" name="email" required autoComplete="email" />
             </label>
 
             <label className="form-label">
               Company (Optional):
-              <input type="text" name="company" />
+              <input type="text" name="company" autoComplete="organization" />
             </label>
 
             <label className="form-label">

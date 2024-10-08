@@ -32,9 +32,9 @@
   <body>
     <!-- Hidden static form for Netlify's form detection -->
     <form name="contact" netlify netlify-honeypot="bot-field" hidden>
-      <input type="text" name="name" />
-      <input type="email" name="email" />
-      <input type="text" name="company" />
+      <input type="text" name="name" autocomplete="name" />
+      <input type="email" name="email" autocomplete="email" />
+      <input type="text" name="company" autocomplete="organization" />
       <textarea name="message"></textarea>
     </form>
 
