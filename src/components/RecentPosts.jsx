@@ -34,7 +34,7 @@ const RecentPosts = () => {
     dots: false,
     arrows: false,
     infinite: true,
-    slidesToShow: 2,
+    slidesToShow: 3,
     slidesToScroll: 1,
     afterChange: (current) => setCurrentSlide(current),
   };

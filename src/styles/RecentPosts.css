@@ -4,7 +4,7 @@
   justify-content: center;
   align-items: center;
   padding: 10% 1rem;
-  width: 50%;
+  width: 80%;
   margin: 0 auto;
 }
 
@@ -184,5 +184,11 @@
   }
   .slick-slide {
     padding: 0 0.5rem;
+  }
+  .recent-posts-slider {
+    padding: 0.25rem;
+  }
+  .post-thumbnail img {
+    height: 9rem;
   }
 }

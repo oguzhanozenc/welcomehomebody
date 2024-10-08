@@ -40,7 +40,7 @@
   align-items: center;
   text-align: center;
   font-size: 1rem;
-  padding: 1rem 2rem;
+  padding: 2rem 2rem;
   border-radius: 0.5rem;
   border: 1px solid #00ff00;
   gap: 1rem;
@@ -74,12 +74,12 @@
 }
 
 .footer-slogan {
-  font-style: italic;
-  color: #fff;
-
-  font-size: 1.25rem;
+  color: #f3f3f3;
+  font-family: "Press Start 2P", monospace;
+  font-size: 0.8rem;
   line-height: 1.5;
   text-shadow: 0 0 5px #00ff00;
+  text-transform: uppercase;
 }
 
 .footer-nav a {
@@ -96,37 +96,15 @@
   text-shadow: 0 0 10px #00ff00;
 }
 
-.footer-social {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: row;
-  gap: 1rem;
-}
-
-.footer-social a {
-  color: #f0f0f0;
-  margin: 0.25rem 0;
-  font-size: 1rem;
-  text-decoration: none;
-  border: 1px solid #f0f0f0;
-  padding: 0.35rem;
-  border-radius: 0.25rem;
-  transition: all 0.3s ease-in-out;
-}
-
-.footer-social a:hover {
-  color: #00ff00;
-  background: rgba(255, 0, 255, 0.2);
-  box-shadow: 0 0 10px #ff0000;
-}
-
 .footer-bottom {
   text-align: center;
   font-size: 1rem;
   color: #888;
   margin: 4rem auto 1rem auto;
+  text-shadow: 0 0 5px #00ff00;
+}
+
+.mail {
   text-shadow: 0 0 5px #00ff00;
 }
 
@@ -145,5 +123,8 @@
   }
   .footer-social {
     justify-content: center;
+  }
+  .footer-nav {
+    text-align: center;
   }
 }

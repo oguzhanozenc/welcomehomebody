@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import Footer from "./components/Footer";
 import UseScrollToHash from "./hooks/UseScrollToHash";
+import ScrollToTop from "./components/ScrollToTop";
 import "./App.css";
 
 import Blog from "./components/Blog";
@@ -58,7 +59,6 @@ function App() {
     };
   }, []);
 
-  // Listen for storage events to sync cart across tabs
   useEffect(() => {
     const handleStorageChange = (event) => {
       if (event.key === "cartItems") {
@@ -76,6 +76,7 @@ function App() {
 
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <UseScrollToHash />
       <Navbar />
       <Routes>

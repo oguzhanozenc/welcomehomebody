@@ -4,6 +4,7 @@ import slugify from "slug";
 import "../styles/BlogPost.css";
 import ShareComponent from "./ShareComponent";
 import RecentPosts from "./RecentPosts";
+import { RiArrowGoBackFill } from "react-icons/ri";
 
 const BlogPost = () => {
   const [post, setPost] = useState(null);
@@ -49,8 +50,8 @@ const BlogPost = () => {
     <article className="postpage">
       <section className="blogpost--section">
         <div className="returnlinkcontainer">
-          <button id="returnlink" className="btn" onClick={() => navigate(-1)}>
-            Return
+          <button className="btn" onClick={() => navigate(-1)}>
+            <RiArrowGoBackFill /> Return
           </button>
         </div>
         <div className="blogpost--container">
@@ -73,18 +74,6 @@ const BlogPost = () => {
                     <div id="infotext">
                       <small id="authorname">
                         {post.author ? `${post.author}` : "Offbeat Security"}{" "}
-                        <span>
-                          <a
-                            href="#blog"
-                            id="followlink"
-                            onClick={(e) => {
-                              e.preventDefault();
-                              handleNavClick("blog");
-                            }}
-                          >
-                            · Follow
-                          </a>
-                        </span>
                       </small>
 
                       {post.date && (

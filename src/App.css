@@ -1,6 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Rethink+Sans:ital,wght@0,400..800;1,400..800&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&familyto+Mono:ital,wght@0,100..700;1,100..700&display=swap");
 
+html {
+  scroll-behavior: smooth;
+}
+
 :root {
   --color-top: #000;
   --color-start: #f3feb8;
@@ -81,6 +85,7 @@ body {
   border: 2px solid #000;
   width: 80%;
   overflow: hidden;
+  border-radius: 0.25rem;
 }
 
 .title-bar {
@@ -155,4 +160,29 @@ body {
   margin: 2rem auto;
   font-family: "Press Start 2P", monospace;
   font-weight: 600;
+  line-height: 1.5;
+}
+
+.white-text {
+  color: white !important;
+  font-size: 1.25rem;
+  padding-bottom: 0.5rem;
+  min-height: 10dvh;
+  min-height: 10vh;
+}
+
+@media (max-width: 768px) {
+  .sectiontitle {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 450px) {
+  .sectiontitle {
+    font-size: 1.4rem;
+  }
+
+  .white-text {
+    font-size: 0.9rem;
+  }
 }

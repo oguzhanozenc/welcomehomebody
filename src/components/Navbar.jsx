@@ -58,10 +58,8 @@ const Navbar = () => {
     <nav className="navbar">
       {/* Top Info Bar */}
       <div className="top-info-bar">
-        <div className="contact-info">
-          <span>info@homebody.com</span> | <span>+91-9876543210</span>
-        </div>
-        <div className="promo-message">Free shipping on orders over $99</div>
+        <div className="promo-message"></div>{" "}
+        <div className="contact-info">homebodybiz24@gmail.com</div>
       </div>
 
       {/* Main Navbar */}
@@ -94,7 +92,7 @@ const Navbar = () => {
           </button>
 
           <Link to="/cart" className="cart-btn">
-            <FaShoppingCart size={24} />
+            <img src="../public/cart.png" alt="cart" width="36" />
             {cartItemCount > 0 && (
               <span className="cart-count">{cartItemCount}</span>
             )}
@@ -123,7 +121,7 @@ const Navbar = () => {
             </div>
           ) : (
             <Link to="/login" className="account-btn">
-              <FaUserCircle size={24} />
+              <img src="../public/user.png" alt="cart" width="36" />
             </Link>
           )}
 

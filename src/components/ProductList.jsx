@@ -75,12 +75,7 @@ const ProductList = () => {
               <div className="xp-window" key={productId}>
                 <div className="window-header">
                   <span className="window-title">{product.title}</span>
-                  <div className="window-controls">
-                    <AiOutlineLine
-                      className="expand-icon"
-                      onClick={() => navigate(`/products/${productId}`)}
-                    />
-                  </div>
+                  <div className="window-controls"></div>
                 </div>
                 <div className="window-content">
                   {product.images && product.images.length > 0 ? (

@@ -1,26 +1,37 @@
+/* General Styles */
 .header {
   position: relative;
   width: 100%;
   height: 100vh;
   overflow: hidden;
+}
+
+.header-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  color: #fff;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
+/* Background Overlay */
 .background-overlay {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: url("/city.webp") no-repeat center center;
+  background: url("./city.webp") no-repeat center center;
   background-size: cover;
-  z-index: -1;
   opacity: 0;
   animation: arcadePixelatedAppear 1.5s ease-in-out forwards;
   image-rendering: pixelated;
+  z-index: -1;
+  mask-image: linear-gradient(to top, rgba(0, 0, 0, 0) 1%, black 40%);
 }
 
 @keyframes arcadePixelatedAppear {
@@ -29,16 +40,6 @@
     transform: scale(1.2);
     filter: contrast(0) brightness(0) blur(5px);
   }
-  30% {
-    opacity: 0.2;
-    transform: scale(1.15);
-    filter: contrast(1.5) brightness(1.5) blur(3px);
-  }
-  60% {
-    opacity: 0.3;
-    transform: scale(1.05);
-    filter: contrast(1.2) brightness(1.2) blur(1px);
-  }
   100% {
     opacity: 0.4;
     transform: scale(1);
@@ -46,135 +47,102 @@
   }
 }
 
-.main-scene .background-overlay {
-  mask-image: linear-gradient(to top, rgba(0, 0, 0, 0) 1%, black 40%);
+/* Logo Container */
+.logo-container {
+  margin-bottom: 1.25rem;
 }
 
-.header-container {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+.logo-image:hover {
+  transition: all 300ms ease;
+  filter: contrast(1.25);
 }
 
-.header img {
+.logo-image {
   width: 25rem;
+  max-width: 80%;
   height: auto;
-  object-fit: cover;
-  opacity: 0;
-  transition: opacity 1s ease-in-out, transform 1.5s ease-in-out;
-  user-select: none;
+  animation: fadeInDown 1s ease-in-out;
+}
+.explorebtn-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.header img.visible {
-  opacity: 1;
-  transform: scale(1);
-}
-
-.header img.hidden {
-  opacity: 0;
-  transform: scale(0.1);
-}
-
-.fade-in {
-  animation: fadeIn 1s ease-in forwards;
-}
-
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-.loading-screen {
+/* Main Statement */
+.main-statement {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100%;
-  font-family: "Press Start 2P", cursive;
-  color: #fff;
-  background-color: #000;
+  max-width: 50rem;
+  padding: 0 1.25rem;
 }
 
-.press-start-screen {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-}
-
-.press-start-btn {
+.section-title {
+  font-family: "Press Start 2P", monospace;
   font-size: 1.5rem;
-  color: #00ff00;
-  background-color: #000;
-  padding: 0.5rem 2rem;
-  border: 3px solid #ff0000;
-  border-radius: 5px;
-  font-family: "Press Start 2P", cursive;
-  letter-spacing: 0.2rem;
-  text-transform: uppercase;
-  text-shadow: 0 0 5px #ff0000, 0 0 10px #ff0000, 0 0 15px #ff0000;
-  transition: all 0.3s ease;
-  animation: blinkPressStart 1s infinite;
+  margin-bottom: 1.25rem;
+  animation: fadeInUp 1s ease-in-out;
 }
 
-@keyframes blinkPressStart {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
-}
-
-.press-start-btn:hover {
-  color: #ff0000;
-  background-color: #222;
-  border-color: #00ff00;
-  text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00, 0 0 15px #00ff00;
-}
-
-.welcome-text {
-  position: relative;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  margin-top: 1rem;
-}
-
+/* Explore Button */
 .explore-btn {
-  text-align: center;
-  font-size: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  font-size: 1.2rem;
   color: #00ff00;
   background-color: #000;
-  padding: 0.5rem 2rem;
-  border: 3px solid #ff0000;
-  border-radius: 5px;
-  font-family: "Press Start 2P", cursive;
-  letter-spacing: 0.2rem;
+  padding: 1rem 3rem;
+  border: 0.1875rem solid #ff0000;
+  border-radius: 0.3125rem;
+  font-family: "Press Start 2P", monospace;
   text-transform: uppercase;
-  box-shadow: 0 0 5px #ff0000, 0 0 10px #ff0000, 0 0 15px #ff0000;
-  transition: box-shadow 0.3s ease, transform 0.3s ease;
-  margin: 0 auto;
+  text-decoration: none;
+  text-shadow: 0 0 0.3125rem #ff0000;
   cursor: pointer;
+  transition: all 0.3s ease;
+  overflow: hidden;
 }
 
-.explore-btn:hover {
-  box-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000;
-  transform: scale(1.1);
-  background-color: #222;
-  border-color: #00ff00;
-  color: #ff0000;
+/* Animations */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-1.25rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(1.25rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 720px) {
+  .logo-image {
+    width: 18rem;
+  }
+
+  .section-title {
+    font-size: 1.2rem;
+  }
+
+  .explore-btn {
+    width: 80%;
+    font-size: 1rem;
+    padding: 0.75rem 1.5rem;
+  }
 }

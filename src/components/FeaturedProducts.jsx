@@ -41,7 +41,7 @@ const FeaturedProducts = () => {
 
   return (
     <div className="windows-xp-desktop" id="featuredproducts">
-      <SectionTitle title="Featured Products" />
+      <SectionTitle title="Featured Items" />
       <div className="product-windows-container">
         {openWindows.map((productId) => {
           const product = products.find((p) => p.id.includes(productId));

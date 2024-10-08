@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { RiArrowRightDoubleLine, RiArrowLeftDoubleLine } from "react-icons/ri";
+import { CgArrowsExpandRight } from "react-icons/cg";
+import { FaCircleUser } from "react-icons/fa6";
 import { v4 as uuidv4 } from "uuid";
 import slug from "slug";
 import "../styles/Blog.css";
-import { FaCircleUser } from "react-icons/fa6";
 
 const Blog = () => {
   const [posts, setPosts] = useState([]);
@@ -70,10 +71,11 @@ const Blog = () => {
               {" "}
               <div className="window post-window">
                 <div className="title-bar">
-                  <div className="buttons">
-                    <div className="button close"></div>
-                    <div className="button minimize"></div>
-                    <div className="button maximize"></div>
+                  <div className="title"></div>
+                  <div className="window-controls">
+                    <button>
+                      <CgArrowsExpandRight />
+                    </button>
                   </div>
                 </div>
                 <div className="blog-postunit blog-content">

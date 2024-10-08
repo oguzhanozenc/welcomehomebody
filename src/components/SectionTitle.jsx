@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { ReactTyped } from "react-typed";
 
-const SectionTitle = ({ title }) => {
+const SectionTitle = ({ title, className }) => {
   const sectionTitleRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -35,7 +35,7 @@ const SectionTitle = ({ title }) => {
           backDelay={1500}
           loop={false}
           showCursor={true}
-          className="sectiontitle"
+          className={`sectiontitle ${className}`} // Adding className for styling
         />
       )}
     </div>
