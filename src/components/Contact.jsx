@@ -5,6 +5,19 @@ import SectionTitle from "./SectionTitle";
 
 export default function Contact() {
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    setLoading(true);
+
+    const form = event.target;
+
+    setTimeout(() => {
+      setFormSubmitted(true);
+      setLoading(false);
+    }, 2000);
+  };
 
   return (
     <section className="contact-section">
@@ -17,7 +30,7 @@ export default function Contact() {
               onClick={() => setFormSubmitted(false)}
               className="arcade-button"
             >
-              <RiArrowGoBackLine className="arcade-icon" /> Back to the Form
+              <RiArrowGoBackLine className="arcade-icon" /> Back
             </button>
           </div>
         ) : (
@@ -26,7 +39,7 @@ export default function Contact() {
             method="POST"
             netlify-honeypot="bot-field"
             data-netlify="true"
-            onSubmit={() => setFormSubmitted(true)}
+            onSubmit={handleSubmit}
             className="contact-form"
           >
             <input type="hidden" name="form-name" value="contact" />
@@ -57,8 +70,8 @@ export default function Contact() {
               <textarea name="message" required></textarea>
             </label>
 
-            <button type="submit" className="arcade-button">
-              Submit
+            <button type="submit" className="arcade-button" disabled={loading}>
+              {loading ? "Submitting..." : "Submit"}
             </button>
           </form>
         )}
