@@ -2,11 +2,42 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/logo-open.webp" />
+    <link rel="icon" type="image/webp" href="/logo-open.webp" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Homebody</title>
+    <meta
+      name="description"
+      content="Homebody: A retro arcade-inspired e-commerce platform for those who prefer to stay home but still want to stand out when it counts. We got that, we do that, we are that."
+    />
+    <meta
+      name="keywords"
+      content="Homebody, retro arcade, e-commerce, hikikomori, stay home, retro style, gaming, arcade shopping, unique items"
+    />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:title" content="Homebody - Retro Arcade E-commerce" />
+    <meta
+      property="og:description"
+      content="A platform for those who prefer staying home but have something to show when needed. Explore our retro arcade-inspired collection."
+    />
+    <meta property="og:image" content="/logo-open.webp" />
+    <meta property="og:url" content="https://welcomehomebody.com" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Homebody - Retro Arcade E-commerce" />
+    <meta
+      name="twitter:description"
+      content="We got that, we do that, we are that. A retro arcade e-commerce experience tailored for the homebodies."
+    />
+    <meta name="twitter:image" content="/logo-open.webp" />
+    <title>Homebody - Retro Arcade E-commerce</title>
   </head>
   <body>
+    <!-- Hidden Netlify form for detection -->
+    <form name="contact" netlify netlify-honeypot="bot-field" hidden>
+      <input type="text" name="name" autocomplete="name" hidden />
+      <input type="email" name="email" autocomplete="email" hidden />
+      <input type="text" name="company" autocomplete="company" hidden />
+      <textarea name="message" hidden></textarea>
+    </form>
+
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>

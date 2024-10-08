@@ -8,7 +8,6 @@ export default function Contact() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
     const form = event.target;
     const formData = new FormData(form);
 
@@ -44,24 +43,36 @@ export default function Contact() {
             onSubmit={handleSubmit}
             className="contact-form"
           >
+            {/* Hidden form field for Netlify */}
             <input type="hidden" name="form-name" value="contact" />
+
+            {/* Honeypot field to prevent spam */}
             <p className="hidden">
               <label>
                 Don’t fill this out if you’re human: <input name="bot-field" />
               </label>
             </p>
+
             <label className="form-label">
               Name:
               <input type="text" name="name" required />
             </label>
+
             <label className="form-label">
               Email:
               <input type="email" name="email" required />
             </label>
+
+            <label className="form-label">
+              Company:
+              <input type="text" name="company" />
+            </label>
+
             <label className="form-label">
               Message:
               <textarea name="message" required></textarea>
             </label>
+
             <button type="submit" className="arcade-button">
               Submit
             </button>

@@ -121,7 +121,7 @@ const Navbar = () => {
             </div>
           ) : (
             <Link to="/login" className="account-btn">
-              <img src="/user.png" alt="cart" width="36" />
+              <img src="/user.png" alt="user" width="36" />
             </Link>
           )}
 
