@@ -29,10 +29,8 @@ export default function Contact() {
             onSubmit={() => setFormSubmitted(true)}
             className="contact-form"
           >
-            {/* Hidden form field for Netlify */}
             <input type="hidden" name="form-name" value="contact" />
 
-            {/* Honeypot field to prevent spam */}
             <p className="hidden">
               <label>
                 Don’t fill this out if you’re human: <input name="bot-field" />

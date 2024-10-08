@@ -18,6 +18,7 @@
   border-radius: 0.5rem;
 }
 
+/* Form styles */
 .contact-form {
   background-color: #fff;
   padding: 2rem;
@@ -52,6 +53,7 @@
   height: 10rem;
 }
 
+/* Arcade button styles */
 .arcade-button {
   background-color: #ffbd2e;
   border: 2px solid #9b9b9b;
@@ -75,4 +77,34 @@
 .arcade-button:disabled {
   background-color: #ccc;
   cursor: not-allowed;
+}
+
+/* Confirmation message styling */
+.confirmation-message {
+  background-color: #e0ffe0;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  text-align: center;
+  color: #1d1d1d;
+  box-shadow: inset 1px 1px 0 #fff, 2px 2px 5px rgba(0, 0, 0, 0.3);
+  border: 2px solid #4caf50;
+}
+
+.confirmation-message p {
+  font-size: 1.5rem;
+  font-family: "Press Start 2P", cursive;
+  color: #4caf50;
+  margin-bottom: 1.5rem;
+}
+
+.confirmation-message .arcade-button {
+  background-color: #ffbd2e;
+  color: #1d1d1d;
+  border: 2px solid #9b9b9b;
+  padding: 0.75rem;
+  border-radius: 4px;
+}
+
+.confirmation-message .arcade-button:hover {
+  background-color: #ff8c00;
 }
