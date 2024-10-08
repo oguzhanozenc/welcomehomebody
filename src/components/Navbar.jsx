@@ -92,7 +92,7 @@ const Navbar = () => {
           </button>
 
           <Link to="/cart" className="cart-btn">
-            <img src="../public/cart.png" alt="cart" width="36" />
+            <img src="/cart.png" alt="cart" width="36" />
             {cartItemCount > 0 && (
               <span className="cart-count">{cartItemCount}</span>
             )}
@@ -121,7 +121,7 @@ const Navbar = () => {
             </div>
           ) : (
             <Link to="/login" className="account-btn">
-              <img src="../public/user.png" alt="cart" width="36" />
+              <img src="/user.png" alt="cart" width="36" />
             </Link>
           )}
 

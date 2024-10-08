@@ -87,7 +87,7 @@
 
 .recentpost-unit {
   overflow: hidden;
-  background: #e0e0e0;
+  background: #c0c0c0;
   border: 2px solid #9b9b9b;
   border-radius: 4px;
   box-shadow: inset 1px 1px 0 #fff, 2px 2px 5px rgba(0, 0, 0, 0.3);
@@ -129,8 +129,6 @@
 
 @media only screen and (max-width: 1200px) {
   .recent-posts {
-    display: flex;
-    flex-direction: column;
     text-align: center;
   }
 
@@ -141,7 +139,7 @@
 
   .recentpost-unit {
     margin: 1rem auto;
-    width: 100% !important;
+    width: 80% !important;
   }
 
   .linktoblog {
@@ -149,7 +147,6 @@
   }
 
   .subscribe {
-    margin: 1rem auto;
     width: 90%;
   }
 
@@ -162,30 +159,21 @@
   }
 
   .slick-slider {
-    margin: 0 20%;
+    margin: 0 10%;
   }
 }
 
 @media only screen and (max-width: 765px) {
-  .subscribe {
-    width: 100%;
-    padding: 0 1rem;
-  }
-
-  .linktoblog {
-    padding: 1rem;
-  }
-
-  .linktoblog h3 {
-    font-size: 1.25rem;
-  }
-
-  .slick-slider {
-    margin: 0;
+  .recentpost-unit {
+    width: 100% !important;
   }
 
   .slick-slide {
     padding: 0 0.5rem;
+  }
+
+  .recentposts--section {
+    padding: 5% 0;
   }
 
   .recent-posts-slider {

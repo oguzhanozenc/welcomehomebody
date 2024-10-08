@@ -37,6 +37,20 @@ const RecentPosts = () => {
     slidesToShow: 3,
     slidesToScroll: 1,
     afterChange: (current) => setCurrentSlide(current),
+    responsive: [
+      {
+        breakpoint: 1200,
+        settings: {
+          slidesToShow: 2,
+        },
+      },
+      {
+        breakpoint: 765,
+        settings: {
+          slidesToShow: 1,
+        },
+      },
+    ],
   };
 
   const handlePrev = () => {
@@ -111,7 +125,7 @@ const RecentPosts = () => {
                     <BsArrowRightCircleFill />
                   </button>
                 </div>
-              </div>{" "}
+              </div>
               <div className="linktoblog">
                 <Link to="/blog" className="btn">
                   View all Posts

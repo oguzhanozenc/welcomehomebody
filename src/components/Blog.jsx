@@ -6,6 +6,7 @@ import { FaCircleUser } from "react-icons/fa6";
 import { v4 as uuidv4 } from "uuid";
 import slug from "slug";
 import "../styles/Blog.css";
+import SectionTitle from "./SectionTitle";
 
 const Blog = () => {
   const [posts, setPosts] = useState([]);
@@ -50,9 +51,7 @@ const Blog = () => {
   return (
     <section className="blog--section">
       <div id="blogsectiontitle">
-        <h2 className="section-title" id="recentposts-title">
-          Recent Posts
-        </h2>
+        <SectionTitle title="Recent Posts" className="white-text" />
       </div>
 
       <div className="blog-postscontainer">

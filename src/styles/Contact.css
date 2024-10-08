@@ -3,7 +3,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  margin: 10% auto;
+  margin: 10% 2%;
   padding: 10 5%;
 }
 
@@ -12,23 +12,19 @@
   width: 100%;
   position: relative;
   z-index: 2;
-}
-
-.arcade-button {
-  color: #fff;
-  font-family: "Press Start 2P", cursive;
-  border: none;
-  cursor: pointer;
-  padding: 0.5rem;
+  background-color: #c3c3c3;
+  border: 2px solid #9b9b9b;
+  box-shadow: inset 1px 1px 0 #fff, 2px 2px 5px rgba(0, 0, 0, 0.3);
+  border-radius: 0.5rem;
 }
 
 .contact-form {
-  background-color: #222;
+  background-color: #fff;
   padding: 2rem;
   border-radius: 0.5rem;
-  color: #fff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-
+  color: #1d1d1d;
+  box-shadow: inset 1px 1px 0 #fff, 2px 2px 5px rgba(0, 0, 0, 0.3);
+  border: 2px solid #9b9b9b;
   margin: 2rem;
 }
 
@@ -36,6 +32,7 @@
   display: block;
   margin-bottom: 0.5rem;
   font-size: 1rem;
+  color: #202020;
 }
 
 .form-label input,
@@ -44,11 +41,10 @@
   width: 100%;
   padding: 0.5rem;
   margin-top: 0.25rem;
-  border: 1px solid #555;
-  border-radius: 5px;
-  background-color: #333;
-
-  color: #fff;
+  border: 2px solid #9b9b9b;
+  border-radius: 4px;
+  background-color: #d4d0c8;
+  color: #202020;
 }
 
 .form-label textarea {
@@ -58,13 +54,14 @@
 
 .arcade-button {
   background-color: #ffbd2e;
-  border: none;
-  color: #fff;
+  border: 2px solid #9b9b9b;
+  color: #1d1d1d;
   cursor: pointer;
   padding: 0.5rem;
-  border-radius: 0.25rem;
+  border-radius: 4px;
   font-family: "Press Start 2P", cursive;
   transition: all 300ms ease;
+  box-shadow: inset 1px 1px 0 #fff, 2px 2px 5px rgba(0, 0, 0, 0.3);
 }
 
 .arcade-button:hover {
