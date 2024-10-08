@@ -48,10 +48,21 @@ const ProductList = () => {
   return (
     <div className="product-list" id="products">
       <div className="filter-buttons">
+        <button
+          onClick={() => navigate("/products")}
+          className={`filter-btn ${!category ? "active" : ""}`}
+        >
+          All Products
+        </button>
         {categories.map((cat) => (
           <button
             key={cat}
-            onClick={() => navigate(`/products/category/${cat.toLowerCase()}`)}
+            // If the category is already selected, remove the filter by navigating to "/products"
+            onClick={() =>
+              category === cat.toLowerCase()
+                ? navigate("/products")
+                : navigate(`/products/category/${cat.toLowerCase()}`)
+            }
             className={`filter-btn ${
               category === cat.toLowerCase() ? "active" : ""
             }`}
@@ -59,9 +70,6 @@ const ProductList = () => {
             {cat}
           </button>
         ))}
-        <button onClick={() => navigate("/products")} className="filter-btn">
-          All Products
-        </button>
       </div>
       <div className="productlist-windows-container">
         {filteredProducts.length === 0 ? (

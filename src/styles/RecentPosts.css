@@ -15,7 +15,10 @@
   align-items: stretch;
   margin: 0 auto;
   filter: saturate(1.5);
-  border-radius: 0.5rem;
+  border-radius: 4px;
+  background-color: #c3c3c3;
+  border: 2px solid #9b9b9b;
+  box-shadow: inset 1px 1px 0 #fff, 2px 2px 5px rgba(0, 0, 0, 0.3);
 }
 
 .linktoblog {
@@ -23,31 +26,38 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: #f0f0f0;
-  border-radius: 0.5rem;
+  color: #202020;
+  border-radius: 4px;
   padding: 1rem 0.5rem;
-  width: 100%;
-  padding: 1rem 0.5rem;
+  background-color: #e0e0e0;
+  border: 2px solid #9b9b9b;
+  box-shadow: inset 1px 1px 0 #fff;
 }
 
 .subscribe {
   width: 100%;
   padding: 0 2rem;
   margin: 1rem 0;
+  background-color: #d4d0c8;
+  border: 2px solid #9b9b9b;
+  box-shadow: inset 1px 1px 0 #fff;
 }
 
 .linktoblog h3 {
   font-size: 1.35rem;
   font-weight: 600;
-  text-align: justify;
+  text-align: center;
+  color: #333;
   margin: 1rem 0;
+  text-shadow: 1px 1px 0 #fff;
 }
 
 .post-thumbnail img {
   width: 100%;
   height: 10.5rem;
   object-fit: cover;
-  border-radius: 0.5rem 0.5rem 0 0;
+  border-radius: 4px 4px 0 0;
+  box-shadow: inset 1px 1px 0 #fff, 0 1px 4px rgba(0, 0, 0, 0.2);
 }
 
 .post-info {
@@ -55,6 +65,7 @@
   opacity: 0.7;
   transition: opacity 0.3s ease;
   display: flex;
+  background-color: #c0c0c0;
 }
 
 .recentpost-unit:hover .post-info {
@@ -63,29 +74,23 @@
 
 .post-info p {
   font-weight: bold;
-  color: #ffffff;
+  color: #000;
   margin: 0;
   font-size: 0.9rem;
   text-align: center;
+  text-shadow: 1px 1px 0 #fff;
 }
 
 .slick-slide {
   padding: 0 1rem;
 }
 
-.recent-posts-slider {
-  padding: 1rem 0.5rem;
-  place-content: center;
-}
-
 .recentpost-unit {
   overflow: hidden;
-  background: rgb(22, 22, 22, 0.9);
-  -webkit-backdrop-filter: blur(20px);
-  backdrop-filter: blur(20px);
-  border: 1px solid #333;
-  border-radius: 0.5rem;
-  box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
+  background: #e0e0e0;
+  border: 2px solid #9b9b9b;
+  border-radius: 4px;
+  box-shadow: inset 1px 1px 0 #fff, 2px 2px 5px rgba(0, 0, 0, 0.3);
   cursor: pointer;
   display: flex;
   flex-direction: column;
@@ -93,7 +98,7 @@
   align-items: flex-end;
   height: 18rem;
   margin: 1rem 0;
-  transition: transform 0.5s, opacity 0.5s, filter 0.5s, z-index 0s;
+  transition: transform 0.5s, opacity 0.5s, filter 0.5s;
 }
 
 .custom-arrows {
@@ -105,24 +110,21 @@
   background: transparent;
   border: none;
   font-size: 1.5rem;
-  color: grey;
+  color: #666;
   transition: all 300ms ease;
 }
 
 .custom-arrows button:hover {
-  color: blue;
+  color: #0000ff;
   cursor: pointer;
 }
 
 .slick-dots li button:before {
-  color: #f0f0f0;
+  color: #202020;
 }
 
 .slick-dots li.slick-active button:before {
-  color: #ffffff;
-}
-
-.slick-list {
+  color: #0000ff;
 }
 
 @media only screen and (max-width: 1200px) {
@@ -136,10 +138,12 @@
     padding: 10% 0;
     width: 100%;
   }
+
   .recentpost-unit {
     margin: 1rem auto;
     width: 100% !important;
   }
+
   .linktoblog {
     margin: 1rem auto;
   }
@@ -163,9 +167,6 @@
 }
 
 @media only screen and (max-width: 765px) {
-  .recentposts--section {
-  }
-
   .subscribe {
     width: 100%;
     padding: 0 1rem;
@@ -182,12 +183,15 @@
   .slick-slider {
     margin: 0;
   }
+
   .slick-slide {
     padding: 0 0.5rem;
   }
+
   .recent-posts-slider {
     padding: 0.25rem;
   }
+
   .post-thumbnail img {
     height: 9rem;
   }
