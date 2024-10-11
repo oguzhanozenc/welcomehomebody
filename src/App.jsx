@@ -22,6 +22,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import Account from "./components/Account";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
+import PasswordRecover from "./components/PasswordRecover";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -98,6 +99,7 @@ function App() {
         <Route path="/account" element={<PrivateRoute element={Account} />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/password-recover" element={<PasswordRecover />} />
       </Routes>
       <Footer />
       <ToastContainer />

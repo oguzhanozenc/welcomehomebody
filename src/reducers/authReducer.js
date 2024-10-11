@@ -4,6 +4,8 @@ import {
   CUSTOMER_LOGIN_FAILURE,
   CUSTOMER_SIGNUP_SUCCESS,
   CUSTOMER_SIGNUP_FAILURE,
+  CUSTOMER_RECOVER_SUCCESS,
+  CUSTOMER_RECOVER_FAILURE,
 } from "../actions/actionTypes";
 
 const initialState = {
@@ -29,6 +31,7 @@ const authReducer = (state = initialState, action) => {
       };
     case CUSTOMER_LOGIN_FAILURE:
     case CUSTOMER_SIGNUP_FAILURE:
+    case CUSTOMER_RECOVER_FAILURE:
       return {
         ...state,
         isAuthenticated: false,
@@ -45,6 +48,7 @@ const authReducer = (state = initialState, action) => {
         error: null,
       };
     case CUSTOMER_SIGNUP_SUCCESS:
+    case CUSTOMER_RECOVER_SUCCESS:
       return {
         ...state,
         error: null,

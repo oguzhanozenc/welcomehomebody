@@ -1,3 +1,4 @@
+// src/components/Login.js
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginCustomer } from "../actions/authActions";
@@ -57,6 +58,12 @@ const Login = () => {
         Don't have an account?{" "}
         <Link to="/signup" state={{ from: location }}>
           Sign Up Here
+        </Link>
+      </p>
+      <p>
+        Forgot your password?{" "}
+        <Link to="/password-recover" state={{ from: location }}>
+          Reset it here
         </Link>
       </p>
     </div>

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import "../styles/Navbar.css";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { FaShoppingCart, FaUserCircle, FaSearch } from "react-icons/fa";
+import { FaSearch } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import { logoutCustomer } from "../actions/authActions";
 
@@ -104,7 +104,7 @@ const Navbar = () => {
               onMouseEnter={toggleDropdown}
               onMouseLeave={toggleDropdown}
             >
-              <FaUserCircle size={24} className="account-icon" />
+              <img src="/user.png" alt="user" width="36" />
               {isDropdownOpen && (
                 <div className="dropdown-menu">
                   <Link to="/account" className="dropdown-item">

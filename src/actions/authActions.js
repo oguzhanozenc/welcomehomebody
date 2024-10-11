@@ -1,3 +1,4 @@
+// src/actions/authActions.js
 import { gql } from "graphql-request";
 import client from "../client";
 import {
@@ -6,6 +7,8 @@ import {
   CUSTOMER_LOGIN_FAILURE,
   CUSTOMER_SIGNUP_SUCCESS,
   CUSTOMER_SIGNUP_FAILURE,
+  CUSTOMER_RECOVER_SUCCESS,
+  CUSTOMER_RECOVER_FAILURE,
 } from "./actionTypes";
 
 export const loginCustomer = (email, password) => async (dispatch) => {
@@ -122,3 +125,34 @@ export const signUpCustomer =
       throw error;
     }
   };
+
+// Optional: You can add the customerRecover action if you prefer to handle it in actions
+export const recoverCustomerPassword = (email) => async (dispatch) => {
+  const mutation = gql`
+    mutation customerRecover($email: String!) {
+      customerRecover(email: $email) {
+        customerUserErrors {
+          code
+          field
+          message
+        }
+      }
+    }
+  `;
+
+  try {
+    const response = await client.request(mutation, { email });
+    const errors = response.customerRecover.customerUserErrors;
+
+    if (errors.length > 0) {
+      dispatch({ type: CUSTOMER_RECOVER_FAILURE, payload: errors[0].message });
+      throw new Error(errors[0].message);
+    } else {
+      dispatch({ type: CUSTOMER_RECOVER_SUCCESS });
+    }
+  } catch (error) {
+    console.error("Password recovery failed:", error);
+    dispatch({ type: CUSTOMER_RECOVER_FAILURE, payload: error.message });
+    throw error;
+  }
+};

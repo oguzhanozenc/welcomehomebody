@@ -1,3 +1,4 @@
+// src/components/Account.js
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { gql } from "graphql-request";
