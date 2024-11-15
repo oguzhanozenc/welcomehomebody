@@ -1,17 +1,18 @@
 ---
-title: DIY Retro Arcade T-Shirt Customization Tips
+title: "EDITED POST --- DIY Retro Arcade T-Shirt Customization Tips "
 author: Homebody Blog
 date: 2024-08-25T22:36:00.000Z
 thumbnail: /img/uploads/post3.jpg
-featuredText: Learn how to customize your own arcade-themed t-shirts with these
-  simple DIY tips. Stand out with your unique designs!
+featuredText: THIS IS THE EDITED VERSION. Learn how to customize your own
+  arcade-themed t-shirts with these simple DIY tips. Stand out with your unique
+  designs!
 tags:
   - DIY
   - t-shirt
   - custom t-shirt
   - arcade theme
 ---
-<p>Customizing your own arcade-themed t-shirts can be a fun and rewarding project. Here are some tips to help you get started:</p>
+THIS IS THE EDITED VERSION. L<p>Customizing your own arcade-themed t-shirts can be a fun and rewarding project. Here are some tips to help you get started:</p>
 
 <ul>
 
