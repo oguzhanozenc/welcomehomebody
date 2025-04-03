@@ -4,7 +4,7 @@ Homebody is a fully responsive, retro-styled e-commerce platform that merges vin
 
 ## Live Demo
 
-> **[View Live Site](https://your-deployment-url.netlify.app)**
+> **[View Live Site](https://welcomehomebody.com)**
 
 ---
 
